@@ -34,11 +34,12 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python main.py
-
-      - name: Commit and Push generated index.html
+          
+      - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull origin main --rebase
           git add index.html
-          git commit -m "Auto-update dashboard HTML [skip ci]" || echo "No changes to commit"
-          git push
+          git commit -m "Auto-update dashboard HTML [skip ci]" || exit 0
+          git push origin main
