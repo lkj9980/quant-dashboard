@@ -100,9 +100,6 @@ def generate_html(ai_comment):
         </div>
         <div class="card">
             <h3>📊 실시간 지표</h3>
-            <div class="metric"><span>코스피</span><span>{kospi}</span></div>
-            <div class="metric"><span>나스닥</span><span>{nasdaq}</span></div>
-            <div class="metric"><span>환율</span><span>{fx}</span></div>
         </div>
         <p style="text-align:center; font-size:12px;">Last Updated: {current_time}</p>
     </div>
