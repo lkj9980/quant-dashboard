@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Quant Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-sub: #666666;
+            --accent-blue: #2563eb;
+            --border-color: #e5e7eb;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 480px; /* 모바일 최적화 폭 */
+        }
+        header {
+            margin-bottom: 20px;
+            padding: 0 4px;
+        }
+        header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            color: var(--text-main);
+        }
+        header p {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin: 0;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border-color);
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--text-main);
+        }
+        /* 지표 리스트 스타일 */
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+        .metric-name {
+            color: var(--text-sub);
+        }
+        .metric-value {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .positive { color: #dc2626; } /* 상승 빨간색 포인트 */
+        .negative { color: #2563eb; } /* 하락 파란색 포인트 */
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>계좌별 맞춤 포트폴리오 전략</h1>
+            <p>최신 매크로 시황 및 실시간 퀀트 분석 결과</p>
+        </header>
+
+        <!-- AI 코멘트 카드 -->
+        <div class="card">
+            <div class="card-title">💡 오늘의 매크로 변곡점</div>
+            <p style="font-size: 14px; line-height: 1.5; color: #4b5563; margin: 0;">
+                {ai_comment}
+            </p>
+        </div>
+
+        <!-- 주요 지표 현황판 카드 -->
+        <div class="card">
+            <div class="card-title">📊 실시간 주요 지표 현황</div>
+            <div class="metric-row">
+                <span class="metric-name">코스피 (KOSPI)</span>
+                <span class="metric-value positive">{kospi_val}</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-name">나스닥 100 (QQQ)</span>
+                <span class="metric-value positive">{nasdaq_val}</span>
+            </div>
+            <div class="metric-row">
+                <span class="metric-name">원/달러 환율</span>
+                <span class="metric-value">{fx_val}</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            Last Updated: {update_time} &bull; Powered by GitHub Pages & Gemini AI
+        </div>
+    </div>
+</body>
+</html>
