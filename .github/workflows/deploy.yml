@@ -1,0 +1,44 @@
+name: Deploy Quant Dashboard to GitHub Pages
+
+on:
+  schedule:
+    - cron: '00 23 * * *' # 한국 시간 오전 8시 00분 (미장 마감 시황)
+    - cron: '00 7 * * *'  # 한국 시간 오후 4시 00분 (국장 마감 시황)
+    - cron: '55 2 * * *'  # 한국 시간 오전 11시 55분 (테스트)
+    - cron: '00 3 * * *'  # 한국 시간 오후 12시 00분 (테스트)
+  workflow_dispatch: # 수동 실행 버튼 제공
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install yfinance google-generativeai pandas
+
+      - name: Run Python Analysis & Generate index.html
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python main.py
+
+      - name: Commit and Push generated index.html
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Auto-update dashboard HTML [skip ci]" || echo "No changes to commit"
+          git push
