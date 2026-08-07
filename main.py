@@ -69,7 +69,7 @@ def get_ai_analysis():
     report_content = response.text
     return response.text
 
-def generate_html(ai_comment, kospi, nasdaq, fx):
+def generate_html(ai_comment):
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M')
     
     html_template = f"""<!DOCTYPE html>
@@ -109,4 +109,4 @@ def generate_html(ai_comment, kospi, nasdaq, fx):
 if __name__ == "__main__":
     ai_text = get_ai_analysis()
     # 실제로는 여기서 yfinance 등으로 데이터를 가져와 변수에 넣어야 합니다.
-    generate_html(ai_text, "2,600.00", "19,000.00", "1,380.00")
+    generate_html(ai_text)
