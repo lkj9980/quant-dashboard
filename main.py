@@ -86,6 +86,12 @@ def generate_html(ai_comment):
     </style>
 </head>
 <body>
+    <div class="report-card">
+        <h1>퀀트 전략 리포트</h1>
+        <pre>{report_content}</pre>
+        <p style="text-align:right; font-size:12px; color:#888;">Updated: {current_time}</p>
+    </div>
+
     <div style="max-width: 480px; margin: auto;">
         <h1>계좌별 맞춤 포트폴리오 전략</h1>
         <div class="card">
