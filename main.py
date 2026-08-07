@@ -35,7 +35,7 @@ def get_ai_analysis():
     # 2. Gemini AI 매크로 분석
     # ------------------------------------------
     print("2. Gemini AI 시장 분석 중...")
-    genai.configure(api_key=GEMINI_API_KEY)
+    os.environ["GEMINI_API_KEY"]**
     model = genai.GenerativeModel('gemini-3.5-flash')
     
     prompt = f"""
