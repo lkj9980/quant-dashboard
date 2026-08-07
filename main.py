@@ -63,8 +63,16 @@ def get_ai_analysis():
     5. Portfolio B (퇴직연금 DC/IRP) 추천 비중 (위험자산 최대 70%)
     6. 분할 매수/매도 가격 타점 및 액션 플랜
     - 미사여구를 배제하고 모든 수치와 가격은 명확한 숫자로만 출력할 것.
+
+    [출력 형식 가이드]
+    - 오직 Tailwind CSS 클래스를 사용한 순수 HTML <div> 카드 형태로만 출력하세요.
+    - 예시 구조:
+      <div class="bg-white rounded-xl p-5 shadow-sm mb-4">
+          <h3 class="font-bold text-lg mb-2">카드 제목</h3>
+          <p class="text-gray-600">내용...</p>
+      </div>
     """
-    
+
     response = model.generate_content(prompt)
     report_content = response.text
     return response.text
