@@ -88,7 +88,7 @@ def generate_html(ai_comment):
 <body>
     <div class="report-card">
         <h1>퀀트 전략 리포트</h1>
-        <pre>{report_content}</pre>
+        <pre>{ai_comment}</pre>
         <p style="text-align:right; font-size:12px; color:#888;">Updated: {current_time}</p>
     </div>
 
