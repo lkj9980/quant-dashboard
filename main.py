@@ -1,4 +1,5 @@
 import os
+import yfinance as yf
 import google.generativeai as genai
 from datetime import datetime
 
@@ -56,23 +57,21 @@ def get_ai_analysis():
        - 레버리지/인버스 매매 원천 금지
     
     [출력 형식]
-    1. 오늘 시장의 핵심 변곡점을 꿰뚫는 한 문장 인용구 (Blockquote)
-    2. [실시간 주요 지표 현황판] (마크다운)
-    3. 시장별 포지션 스코어링(0~100점): 매수/매도 비교 점수 (코스피200 / 코스닥150 / 나스닥100)
-    4. Portfolio A (일반계좌) 추천 비중
-    5. Portfolio B (퇴직연금 DC/IRP) 추천 비중 (위험자산 최대 70%)
-    6. 분할 매수/매도 가격 타점 및 액션 플랜
-    - 미사여구를 배제하고 모든 수치와 가격은 명확한 숫자로만 출력할 것.
-
-    [출력 형식 가이드]
     - 오직 Tailwind CSS 클래스를 사용한 순수 HTML <div> 카드 형태로만 출력하세요.
+    - 전체 응답은 아래 카드 구조(div)를 포함해야 합니다:
+       - 카드 1: 오늘의 매크로 변곡점 한 줄 요약(Blockquote) (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
+       - 카드 2. [실시간 주요 지표 현황판] (마크다운)
+       - 카드 3: 시장별 포지션 스코어링 및 점수 (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
+       - 카드 4: Portfolio A (일반계좌) 추천 비중 (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
+       - 카드 5. Portfolio B (퇴직연금 DC/IRP) 추천 비중 (위험자산 최대 70%) (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
+       - 카드 6. 분할 매수/매도 가격 타점 및 액션 플랜
     """
 
     response = model.generate_content(prompt)
     report_content = response.text
     return response.text
 
-def generate_html(ai_comment):
+def generate_html(ai_html_content):
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M')
     
     html_template = f"""<!DOCTYPE html>
@@ -81,25 +80,26 @@ def generate_html(ai_comment):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Quant Dashboard</title>
-    <style>
-        body {{ font-family: sans-serif; background-color: #f8f9fa; padding: 20px; }}
-        .card {{ background: white; border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }}
-        h1 {{ font-size: 18px; }}
-        .metric {{ display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }}
-    </style>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div style="max-width: 480px; margin: auto;">
-        <h1>계좌별 맞춤 포트폴리오 전략</h1>
-        <div class="card">
-            <h3>💡 매크로 변곡점</h3>
-            <p>{ai_comment}</p>
-        </div>
-        <div class="card">
-            <h3>📊 실시간 지표</h3>
-        </div>
-        <p style="text-align:center; font-size:12px;">Last Updated: {current_time}</p>
-    </div>
+<body class="bg-slate-50 text-slate-800 p-4 max-w-xl mx-auto">
+    
+    <!-- 상단 타이틀 영역 -->
+    <header class="mb-6 mt-2">
+        <h1 class="text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
+        <p class="text-xs text-slate-500 mt-1">최신 매크로 시황 및 실시간 퀀트 분석 결과</p>
+    </header>
+
+    <!-- AI가 생성한 카드 영역 -->
+    <main>
+        {ai_html_content}
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="text-center text-[11px] text-slate-400 mt-8 mb-4">
+        Last Updated: {current_time} • Powered by GitHub Pages & Gemini AI
+    </footer>
 </body>
 </html>"""
     with open('index.html', 'w', encoding='utf-8') as f:
