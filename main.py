@@ -1,4 +1,9 @@
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from datetime import datetime
+import markdown
 import yfinance as yf
 import google.generativeai as genai
 from datetime import datetime
