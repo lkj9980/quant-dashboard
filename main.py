@@ -143,5 +143,5 @@ def send_gmail_report(html_content):
 if __name__ == "__main__":
     ai_text = get_ai_analysis()
     # 실제로는 여기서 yfinance 등으로 데이터를 가져와 변수에 넣어야 합니다.
-    html_content=generate_html(ai_text)
-    send_gmail_report(html_content):
+    html_content = generate_html(ai_text)
+    send_gmail_report(html_content)
