@@ -120,7 +120,7 @@ def generate_html(ai_html_content):
     return html_template
 
 # 4. Gmail 발송 (오늘 날짜 자동 적용)
-def send_gmail_report(html_content):
+def send_gmail_report(html_template):
     today_date = datetime.now().strftime("%Y-%m-%d")
     
     GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
@@ -143,5 +143,5 @@ def send_gmail_report(html_content):
 if __name__ == "__main__":
     ai_text = get_ai_analysis()
     # 실제로는 여기서 yfinance 등으로 데이터를 가져와 변수에 넣어야 합니다.
-    html_content = generate_html(ai_text)
-    send_gmail_report(html_content)
+    html_template = generate_html(ai_text)
+    send_gmail_report(html_template)
