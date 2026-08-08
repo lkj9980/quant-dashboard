@@ -66,11 +66,6 @@ def get_ai_analysis():
 
     [출력 형식 가이드]
     - 오직 Tailwind CSS 클래스를 사용한 순수 HTML <div> 카드 형태로만 출력하세요.
-    - 예시 구조:
-      <div class="bg-white rounded-xl p-5 shadow-sm mb-4">
-          <h3 class="font-bold text-lg mb-2">카드 제목</h3>
-          <p class="text-gray-600">내용...</p>
-      </div>
     """
 
     response = model.generate_content(prompt)
