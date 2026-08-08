@@ -124,8 +124,8 @@ def send_gmail_report(html_template):
     today_date = datetime.now().strftime("%Y-%m-%d")
     
     GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
-    #MY_EMAIL = "lkj9980@gmail.com" # <--- 본인 Gmail 주소로 수정하세요!
-    MY_EMAIL = os.environ.get("MY_EMAIL")
+    MY_EMAIL = "lkj9980@gmail.com" # <--- 본인 Gmail 주소로 수정하세요!
+    #MY_EMAIL = os.environ.get("MY_EMAIL")
     msg = MIMEMultipart()
     msg['From'] = MY_EMAIL
     msg['To'] = MY_EMAIL
