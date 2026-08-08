@@ -57,6 +57,7 @@ def get_ai_analysis():
        - 레버리지/인버스 매매 원천 금지
     
     [출력 형식]
+    - 마크다운 기호(###, **, |, - 등)를 절대 사용하지 마세요.
     - 오직 Tailwind CSS 클래스를 사용한 순수 HTML <div> 카드 형태로만 출력하세요.
     - 전체 응답은 아래 카드 구조(div)를 포함해야 합니다:
        - 카드 1: 오늘의 매크로 변곡점 한 줄 요약(Blockquote) (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
