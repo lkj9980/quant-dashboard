@@ -117,31 +117,32 @@ def generate_html(ai_html_content):
 </html>"""
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(html_template)
-    
+    return html_template
+
 # 4. Gmail 발송 (오늘 날짜 자동 적용)
-today_date = datetime.now().strftime("%Y-%m-%d")
-
-GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")
-
-# gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
-#MY_EMAIL = "lkj9980@gmail.com" # <--- 본인 Gmail 주소로 수정하세요!
-MY_EMAIL = os.environ.get("MY_EMAIL")
-
-msg = MIMEMultipart()
-msg['From'] = MY_EMAIL
-msg['To'] = MY_EMAIL
-msg['Subject'] = f"[일일 퀀트 리포트] {today_date} 시장 분석 및 자산 배분 전략"
-
-msg.attach(MIMEText(html_template, 'html', 'utf-8'))
-
-server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-server.login(MY_EMAIL, GMAIL_APP_PASSWORD)
-server.sendmail(MY_EMAIL, MY_EMAIL, msg.as_string())
-server.close()
-print("Gmail HTML 리포트 발송 완료!")
+def send_gmail_report(html_content):
+    today_date = datetime.now().strftime("%Y-%m-%d")
+    
+    GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
+    #MY_EMAIL = "lkj9980@gmail.com" # <--- 본인 Gmail 주소로 수정하세요!
+    MY_EMAIL = os.environ.get("MY_EMAIL")
+    msg = MIMEMultipart()
+    msg['From'] = MY_EMAIL
+    msg['To'] = MY_EMAIL
+    msg['Subject'] = f"[일일 퀀트 리포트] {today_date} 시장 분석 및 자산 배분 전략"
+    
+    msg.attach(MIMEText(html_template, 'html', 'utf-8'))
+    
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server.login(MY_EMAIL, GMAIL_APP_PASSWORD)
+    server.sendmail(MY_EMAIL, MY_EMAIL, msg.as_string())
+    server.close()
+    print("Gmail HTML 리포트 발송 완료!")
 
 # 실행부
 if __name__ == "__main__":
     ai_text = get_ai_analysis()
     # 실제로는 여기서 yfinance 등으로 데이터를 가져와 변수에 넣어야 합니다.
-    generate_html(ai_text)
+    html_template=generate_html(ai_text)
+    send_gmail_report(html_content):
+
