@@ -8,7 +8,7 @@ import yfinance as yf
 import google.generativeai as genai
 from datetime import datetime
 
-def get_ai_analysis():
+def get_ai_analysis(GEMINI_API_KEY):
     # 여기에 실제 데이터 수집 로직(yfinance 등)을 넣거나 
     # 간단히 Gemini에게 시황 분석을 요청합니다.
     # ------------------------------------------
@@ -46,7 +46,7 @@ def get_ai_analysis():
     # ------------------------------------------
     print("2. Gemini AI 시장 분석 중...")
     # 1. API 키 설정 (GitHub Secrets에서 가져옴)
-    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+    #GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel('gemini-3.5-flash')
     
@@ -119,10 +119,10 @@ def generate_html(ai_html_content):
     return html_template
 
 # 4. Gmail 발송 (오늘 날짜 자동 적용)
-def send_gmail_report(html_template):
+def send_gmail_report(html_template,GMAIL_APP_PASSWORD):
     today_date = datetime.now().strftime("%Y-%m-%d")
     
-    GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
+    #GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
     MY_EMAIL = "lkj9980@gmail.com" # <--- 본인 Gmail 주소로 수정하세요!
     #MY_EMAIL = os.environ.get("MY_EMAIL")
     msg = MIMEMultipart()
@@ -140,7 +140,12 @@ def send_gmail_report(html_template):
 
 # 실행부
 if __name__ == "__main__":
-    ai_text = get_ai_analysis()
+    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+    GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
+    #MY_EMAIL = "lkj9980@gmail.com" # <--- 본인 Gmail 주소로 수정하세요!
+    #MY_EMAIL = os.environ.get("MY_EMAIL")
+
+    ai_text = get_ai_analysis(GEMINI_API_KEY)
     # 실제로는 여기서 yfinance 등으로 데이터를 가져와 변수에 넣어야 합니다.
     html_template = generate_html(ai_text)
-    send_gmail_report(html_template)
+    send_gmail_report(html_template,GMAIL_APP_PASSWORD)
