@@ -118,8 +118,35 @@ def generate_html(ai_html_content):
         f.write(html_template)
     return html_template
 
-# 4. Gmail 발송 (오늘 날짜 자동 적용)
 def send_gmail_report(html_template,GMAIL_APP_PASSWORD,MY_EMAIL):
+    # 3. 마크다운을 예쁜 HTML 웹페이지 코드로 변환
+    html_body = markdown.markdown(html_template, extensions=['tables', 'fenced_code'])
+    # 웹페이지 스타일 꾸미기 (보기 편한 디자인 템플릿)
+    styled_html = f"""<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body {{ font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #333; line-height: 1.6; padding: 20px; background-color: #f9f9f9; }}
+  .container {{ max-width: 700px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }}
+  h1, h2, h3 {{ color: #1a365d; }}
+  blockquote {{ border-left: 4px solid #3182ce; margin: 20px 0; padding: 10px 20px; background: #ebf8ff; color: #2b6cb0; font-style: italic; }}
+  table {{ width: 100%; border-collapse: collapse; margin: 20px 0; }}
+  th, td {{ border: 1px solid #e2e8f0; padding: 10px 12px; text-align: left; font-size: 14px; }}
+  th {{ background-color: #f7fafc; color: #4a5568; }}
+  code, pre {{ background: #edf2f7; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 13px; }}
+  pre {{ padding: 15px; white-space: pre-wrap; }}
+</style>
+</head>
+<body>
+<div class="container">
+  {html_body}
+</div>
+</body>
+</html>
+"""
+    
+    # 4. Gmail 발송 (오늘 날짜 자동 적용)
     today_date = datetime.now().strftime("%Y-%m-%d")
     
     msg = MIMEMultipart()
@@ -127,7 +154,7 @@ def send_gmail_report(html_template,GMAIL_APP_PASSWORD,MY_EMAIL):
     msg['To'] = MY_EMAIL
     msg['Subject'] = f"[일일 퀀트 리포트] {today_date} 시장 분석 및 자산 배분 전략"
     
-    msg.attach(MIMEText(html_template, 'html', 'utf-8'))
+    msg.attach(MIMEText(styled_html, 'html', 'utf-8'))
     
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
     server.login(MY_EMAIL, GMAIL_APP_PASSWORD)
@@ -144,6 +171,5 @@ if __name__ == "__main__":
     html_template = generate_html(ai_text)
     
     GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
-    MY_EMAIL = "lkj9980@gmail.com" # <--- 본인 Gmail 주소로 수정하세요!
-    #MY_EMAIL = os.environ.get("MY_EMAIL")
-    #send_gmail_report(html_template, GMAIL_APP_PASSWORD, MY_EMAIL)
+    MY_EMAIL = os.environ.get("MY_EMAIL")
+    send_gmail_report(html_template, GMAIL_APP_PASSWORD, MY_EMAIL)
