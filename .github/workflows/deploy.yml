@@ -26,8 +26,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install yfinance google-generativeai pandas
-
+          pip install yfinance google-generativeai pandas markdown
+          
       - name: Run Python Analysis & Generate index.html
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
