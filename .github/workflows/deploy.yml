@@ -35,12 +35,12 @@ jobs:
           MY_EMAIL: ${{ secrets.MY_EMAIL }} 
         run: |
           python main.py
-
+          
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html
+          git add index.html history/
           git pull origin main --rebase || echo "No rebase needed"
-          git commit -m "Auto-update dashboard HTML [skip ci]" || exit 0
+          git commit -m "Auto-update dashboard and daily history archive [skip ci]" || exit 0
           git push origin main
