@@ -83,24 +83,31 @@ def get_ai_analysis(GEMINI_API_KEY):
     report_content = response.text
     return response.text
 
-def generate_html(current_time, ai_html_content):
-    #current_time = datetime.now().strftime('%Y-%m-%d %H:%M')
+def generate_html(today_date, current_time, ai_html_content):
+    # 1. 아카이브 폴더 생성
+    os.makedirs("history", exist_ok=True)
     
+    # 개별 일일 리포트 파일 경로
+    daily_filename = f"history/{today_date}.html"
+    
+    # 공통 HTML 템플릿
     html_template = f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Quant Dashboard</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Daily Quant Dashboard - {today_date}</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 p-4 max-w-xl mx-auto">
     
     <!-- 상단 타이틀 영역 -->
-    <header class="mb-6 mt-2">
-        <h1 class="text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
-        <p class="text-xs text-slate-500 mt-1">최신 매크로 시황 및 실시간 퀀트 분석 결과</p>
+    <header class="mb-6 mt-2 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
+            <p class="text-xs text-slate-500 mt-1">최신 매크로 시황 및 실시간 퀀트 분석 결과 ({today_date})</p>
+        </div>
+        <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-bold transition">메인으로</a>
     </header>
 
     <!-- AI가 생성한 카드 영역 -->
@@ -114,10 +121,67 @@ def generate_html(current_time, ai_html_content):
     </footer>
 </body>
 </html>"""
-    with open('index.html', 'w', encoding='utf-8') as f:
-        f.write(html_template)
-    return html_template
 
+    # 오늘 날짜 파일로 아카이브 저장
+    with open(daily_filename, 'w', encoding='utf-8') as f:
+        f.write(html_template)
+
+    # 2. history 폴더에 있는 모든 리포트 목록을 읽어서 메인 index.html의 아카이브 목록 구성
+    files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)
+    
+    archive_links = ""
+    for file in files:
+        date_str = file.replace(".html", "")
+        archive_links += f"""
+        <a href="history/{file}" class="block bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:border-blue-400 transition mb-3 flex justify-between items-center">
+            <span class="font-bold text-slate-700">📅 {date_str} 일일 퀀트 리포트</span>
+            <span class="text-xs text-blue-600 font-semibold">보기 &rarr;</span>
+        </a>
+        """
+
+    # 메인 인덱스 페이지 (아카이브 허브 역할 + 오늘자 내용 병행 표시)
+    index_template = f"""<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Quant Dashboard - Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 p-4 max-w-xl mx-auto">
+    
+    <header class="mb-6 mt-2">
+        <h1 class="text-2xl font-black tracking-tight text-slate-900">퀀트 리포트 아카이브 허브</h1>
+        <p class="text-xs text-slate-500 mt-1">날짜별 과거 시황 분석 및 트렌드 기록실</p>
+    </header>
+
+    <!-- 오늘자 바로가기 최상단 배치 -->
+    <div class="mb-6">
+        <a href="history/{today_date}.html" class="block bg-blue-600 text-white p-4 rounded-2xl shadow-md hover:bg-blue-700 transition font-bold text-center">
+            🔥 오늘자 ({today_date}) 최신 리포트 보러가기
+        </a>
+    </div>
+
+    <!-- 과거 히스토리 목록 -->
+    <section>
+        <h2 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Previous Reports</h2>
+        <div class="space-y-2">
+            {archive_links}
+        </div>
+    </section>
+
+    <footer class="text-center text-[11px] text-slate-400 mt-12 mb-4">
+        Powered by GitHub Pages & Gemini AI
+    </footer>
+</body>
+</html>"""
+
+    # 메인 index.html 갱신
+    with open('index.html', 'w', encoding='utf-8') as f:
+        f.write(index_template)
+        
+    return index_template
+    
 def send_gmail_report(current_time, html_template, GMAIL_APP_PASSWORD,MY_EMAIL):
     # 3. 마크다운을 예쁜 HTML 웹페이지 코드로 변환
     html_body = markdown.markdown(html_template, extensions=['tables', 'fenced_code'])
@@ -175,8 +239,8 @@ if __name__ == "__main__":
     
     ai_text = get_ai_analysis(GEMINI_API_KEY)
     # 실제로는 여기서 yfinance 등으로 데이터를 가져와 변수에 넣어야 합니다.
-    html_template = generate_html(current_time, ai_text)
+    html_template = generate_html(today_date, current_time, ai_text)
     
     GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
     MY_EMAIL = os.environ.get("MY_EMAIL")
-    send_gmail_report(current_time, html_template, GMAIL_APP_PASSWORD, MY_EMAIL)
+    #send_gmail_report(current_time, html_template, GMAIL_APP_PASSWORD, MY_EMAIL)
