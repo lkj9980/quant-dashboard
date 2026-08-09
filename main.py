@@ -6,7 +6,7 @@ from datetime import datetime
 import markdown
 import yfinance as yf
 import google.generativeai as genai
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 def get_ai_analysis(GEMINI_API_KEY):
     # 여기에 실제 데이터 수집 로직(yfinance 등)을 넣거나 
@@ -83,8 +83,8 @@ def get_ai_analysis(GEMINI_API_KEY):
     report_content = response.text
     return response.text
 
-def generate_html(ai_html_content):
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M')
+def generate_html(current_time, ai_html_content):
+    #current_time = datetime.now().strftime('%Y-%m-%d %H:%M')
     
     html_template = f"""<!DOCTYPE html>
 <html lang="ko">
@@ -118,7 +118,7 @@ def generate_html(ai_html_content):
         f.write(html_template)
     return html_template
 
-def send_gmail_report(html_template,GMAIL_APP_PASSWORD,MY_EMAIL):
+def send_gmail_report(current_time, html_template, GMAIL_APP_PASSWORD,MY_EMAIL):
     # 3. 마크다운을 예쁜 HTML 웹페이지 코드로 변환
     html_body = markdown.markdown(html_template, extensions=['tables', 'fenced_code'])
     # 웹페이지 스타일 꾸미기 (보기 편한 디자인 템플릿)
@@ -147,12 +147,12 @@ def send_gmail_report(html_template,GMAIL_APP_PASSWORD,MY_EMAIL):
 """
     
     # 4. Gmail 발송 (오늘 날짜 자동 적용)
-    today_date = datetime.now().strftime("%Y-%m-%d")
+    #today_date = datetime.now().strftime("%Y-%m-%d")
     
     msg = MIMEMultipart()
     msg['From'] = MY_EMAIL
     msg['To'] = MY_EMAIL
-    msg['Subject'] = f"[일일 퀀트 리포트] {today_date} 시장 분석 및 자산 배분 전략"
+    msg['Subject'] = f"[일일 퀀트 리포트] {current_time} 시장 분석 및 자산 배분 전략"
     
     msg.attach(MIMEText(styled_html, 'html', 'utf-8'))
     
@@ -164,12 +164,19 @@ def send_gmail_report(html_template,GMAIL_APP_PASSWORD,MY_EMAIL):
 
 # 실행부
 if __name__ == "__main__":
+    # 한국 시간(KST, UTC+9) 타임존 정의
+    KST = timezone(timedelta(hours=9))
+    
+    # 기존 datetime.now() 대신 아래처럼 KST를 넣어줍니다.
+    today_date = datetime.now(KST).strftime("%Y-%m-%d")
+    current_time = datetime.now(KST).strftime('%Y-%m-%d %H:%M')
+    
     GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
     
     ai_text = get_ai_analysis(GEMINI_API_KEY)
     # 실제로는 여기서 yfinance 등으로 데이터를 가져와 변수에 넣어야 합니다.
-    html_template = generate_html(ai_text)
+    html_template = generate_html(current_time, ai_text)
     
     GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
     MY_EMAIL = os.environ.get("MY_EMAIL")
-    send_gmail_report(html_template, GMAIL_APP_PASSWORD, MY_EMAIL)
+    send_gmail_report(current_time, html_template, GMAIL_APP_PASSWORD, MY_EMAIL)
