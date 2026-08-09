@@ -31,9 +31,10 @@ jobs:
       - name: Run Python Analysis & Generate index.html
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }} # 이 줄을 추가하세요!
         run: |
           python main.py
-          
+
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
