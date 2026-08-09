@@ -47,7 +47,7 @@ def get_ai_analysis():
     print("2. Gemini AI 시장 분석 중...")
     # 1. API 키 설정 (GitHub Secrets에서 가져옴)
     GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-    genai.configure(GEMINI_API_KEY)
+    genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel('gemini-3.5-flash')
     
     prompt = f"""
