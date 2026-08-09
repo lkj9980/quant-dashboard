@@ -165,4 +165,4 @@ if __name__ == "__main__":
     GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
     MY_EMAIL = "lkj9980@gmail.com" # <--- 본인 Gmail 주소로 수정하세요!
     #MY_EMAIL = os.environ.get("MY_EMAIL")
-    send_gmail_report(html_template, GMAIL_APP_PASSWORD, MY_EMAIL)
+    #send_gmail_report(html_template, GMAIL_APP_PASSWORD, MY_EMAIL)
