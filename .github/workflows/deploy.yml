@@ -2,12 +2,12 @@ name: Deploy Quant Dashboard to GitHub Pages
 
 on:
   schedule:
-    - cron: '0 8 * * *'  # [한국 시간 오전 8시 00분] 미장 마감 브리핑 (UTC 전날 밤 23:00)
-    - cron: '30 11 * * *'  # [한국 시간 오전 11시 30분] 실시간 국장 시황 브리핑 (UTC 새벽 02:30)
-    - cron: '0 16 * * *'   # [한국 시간 오후 4시 00분] 국장 마감 브리핑 (UTC 아침 07:00)
-    - cron: '0 23 * * *'  # [한국 시간 오후 11시 00분] 실시간 미장 시황 브리핑 (UTC 오후 14:00)
-  workflow_dispatch:      # 수동 실행 버튼
-  
+    - cron: '0 23 * * *'  # [한국 시간 오전 8시]
+    - cron: '30 2 * * *'  # [한국 시간 오전 11시 30분]
+    - cron: '0 7 * * *'   # [한국 시간 오후 4시]
+    - cron: '0 14 * * *'  # [한국 시간 오후 11시]
+  workflow_dispatch:
+
 permissions:
   contents: write
   pages: write
