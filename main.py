@@ -7,6 +7,7 @@ import markdown
 import yfinance as yf
 import google.generativeai as genai
 from datetime import datetime, timezone, timedelta
+import csv
 
 # 1. 데이터 수집 함수 (데이터를 딕셔너리로 반환)
 def collect_market_data():
