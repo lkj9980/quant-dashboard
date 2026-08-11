@@ -8,7 +8,8 @@ import yfinance as yf
 import google.generativeai as genai
 from datetime import datetime, timezone, timedelta
 
-def get_ai_analysis(GEMINI_API_KEY):
+# 1. 데이터 수집 함수 (데이터를 딕셔너리로 반환)
+def collect_market_data():
     # 여기에 실제 데이터 수집 로직(yfinance 등)을 넣거나 
     # 간단히 Gemini에게 시황 분석을 요청합니다.
     # ------------------------------------------
@@ -27,32 +28,46 @@ def get_ai_analysis(GEMINI_API_KEY):
         "국제 금": "GC=F", "구리 선물": "HG=F",
         "VIX 변동성": "^VIX"
     }
+    
     print("1. 실시간 시장 데이터 수집 중...")
     data_summary = []
+    ticker_values = {} # CSV 저장용 딕셔너리
+    
     for name, symbol in tickers.items():
         try:
             ticker = yf.Ticker(symbol)
             price = ticker.fast_info['last_price']
             prev_close = ticker.fast_info['previous_close']
             change_pct = ((price - prev_close) / prev_close) * 100
+            
             data_summary.append(f"• {name}: {price:,.2f} ({change_pct:+.2f}%)")
+            ticker_values[name] = price
         except Exception:
             data_summary.append(f"• {name}: 조회 실패")
-    
-    raw_text = "\n".join(data_summary)
-    
+            ticker_values[name] = None
+            
+    return "\n".join(data_summary), ticker_values
+
+def append_to_quant_log(today_date, ticker_values):
+    csv_filename = "history/quant_log.csv"
+    file_exists = os.path.isfile(csv_filename)
+    with open(csv_filename, mode='a', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        if not file_exists:
+            writer.writerow(["Date"] + list(ticker_values.keys()))
+        writer.writerow([today_date] + list(ticker_values.values()))
+
+# 2. 분석 함수 (수집된 raw_text를 인자로 받음)
+def get_ai_analysis(GEMINI_API_KEY, raw_text):
     # ------------------------------------------
     # 2. Gemini AI 매크로 분석
     # ------------------------------------------
     print("2. Gemini AI 시장 분석 중...")
-    # 1. API 키 설정 (GitHub Secrets에서 가져옴)
-    #GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel('gemini-3.5-flash')
     
     prompt = f"""
-    너는 20년 경력의 수석 퀀트 전략가다.
-    아래 실시간 지표를 바탕으로 매크로 시황을 분석하고 계좌별 전략을 작성하라.
+    너는 20년 경력의 수석 퀀트 전략가다. 아래 지표를 바탕으로 매크로 시황을 분석하고 계좌별 전략을 작성하라.
     정량적 시장 지표는 수집된 지표(yfinance)에서 참고해야 하고, 임의로 숫자를 지어낼 수 없으며,
     정성적 시황(글로벌 매크로 뉴스, 연준 발언, 인사이트 등)은 폭넓은 실시간 웹 검색을 통해 종합적으로 분석하여, 일반 계좌와 퇴직연금 계좌의 자산 배분 포트폴리오를 도출하라.
     
@@ -80,7 +95,6 @@ def get_ai_analysis(GEMINI_API_KEY):
     """
 
     response = model.generate_content(prompt)
-    report_content = response.text
     return response.text
 
 def generate_html(today_date, current_time, ai_html_content):
@@ -237,10 +251,18 @@ if __name__ == "__main__":
     
     GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
     
-    ai_text = get_ai_analysis(GEMINI_API_KEY)
-    # 실제로는 여기서 yfinance 등으로 데이터를 가져와 변수에 넣어야 합니다.
+    # [수정] 1. 수집과 분석을 분리하여 호출
+    raw_text, ticker_values = collect_market_data()
+    
+    # [추가] 2. CSV 저장 (백테스트용)
+    append_to_quant_log(today_date, ticker_values)
+    
+    # [수정] 3. 분석 수행
+    ai_text = get_ai_analysis(GEMINI_API_KEY, raw_text)
+    
+    # 4. HTML 생성
     html_template = generate_html(today_date, current_time, ai_text)
     
-    GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
-    MY_EMAIL = os.environ.get("MY_EMAIL")
+    #GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
+    #MY_EMAIL = os.environ.get("MY_EMAIL")
     #send_gmail_report(current_time, html_template, GMAIL_APP_PASSWORD, MY_EMAIL)
