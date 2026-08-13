@@ -103,7 +103,7 @@ def generate_html(today_date, current_time, ai_html_content):
     os.makedirs("history", exist_ok=True)
     
     # 개별 일일 리포트 파일 경로
-    daily_filename = f"history/{today_date}.html"
+    daily_filename = f"history/{current_time}.html"
     
     # 공통 HTML 템플릿
     html_template = f"""<!DOCTYPE html>
