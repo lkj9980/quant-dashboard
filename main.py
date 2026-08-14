@@ -42,7 +42,7 @@ def collect_market_data():
             change_pct = ((price - prev_close) / prev_close) * 100
             
             data_summary.append(f"• {name}: {price:,.2f} ({change_pct:+.2f}%)")
-            ticker_values[name] = price
+            ticker_values[name] = round(price, 2)
         except Exception:
             data_summary.append(f"• {name}: 조회 실패")
             ticker_values[name] = None
