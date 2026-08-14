@@ -49,14 +49,14 @@ def collect_market_data():
             
     return "\n".join(data_summary), ticker_values
 
-def append_to_quant_log(today_date, ticker_values):
+def append_to_quant_log(current_time, ticker_values):
     csv_filename = "history/quant_log.csv"
     file_exists = os.path.isfile(csv_filename)
     with open(csv_filename, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         if not file_exists:
             writer.writerow(["Date"] + list(ticker_values.keys()))
-        writer.writerow([today_date] + list(ticker_values.values()))
+        writer.writerow([current_time] + list(ticker_values.values()))
 
 # 2. 분석 함수 (수집된 raw_text를 인자로 받음)
 def get_ai_analysis(GEMINI_API_KEY, raw_text):
