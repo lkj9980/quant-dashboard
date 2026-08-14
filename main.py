@@ -42,7 +42,7 @@ def collect_market_data():
             change_pct = ((price - prev_close) / prev_close) * 100
             
             data_summary.append(f"• {name}: {price:,.2f} ({change_pct:+.2f}%)")
-            ticker_values[name] = round(price, 2)
+            ticker_values[name] = f"{price:.2f}"
         except Exception:
             data_summary.append(f"• {name}: 조회 실패")
             ticker_values[name] = None
@@ -256,7 +256,7 @@ if __name__ == "__main__":
     raw_text, ticker_values = collect_market_data()
     
     # [추가] 2. CSV 저장 (백테스트용)
-    append_to_quant_log(today_date, ticker_values)
+    append_to_quant_log(current_time, ticker_values)
     
     # [수정] 3. 분석 수행
     ai_text = get_ai_analysis(GEMINI_API_KEY, raw_text)
