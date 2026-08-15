@@ -172,7 +172,7 @@ def generate_html(today_date, current_time, ai_html_content):
 
     <!-- 오늘자 바로가기 최상단 배치 -->
     <div class="mb-6">
-        <a href={daily_filename} class="block bg-blue-600 text-white p-4 rounded-2xl shadow-md hover:bg-blue-700 transition font-bold text-center">
+        <a href="{daily_filename}" class="block bg-blue-600 text-white p-4 rounded-2xl shadow-md hover:bg-blue-700 transition font-bold text-center">
             🔥 오늘자 ({today_date}) 최신 리포트 보러가기
         </a>
     </div>
