@@ -105,10 +105,6 @@ def generate_html(today_date, current_time, ai_html_content):
     # 개별 일일 리포트 파일 경로
     daily_filename = f"history/{current_time}.html"
     
-    # 오늘 날짜 파일로 아카이브 저장
-    with open(daily_filename, 'w', encoding='utf-8') as f:
-        f.write(html_template)
-
     # 2. history 폴더에 있는 모든 리포트 목록을 읽어서 메인 index.html의 아카이브 목록 구성
     files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)
     
