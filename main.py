@@ -157,7 +157,10 @@ def generate_html(today_date, current_time, ai_html_content):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Quant Dashboard - {today_date}</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 p-4 max-w-xl mx-auto">
     
