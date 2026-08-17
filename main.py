@@ -47,7 +47,51 @@ def collect_market_data():
             data_summary.append(f"• {name}: 조회 실패")
             ticker_values[name] = None
             
+    # --- 🎯 [핵심] 수집이 끝난 직후, 상단에 변곡점 분석 결과 밀어 넣기 ---
+    turning_point_text = analyze_index_turning_points()
+    
+    # data_summary 리스트의 가장 맨 앞에 변곡점 문구 삽입
+    data_summary.insert(0, turning_point_text)
+    
     return "\n".join(data_summary), ticker_values
+
+def analyze_index_turning_points():
+    csv_filename = "history/quant_log.csv"
+    if not os.path.exists(csv_filename):
+        return "아직 누적된 지수 데이터가 없습니다."
+    
+    df = pd.read_csv(csv_filename)
+    if len(df) < 2:
+        return "변곡점을 분석하기에 데이터가 아직 부족합니다 (2개 이상 필요)."
+    
+    # 가장 최근 데이터와 직전 데이터 비교
+    latest = df.iloc[-1]
+    prev = df.iloc[-2]
+    
+    signals = []
+    # CSV의 Date 컬럼을 제외한 지수 컬럼들만 순회
+    for col in df.columns:
+        if col == "Date":
+            continue
+        
+        curr_val = latest[col]
+        prev_val = prev[col]
+        
+        if pd.isna(curr_val) or pd.isna(prev_val):
+            continue
+            
+        # 변동률 계산
+        diff_pct = ((curr_val - prev_val) / prev_val) * 100
+        
+        # ±1% 이상 변동이 발생했을 때를 '변곡점'으로 감지
+        if abs(diff_pct) >= 1.0:
+            direction = " 급등 🚀" if diff_pct > 0 else " 급락 📉"
+            signals.append(f"• [변곡점 포착] {col}: {curr_val:,.2f} ({diff_pct:+.2f}%){direction}")
+            
+    if not signals:
+        return "• 현재 특이사항(±1% 이상 변동) 없이 안정적인 횡보/추세 구간입니다."
+        
+    return "\n".join(signals)
 
 def append_to_quant_log(current_time, ticker_values):
     csv_filename = "history/quant_log.csv"
