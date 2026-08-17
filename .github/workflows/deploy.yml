@@ -3,7 +3,7 @@ name: Deploy Quant Dashboard to GitHub Pages
 on:
   schedule:
     # 1. 국장 개장 후 안정화 시점 [KST 오전 09:10] (UTC 00:10)
-    #- cron: '10 0 * * *'
+    - cron: '10 0 * * *'
     
     # 2. 국장 마감 종가 확정 후 [KST 오후 03:40] (UTC 06:40)
     #- cron: '40 6 * * *'
