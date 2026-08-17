@@ -16,7 +16,7 @@ on:
     - cron: '00 21 * * *'
     
     # 1. 국장 개장 후 안정화 시점 [KST 오전 09:10] (UTC 00:10)
-    #- cron: '00 3 * * *'
+    - cron: '10 8 * * *'
     
   workflow_dispatch:
 
