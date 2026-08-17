@@ -172,10 +172,22 @@ def generate_html(today_date, current_time, ai_html_content):
         </div>
         <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-bold transition">메인으로</a>
     </header>
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="space-y-6">
+        
+        <!-- 2. CSV 트렌드 차트 영역 (AI 본문 바로 위에 배치) -->
+        <section class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <h2 class="text-sm font-bold text-slate-700 mb-3">📈 지수 ETF 실시간 트렌드</h2>
+            <div class="relative w-full h-56">
+                <canvas id="quantChart"></canvas>
+            </div>
+        </section>
 
-    <!-- AI가 생성한 카드 영역 -->
-    <main>
-        {ai_html_content}
+        <!-- 3. AI가 생성한 카드 영역 (본문) -->
+        <div>
+            {ai_html_content}
+        </div>
+        
     </main>
 
     <!-- 푸터 -->
