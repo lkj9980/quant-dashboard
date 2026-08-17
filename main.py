@@ -149,9 +149,45 @@ def generate_html(today_date, current_time, ai_html_content):
     # 개별 일일 리포트 파일 경로
     daily_filename = f"history/{current_time}.html"
     
-    # 2. history 폴더에 있는 모든 리포트 목록을 읽어서 메인 index.html의 아카이브 목록 구성
-    files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)
+    # 공통 HTML 템플릿
+    html_template = f"""<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Quant Dashboard - {today_date}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 p-4 max-w-xl mx-auto">
     
+    <!-- 상단 타이틀 영역 -->
+    <header class="mb-6 mt-2 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
+            <p class="text-xs text-slate-500 mt-1">최신 매크로 시황 및 실시간 퀀트 분석 결과 ({today_date})</p>
+        </div>
+        <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-bold transition">메인으로</a>
+    </header>
+
+    <!-- AI가 생성한 카드 영역 -->
+    <main>
+        {ai_html_content}
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="text-center text-[11px] text-slate-400 mt-8 mb-4">
+        Last Updated: {current_time} • Powered by GitHub Pages & Gemini AI
+    </footer>
+</body>
+</html>"""
+
+    # 오늘 날짜 파일로 아카이브 저장
+    with open(daily_filename, 'w', encoding='utf-8') as f:
+        f.write(html_template)
+
+    # 2. history 폴더에 있는 모든 리포트 목록을 읽어서 메인 index.html의 아카이브 목록 구성
+    files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)    
+        
     archive_links = ""
     for file in files:
         date_str = file.replace(".html", "")
