@@ -20,6 +20,12 @@ jobs:
         run: |
           pip install yfinance google-generativeai pandas markdown requests
 
+      - name: Run Python Analysis & Generate index.html
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }} 
+          MY_EMAIL: ${{ secrets.MY_EMAIL }}
+          
       - name: Run Quant Script
         run: python main.py  # 본인의 파이썬 실행 파일명
 
