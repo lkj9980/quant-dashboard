@@ -39,7 +39,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install yfinance google-generativeai pandas markdown
+          pip install yfinance google-genai pandas markdown
           
       - name: Run Python Analysis & Generate index.html
         env:
