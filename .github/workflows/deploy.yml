@@ -21,7 +21,7 @@ jobs:
           
       - name: Install dependencies
         run: |
-          pip install yfinance google-generativeai pandas markdown requests
+          pip install yfinance google-genai pandas markdown requests
           
       - name: Run Quant Script & Generate index.html
         env:
