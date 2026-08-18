@@ -110,9 +110,8 @@ def get_ai_analysis(GEMINI_API_KEY, raw_text):
     # 2. Gemini AI 매크로 분석
     # ------------------------------------------
     print("2. Gemini AI 시장 분석 중...")
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-3.5-flash')
-    
+    #genai.configure(api_key=GEMINI_API_KEY)
+    #model = genai.GenerativeModel('gemini-3.5-flash')
     prompt = f"""
     너는 20년 경력의 수석 퀀트 전략가다. 아래 지표를 바탕으로 매크로 시황을 분석하고 계좌별 전략을 작성하라.
     정량적 시장 지표는 수집된 지표(yfinance)에서 참고해야 하고, 임의로 숫자를 지어낼 수 없으며,
@@ -140,8 +139,13 @@ def get_ai_analysis(GEMINI_API_KEY, raw_text):
        - 카드 5. Portfolio B (퇴직연금 DC/IRP) 추천 비중 (위험자산 최대 70%) (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
        - 카드 6. 분할 매수/매도 가격 타점 및 액션 플랜
     """
+    
+    response = client.models.generate_content(
+        model="gemini-3.5-flash",
+        contents=prompt,
+    )
 
-    response = model.generate_content(prompt)
+    #response = model.generate_content(prompt)
     return response.text
 
 def generate_html(today_date, current_time, ai_html_content):
