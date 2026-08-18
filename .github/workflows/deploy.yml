@@ -1,5 +1,6 @@
 name: Quant Macro Automation
 
+
 on:
   repository_dispatch:
     types: [run_quant_pipeline]  # 외부에서 이 이름을 부르면 실행됩니다.
