@@ -6,7 +6,8 @@ from email.mime.text import MIMEText
 from datetime import datetime
 import markdown
 import yfinance as yf
-import google.generativeai as genai
+#import google.generativeai as genai
+from google import genai
 from datetime import datetime, timezone, timedelta
 import csv
 
