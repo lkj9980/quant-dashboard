@@ -19,15 +19,15 @@ jobs:
       - name: Install dependencies
         run: |
           pip install yfinance google-generativeai pandas markdown requests
-
-      - name: Run Quant Script & Generate index.html
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }} 
-          MY_EMAIL: ${{ secrets.MY_EMAIL }}
+          
+      - name: Run Quant Script & Generate index.html
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }} 
+          MY_EMAIL: ${{ secrets.MY_EMAIL }} 
         run: |
-        python main.py  # 본인의 파이썬 실행 파일명
-
+          python main.py
+          
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
