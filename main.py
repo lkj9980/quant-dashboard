@@ -138,6 +138,8 @@ def get_ai_analysis(GEMINI_API_KEY, raw_text):
        - 카드 5. Portfolio B (퇴직연금 DC/IRP) 추천 비중 (위험자산 최대 70%) (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
        - 카드 6. 분할 매수/매도 가격 타점 및 액션 플랜
     """
+    # 클라이언트 초기화 (환경 변수 GEMINI_API_KEY가 설정되어 있다면 인자 생략 가능)
+    client = genai.Client(api_key=GEMINI_API_KEY)
     
     response = client.models.generate_content(
         model="gemini-3.5-flash",
