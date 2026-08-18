@@ -1,6 +1,5 @@
 name: Quant Macro Automation
 
-
 on:
   repository_dispatch:
     types: [run_quant_pipeline]  # 외부에서 이 이름을 부르면 실행됩니다.
@@ -28,7 +27,8 @@ jobs:
           MY_EMAIL: ${{ secrets.MY_EMAIL }}
           
       - name: Run Quant Script
-        run: python main.py  # 본인의 파이썬 실행 파일명
+        run: |
+        python main.py  # 본인의 파이썬 실행 파일명
 
       - name: Commit and push changes
         run: |
