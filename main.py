@@ -202,16 +202,22 @@ def generate_html(today_date, current_time, ai_html_content):
     </footer>
     
     <!-- 4. CSV를 읽어서 차트를 그려주는 자바스크립트 -->
-    <script>
+    <script>    
         async function loadChart() {
             try {
                 // 저장된 CSV 파일 경로 (상대 경로 위치에 맞게 조정 필요, 예: 'history/quant_log.csv' 등)
                 const response = await fetch('history/quant_log.csv');
-                if (!response.ok) return;
+                if (!response.ok) {
+                    console.error("🚨 [차트 에러] CSV 파일을 불러오지 못했습니다. 상태 코드:", response.status);
+                    return;
+                }
                 
                 const data = await response.text();
                 const rows = data.trim().split('\n');
-                if (rows.length < 2) return;
+                if (rows.length < 2) {
+                    console.warn("⚠️ [차트 경고] CSV 데이터가 부족합니다.");
+                    return;
+                }
                 
                 const headers = rows[0].split(',');
                 const labels = [];
