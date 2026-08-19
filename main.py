@@ -205,7 +205,7 @@ def generate_html(today_date, current_time, ai_html_content):
     <script>
         async function loadChart() {
             try {
-                # 저장된 CSV 파일 경로 (상대 경로 위치에 맞게 조정 필요, 예: 'history/quant_log.csv' 등)
+                // 저장된 CSV 파일 경로 (상대 경로 위치에 맞게 조정 필요, 예: 'history/quant_log.csv' 등)
                 const response = await fetch('../history/quant_log.csv');
                 if (!response.ok) return;
                 
@@ -221,11 +221,11 @@ def generate_html(today_date, current_time, ai_html_content):
                     datasetsMap[headers[i]] = [];
                 }
                 
-                # 최근 20개 데이터만 슬라이싱해서 가독성 유지
+                // 최근 20개 데이터만 슬라이싱해서 가독성 유지
                 const recentRows = rows.slice(-20);
                 recentRows.forEach(row => {
                     const cols = row.split(',');
-                    labels.push(cols[0]); # Date (시간)
+                    labels.push(cols[0]); // Date (시간)
                     
                     for (let i = 1; i < headers.length; i++) {
                         const val = parseFloat(cols[i]);
