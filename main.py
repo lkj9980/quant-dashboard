@@ -213,7 +213,7 @@ def generate_html(today_date, current_time, ai_html_content):
                 }
                 
                 const data = await response.text();
-                const rows = data.trim().split(/\r?\n/);
+                const rows = data.trim().split('//n');
                 if (rows.length < 2) {
                     console.warn("⚠️ [차트 경고] CSV 데이터가 부족합니다.");
                     return;
