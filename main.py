@@ -162,7 +162,7 @@ def generate_html(today_date, current_time, ai_html_content):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Quant Dashboard - {today_date}</title>
+    <title>Daily Quant Dashboard - __TODAY_DATE__</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
@@ -174,7 +174,7 @@ def generate_html(today_date, current_time, ai_html_content):
     <header class="mb-6 mt-2 flex justify-between items-center">
         <div>
             <h1 class="text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
-            <p class="text-xs text-slate-500 mt-1">최신 매크로 시황 및 실시간 퀀트 분석 결과 ({today_date})</p>
+            <p class="text-xs text-slate-500 mt-1">최신 매크로 시황 및 실시간 퀀트 분석 결과 (__TODAY_DATE__)</p>
         </div>
         <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-bold transition">메인으로</a>
     </header>
@@ -191,14 +191,14 @@ def generate_html(today_date, current_time, ai_html_content):
 
         <!-- 3. AI가 생성한 카드 영역 (본문) -->
         <div>
-            {ai_html_content}
+            __AI_HTML_CONTENT__
         </div>
         
     </main>
 
     <!-- 푸터 -->
     <footer class="text-center text-[11px] text-slate-400 mt-8 mb-4">
-        Last Updated: {current_time} • Powered by GitHub Pages & Gemini AI
+        Last Updated: __CURRENT_TIME__ • Powered by GitHub Pages & Gemini AI
     </footer>
     
     <!-- 4. CSV를 읽어서 차트를 그려주는 자바스크립트 -->
@@ -276,12 +276,12 @@ def generate_html(today_date, current_time, ai_html_content):
 </body>
 </html>"""
     
-    # 2. .format_map()으로 안전하게 채워넣기
-    html_content = html_template.format_map({
-        'today_date': today_date,
-        'ai_html_content': ai_html_content,
-        'current_time': current_time
-    })
+    # 1. format_map 대신 .replace로 안전하게 텍스트만 싹 바꿔치기
+    html_content = (html_template
+        .replace('__TODAY_DATE__', today_date)
+        .replace('__AI_HTML_CONTENT__', ai_html_content)
+        .replace('__CURRENT_TIME__', current_time)
+    )
     
     # 오늘 날짜 파일로 아카이브 저장
     with open(daily_filename, 'w', encoding='utf-8') as f:
