@@ -206,7 +206,7 @@ def generate_html(today_date, current_time, ai_html_content):
         async function loadChart() {
             try {
                 // 저장된 CSV 파일 경로 (상대 경로 위치에 맞게 조정 필요, 예: 'history/quant_log.csv' 등)
-                const response = await fetch('../history/quant_log.csv');
+                const response = await fetch('history/quant_log.csv');
                 if (!response.ok) return;
                 
                 const data = await response.text();
