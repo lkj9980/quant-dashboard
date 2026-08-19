@@ -200,6 +200,79 @@ def generate_html(today_date, current_time, ai_html_content):
     <footer class="text-center text-[11px] text-slate-400 mt-8 mb-4">
         Last Updated: {current_time} • Powered by GitHub Pages & Gemini AI
     </footer>
+    
+    <!-- 4. CSV를 읽어서 차트를 그려주는 자바스크립트 -->
+    <script>
+        async function loadChart() {
+            try {
+                // 저장된 CSV 파일 경로 (상대 경로 위치에 맞게 조정 필요, 예: 'history/quant_log.csv' 등)
+                const response = await fetch('../history/quant_log.csv');
+                if (!response.ok) return;
+                
+                const data = await response.text();
+                const rows = data.trim().split('\n');
+                if (rows.length < 2) return;
+                
+                const headers = rows[0].split(',');
+                const labels = [];
+                const datasetsMap = {};
+                
+                for (let i = 1; i < headers.length; i++) {
+                    datasetsMap[headers[i]] = [];
+                }
+                
+                // 최근 20개 데이터만 슬라이싱해서 가독성 유지
+                const recentRows = rows.slice(-20);
+                recentRows.forEach(row => {
+                    const cols = row.split(',');
+                    labels.push(cols[0]); // Date (시간)
+                    
+                    for (let i = 1; i < headers.length; i++) {
+                        const val = parseFloat(cols[i]);
+                        datasetsMap[headers[i]].push(isNaN(val) ? null : val);
+                    }
+                });
+                
+                const colors = ['#2563eb', '#dc2626', '#16a34a', '#ca8a04', '#9333ea'];
+                let colorIndex = 0;
+                
+                const chartDatasets = Object.keys(datasetsMap).map(key => {
+                    const color = colors[colorIndex % colors.length];
+                    colorIndex++;
+                    return {
+                        label: key,
+                        data: datasetsMap[key],
+                        borderColor: color,
+                        backgroundColor: color,
+                        borderWidth: 2,
+                        pointRadius: 2,
+                        tension: 0.1
+                    };
+                });
+                
+                const ctx = document.getElementById('quantChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: { labels: labels, datasets: chartDatasets },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { grid: { color: '#f1f5f9' }, ticks: { font: { size: 10 } } },
+                            x: { grid: { display: false }, ticks: { font: { size: 9 }, maxTicksLimit: 5 } }
+                        },
+                        plugins: {
+                            legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 10 } }
+                        }
+                    }
+                });
+            } catch (e) {
+                console.log("차트 로딩 실패:", e);
+            }
+        }
+        loadChart();
+    </script>
+    
 </body>
 </html>"""
 
