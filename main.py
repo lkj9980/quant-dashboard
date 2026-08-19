@@ -188,26 +188,40 @@ def generate_html(today_date, current_time, ai_html_content):
                 <canvas id="quantChart"></canvas>
             </div>
         </section>
-        
+        <!-- 화면에 진행 상황을 찍어줄 임시 디버그 박스 -->
+        <div id="debug-view" style="background: #1e293b; color: #38bdf8; padding: 12px; margin: 10px 0; font-family: monospace; font-size: 11px; border-radius: 8px; white-space: pre-wrap;">디버그 대기 중...</div>
+
         <!-- 4. CSV를 읽어서 차트를 그려주는 자바스크립트 -->
-        <script>    
+        <script>
+            function logDebug(msg) {
+                const box = document.getElementById('debug-view');
+                if (box) box.innerText += "\n" + msg;
+            }
+            
             async function loadChart() {
                 try {
                     // 저장된 CSV 파일 경로 (상대 경로 위치에 맞게 조정 필요, 예: 'history/quant_log.csv' 등)
+                    logDebug("1. loadChart 함수 실행됨");
                     const response = await fetch('../history/quant_log.csv');
+                    logDebug("2. fetch 요청 완료, 상태코드: " + response.status);
                     if (!response.ok) {
+                        logDebug("❌ 에러: CSV 파일을 읽지 못했습니다.");
                         console.error("🚨 [차트 에러] CSV 파일을 불러오지 못했습니다. 상태 코드:", response.status);
                         return;
                     }
                     
                     const data = await response.text();
+                    logDebug("3. CSV 데이터 로드 성공 (총 글자수: " + data.length + ")");
                     const rows = data.trim().split('￦n');
+                    logDebug("4. 행(Row) 개수: " + rows.length);
                     if (rows.length < 2) {
+                        logDebug("⚠️ 경고: 데이터 행이 2개 미만입니다.");
                         console.warn("⚠️ [차트 경고] CSV 데이터가 부족합니다.");
                         return;
                     }
                     
                     const headers = rows[0].split(',');
+                    logDebug("5. 헤더(컬럼명) 인식 완료: " + headers.join(', '));
                     const labels = [];
                     const datasetsMap = {};
                     
@@ -260,11 +274,19 @@ def generate_html(today_date, current_time, ai_html_content):
                             }
                         }
                     });
+                    if (!ctx) {
+                        logDebug("❌ 에러: 'quantChart' 캔버스 요소를 찾을 수 없습니다!");
+                        return;
+                    }
+                    logDebug("6. 캔버스 요소 정상 확인됨. 차트 생성 시도...");
+                    
+                    // ... (기존 차트 생성 로직 이어붙이기)
+                    logDebug("✨ 7. 차트 렌더링 코드 도달 완료!");
+                
                 } catch (e) {
-                    console.log("차트 로딩 실패:", e);
+                    logDebug("💥 예외 발생 (Catch): " + e.message);
                 }
             }
-            
             loadChart();
         </script>
         
