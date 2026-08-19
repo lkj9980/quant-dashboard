@@ -264,6 +264,7 @@ def generate_html(today_date, current_time, ai_html_content):
                     console.log("차트 로딩 실패:", e);
                 }
             }
+            
             loadChart();
         </script>
         
