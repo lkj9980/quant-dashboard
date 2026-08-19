@@ -275,14 +275,13 @@ def generate_html(today_date, current_time, ai_html_content):
     
 </body>
 </html>"""
-
-
-    # 2. 템플릿 하단에 .format()으로 변수들을 따로 꽂아줍니다.
-    html_content = html_template.format(
-        today_date=today_date,
-        ai_html_content=ai_html_content,
-        current_time=current_time
-    )
+    
+    # 2. .format_map()으로 안전하게 채워넣기
+    html_content = html_template.format_map({
+        'today_date': today_date,
+        'ai_html_content': ai_html_content,
+        'current_time': current_time
+    })
     
     # 오늘 날짜 파일로 아카이브 저장
     with open(daily_filename, 'w', encoding='utf-8') as f:
