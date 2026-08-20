@@ -192,7 +192,7 @@ def generate_html(today_date, current_time, ai_html_content):
         <div id="debug-view" style="background: #1e293b; color: #38bdf8; padding: 12px; margin: 10px 0; font-family: monospace; font-size: 11px; border-radius: 8px; white-space: pre-wrap;">디버그 대기 중...</div>
 
         <!-- 4. CSV를 읽어서 차트를 그려주는 자바스크립트 -->
-        <script src="chart.js"></script>
+        <script src="../chart.js"></script>
         
         <!-- 3. AI가 생성한 카드 영역 (본문) -->
         <div>
