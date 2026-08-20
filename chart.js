@@ -85,11 +85,14 @@ async function loadChart() {
             logDebug("❌ 에러: 'quantChart' 캔버스 요소를 찾을 수 없습니다!");
             return;
         }
-        logDebug("6. 캔버스 요소 정상 확인됨. 차트 생성 시도...");
         
-        // ... (기존 차트 생성 로직 이어붙이기)
-        logDebug("✨ 7. 차트 렌더링 코드 도달 완료!");
-    
+        logDebug("✨ 6. 차트 렌더링 코드 도달 완료!");
+        // 차트 렌더링이 성공적으로 끝난 직후에 디버그 박스를 자동으로 숨김
+        const debugBox = document.getElementById('debug-view');
+        if (debugBox) {
+            debugBox.classList.add('hidden'); // 또는 debugBox.style.display = 'none';
+        }
+
     } catch (e) {
         logDebug("💥 예외 발생 (Catch): " + e.message);
         console.error("차트 로딩 에러:", e);
