@@ -2,6 +2,7 @@
 function logDebug(msg) {
     const box = document.getElementById('debug-view');
     if (box) box.innerText += "\n" + msg;
+    console.log(msg);            
 }
 
 async function loadChart() {
@@ -18,7 +19,7 @@ async function loadChart() {
         
         const data = await response.text();
         logDebug("3. CSV 데이터 로드 성공 (총 글자수: " + data.length + ")");
-        const rows = data.trim().split('\n');
+        const rows = data.trim().split(/\r?\n/);
         logDebug("4. 행(Row) 개수: " + rows.length);
         if (rows.length < 2) {
             logDebug("⚠️ 경고: 데이터 행이 2개 미만입니다.");
