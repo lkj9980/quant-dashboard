@@ -212,7 +212,7 @@ def generate_html(today_date, current_time, ai_html_content):
                     
                     const data = await response.text();
                     logDebug("3. CSV 데이터 로드 성공 (총 글자수: " + data.length + ")");
-                    const rows = data.trim().split('￦n');
+                    const rows = data.trim().split('\n');
                     logDebug("4. 행(Row) 개수: " + rows.length);
                     if (rows.length < 2) {
                         logDebug("⚠️ 경고: 데이터 행이 2개 미만입니다.");
