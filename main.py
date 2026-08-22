@@ -211,9 +211,7 @@ def generate_html(today_date, current_time, ai_html_content):
             </div>
         </section>
 
-        <!-- 4. CSV를 읽어서 차트를 그려주는 자바스크립트 -->
-        <script src="../chart.js"></script>
-        
+
         <!-- 3. AI가 생성한 카드 영역 (본문) -->
         <div>
             {ai_html_content}
@@ -225,6 +223,9 @@ def generate_html(today_date, current_time, ai_html_content):
     <footer class="text-center text-[11px] text-slate-400 mt-8 mb-4">
         Last Updated: {current_time} • Powered by GitHub Pages & Gemini AI
     </footer>
+    
+    <!-- 4. CSV를 읽어서 차트를 그려주는 자바스크립트 -->
+    <script src="../chart.js"></script>
         
 </body>
 </html>"""
