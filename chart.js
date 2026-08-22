@@ -221,10 +221,10 @@ async function loadChart() {
             logDebug("❌ 에러: 'quantChart' 캔버스 요소를 찾을 수 없습니다!");
             return;
         }
-                        globalHeaders = rows[0].split(',').map(h => h.trim());
-                globalRows = rows.slice(1);
-                
-                logDebug("2. 헤더 감지: " + globalHeaders.slice(1).join(', '));
+        
+        globalHeaders = rows[0].split(',').map(h => h.trim());
+        globalRows = rows.slice(1);
+        logDebug("2. 헤더 감지: " + globalHeaders.slice(1).join(', '));
                 
         // 초기 전체 보기 렌더링
         renderChart(globalRows, globalHeaders, 'all');
