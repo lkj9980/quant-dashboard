@@ -176,7 +176,9 @@ def generate_html(today_date, current_time, ai_html_content):
             <h1 class="text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
             <p class="text-xs text-slate-500 mt-1">최신 매크로 시황 및 실시간 퀀트 분석 결과 ({today_date})</p>
         </div>
+        <div>
         <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-bold transition">메인으로</a>
+        </div>
     </header>
     <!-- 메인 콘텐츠 영역 -->
     <main class="space-y-6">
