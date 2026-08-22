@@ -2,9 +2,10 @@ import pandas as pd
 import numpy as np
 import yfinance as yf
 
-def run_quant_backtest(log_csv_path):
+def run_quant_backtest():
     # 1. 시그널 로그 불러오기 (예: 날짜, 종목별 추천 비중 컬럼 포함)
     # 로그 구조 예시 컬럼: ['Date', 'KOSPI200_Lev_Weight', 'KOSDAQ_Inv_Weight', 'Cash_Weight']
+    log_csv_path = "history/quant_log.csv"
     df_log = pd.read_csv(log_csv_path)
     df_log['Date'] = pd.to_datetime(df_log['Date'])
     df_log = df_log.sort_values('Date').reset_index(drop=True)
@@ -44,4 +45,4 @@ def run_quant_backtest(log_csv_path):
     return sim_df
 
 # 실행 예시
-# run_quant_backtest('quant_log.csv')
+run_quant_backtest()
