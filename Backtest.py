@@ -44,5 +44,5 @@ def run_quant_backtest():
     
     return sim_df
 
-# 실행 예시
-run_quant_backtest()
+if __name__ == "__main__":
+    run_quant_backtest()
