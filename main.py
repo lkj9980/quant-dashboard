@@ -188,6 +188,7 @@ def generate_html(today_date, current_time, ai_html_content):
         
         <!-- 상단 제어 바: 기간 필터 및 커스텀 시리즈 토글 칩 -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+
         <!-- 시리즈 토글 칩 (개별 독립 제어 -> 단일 선택으로 변경) -->
         <div class="flex flex-wrap items-center gap-1.5" id="series-chips">
             <span class="text-xs font-bold text-slate-500 mr-1">지수 선택:</span>
