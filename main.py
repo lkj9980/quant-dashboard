@@ -168,16 +168,16 @@ def generate_html(today_date, current_time, ai_html_content):
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 p-4 sm:p-6 max-w-6xl mx-auto">
+<body class="bg-slate-50 text-slate-800 p-4 max-w-4xl mx-auto">
     <!-- Top Title Area -->
-    <header class="mb-6 mt-2 flex justify-between items-center">
+    <header class="mb-6 mt-2 flex justify-between items-center flex-wrap gap-3">
         <div>
             <h1 class="text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
             <p class="text-xs text-slate-500 mt-1">최신 매크로 시황 및 실시간 퀀트 분석 결과 ({today_date})</p>
         </div>
-        <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-bold transition">메인으로</a>
-        <div class="flex items-center gap-2"> <button onclick="toggleDebug()" class="text-xs bg-slate-800 text-slate-200 hover:bg-slate-700 px-2.5 py-1.5 rounded-lg font-bold transition">디버그</button>
-            <span class="text-xs bg-emerald-50 text-emerald-600 font-semibold px-2.5 py-1.5 rounded-lg border border-emerald-100">Live Preview</span>
+        <div class="flex items-center gap-2"> 
+            <button onclick="toggleDebug()" class="text-xs bg-slate-800 text-slate-200 hover:bg-slate-700 px-2.5 py-1.5 rounded-lg font-bold transition">디버그</button>
+            <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-bold transition">메인으로</a>
         </div>
     </header>
     <!-- 메인 콘텐츠 영역 -->
@@ -185,25 +185,30 @@ def generate_html(today_date, current_time, ai_html_content):
         
         <!-- 디버그 뷰어 박스 -->
         <div id="debug-view" class="hidden" style="background: #1e293b; color: #38bdf8; padding: 12px; margin: 10px 0; font-family: monospace; font-size: 11px; border-radius: 8px; white-space: pre-wrap; max-height: 150px; overflow-y: auto;">디버그 대기 중...</div>
+        <!-- 정돈된 제어 패널 (지수 선택 & 기간 선택 분리) -->
 
-        <!-- 상단 제어 바: 기간 필터 및 커스텀 시리즈 토글 칩 -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-        <!-- 시리즈 토글 칩 (개별 독립 제어 -> 단일 선택으로 변경) -->
-        <div class="flex flex-wrap items-center gap-1.5" id="series-chips">
-            <span class="text-xs font-bold text-slate-500 mr-1">지수 선택:</span>
-            <button onclick="selectSeries('코스피', this)" class="chip-btn text-xs px-3 py-1.5 rounded-full font-bold bg-blue-600 text-white transition shadow-sm" data-series="코스피" style="background-color: #2563eb; color: #ffffff;">코스피</button>
-            <button onclick="selectSeries('S&P500', this)" class="chip-btn text-xs px-3 py-1.5 rounded-full font-bold bg-slate-200 text-slate-700 hover:bg-slate-300 transition shadow-sm" data-series="S&P500" style="background-color: #e2e8f0; color: #94a3b8;">S&P500</button>
-            <button onclick="selectSeries('코스닥', this)" class="chip-btn text-xs px-3 py-1.5 rounded-full font-bold bg-slate-200 text-slate-700 hover:bg-slate-300 transition shadow-sm" data-series="코스닥" style="background-color: #e2e8f0; color: #94a3b8;">코스닥</button>
-            <button onclick="selectSeries('나스닥', this)" class="chip-btn text-xs px-3 py-1.5 rounded-full font-bold bg-slate-200 text-slate-700 hover:bg-slate-300 transition shadow-sm" data-series="나스닥" style="background-color: #e2e8f0; color: #94a3b8;">나스닥</button>
-        </div>
+        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+            
+            <!-- 1. 지수 선택 칩 영역 (가로 스크롤 및 깔끔한 배치) -->
+            <div>
+                <div class="text-xs font-bold text-slate-500 mb-2">📊 지수 단독 선택</div>
+                <div id="series-chips" class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto p-1">
+                    <!-- JS로 동적 생성되거나 기본 칩들이 여기에 들어갑니다 -->
+                </div>
+            </div>
 
-        <!-- 기간 필터 버튼 그룹 -->
-        <div class="flex justify-end gap-1.5">
-                <button onclick="changePeriod(20)" id="btn-20" class="text-xs px-3 py-1.5 rounded-lg font-bold bg-slate-200 text-slate-700 hover:bg-slate-300 transition">최근 20일</button>
-                <button onclick="changePeriod(60)" id="btn-60" class="text-xs px-3 py-1.5 rounded-lg font-bold bg-slate-200 text-slate-700 hover:bg-slate-300 transition">최근 60일</button>
-                <button onclick="changePeriod('all')" id="btn-all" class="text-xs px-3 py-1.5 rounded-lg font-bold bg-blue-600 text-white transition">전체 보기</button>
-            </div>
-        </div>
+            <hr class="border-slate-100">
+
+            <!-- 2. 조회 기간 선택 영역 -->
+            <div class="flex flex-wrap justify-between items-center gap-2">
+                <div class="text-xs font-bold text-slate-500">📅 조회 기간 설정</div>
+                <div class="flex items-center gap-1.5">
+                    <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
+                    <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
+                    <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
+                </div>
+            </div>
+        </div>
 
         <!-- 1. 단일 통합 종합 지수 트렌드 차트 -->
         <section class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
