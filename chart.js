@@ -71,11 +71,13 @@ async function loadData() {
             const response = await fetch('../history/quant_log.csv');
             if (response.ok) {
                 data = await response.text();
+                logDebug("서버 CSV 로드 성공");
             } else {
                 throw new Error();
             }
         } catch (err) {
             data = sampleCsv;
+            logDebug("외부 파일 로드 실패 (CORS 또는 경로 문제), 안전한 샘플 데이터 사용");
         }
 
         const rows = data.trim().split(/\r?\n/);
