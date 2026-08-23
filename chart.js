@@ -233,7 +233,7 @@ async function loadChart() {
         // 차트 렌더링이 성공적으로 끝난 직후에 디버그 박스를 자동으로 숨김
         const debugBox = document.getElementById('debug-view');
         if (debugBox) {
-            debugBox.classList.add('hidden'); // 또는 debugBox.style.display = 'none';
+        //debugBox.classList.add('hidden'); // 또는 debugBox.style.display = 'none';
         }
 
     } catch (e) {
