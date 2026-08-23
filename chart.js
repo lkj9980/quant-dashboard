@@ -104,7 +104,7 @@ function renderChart(rows, headers, limit) {
         });
     }
 
-    const ctx = document.getElementById('unifiedChart').getContext('2d');
+    const ctx = document.getElementById('quantChart').getContext('2d');
     if (unifiedChartInstance) unifiedChartInstance.destroy();
 
     unifiedChartInstance = new Chart(ctx, {
