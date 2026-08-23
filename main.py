@@ -208,13 +208,14 @@ def generate_html(today_date, current_time, ai_html_content):
         
         <!-- 2. CSV 트렌드 차트 영역 (AI 본문 바로 위에 배치) -->
         <section class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-            <h2 class="text-sm font-bold text-slate-700 mb-3">📈 지수 ETF 실시간 트렌드</h2>
+        <div class="flex justify-between items-center mb-3">
+        <h2 class="text-sm font-bold text-slate-700 mb-3">📈 지수 ETF 실시간 트렌드</h2>
+        </div>
             <div class="relative w-full h-56">
                 <canvas id="quantChart"></canvas>
             </div>
         </section>
-
-
+        
         <!-- 3. AI가 생성한 카드 영역 (본문) -->
         <div>
             {ai_html_content}
