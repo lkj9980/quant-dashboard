@@ -168,26 +168,26 @@ def generate_html(today_date, current_time, ai_html_content):
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 p-4 max-w-4xl mx-auto">
+<body class="bg-slate-50 text-slate-800 p-3 sm:p-4 max-w-4xl mx-auto">
     <!-- Top Title Area -->
-    <header class="mb-6 mt-2 flex justify-between items-center flex-wrap gap-3">
+    <header class="mb-4 mt-1 flex justify-between items-center flex-wrap gap-2">
         <div>
-            <h1 class="text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
-            <p class="text-xs text-slate-500 mt-1">최신 매크로 시황 및 실시간 퀀트 분석 결과 ({today_date})</p>
+            <h1 class="text-xl sm:text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
+            <p class="text-[11px] sm:text-xs text-slate-500 mt-0.5">최신 매크로 시황 및 실시간 퀀트 분석 결과 ({today_date})</p>
         </div>
-        <div class="flex items-center gap-2"> 
+        <div class="flex items-center gap-1.5"> 
             <button onclick="toggleDebug()" class="text-xs bg-slate-800 text-slate-200 hover:bg-slate-700 px-2.5 py-1.5 rounded-lg font-bold transition">디버그</button>
             <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-bold transition">메인으로</a>
         </div>
     </header>
     <!-- 메인 콘텐츠 영역 -->
-    <main class="space-y-6">
+    <main class="space-y-4">
         
         <!-- 디버그 뷰어 박스 -->
         <div id="debug-view" class="hidden" style="background: #1e293b; color: #38bdf8; padding: 12px; margin: 10px 0; font-family: monospace; font-size: 11px; border-radius: 8px; white-space: pre-wrap; max-height: 150px; overflow-y: auto;">디버그 대기 중...</div>
         <!-- 정돈된 제어 패널 (지수 선택 & 기간 선택 분리) -->
 
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+        <div class="bg-white p-3.5 sm:p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
             
             <!-- 1. 지수 선택 칩 영역 (가로 스크롤 및 깔끔한 배치) -->
             <div>
@@ -196,9 +196,7 @@ def generate_html(today_date, current_time, ai_html_content):
                     <!-- JS로 동적 생성되거나 기본 칩들이 여기에 들어갑니다 -->
                 </div>
             </div>
-
-            <hr class="border-slate-100">
-
+            
             <!-- 2. 조회 기간 선택 영역 -->
             <div class="flex flex-wrap justify-between items-center gap-2">
                 <div class="text-xs font-bold text-slate-500">📅 조회 기간 설정</div>
@@ -211,8 +209,8 @@ def generate_html(today_date, current_time, ai_html_content):
         </div>
 
         <!-- 1. 단일 통합 종합 지수 트렌드 차트 -->
-        <section class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-            <div class="flex justify-between items-center mb-3">
+        <section class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex justify-between items-center mb-2">
                 <h2 class="text-sm font-bold text-slate-700">📈 전체 주요 지수 통합 트렌드 및 변곡점</h2>
                 <span class="text-[10px] bg-blue-50 text-blue-600 font-semibold px-2 py-0.5 rounded">통합 뷰</span>
             </div>
