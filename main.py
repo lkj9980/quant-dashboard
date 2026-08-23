@@ -212,7 +212,7 @@ def generate_html(today_date, current_time, ai_html_content):
         <h2 class="text-sm font-bold text-slate-700 mb-3">📈 지수 ETF 실시간 트렌드</h2>
         </div>
             <div class="relative w-full h-56">
-                <canvas id="unifiedChart"></canvas>
+                <canvas id="quantChart"></canvas>
             </div>
         </section>
         
