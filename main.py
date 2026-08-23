@@ -168,7 +168,7 @@ def generate_html(today_date, current_time, ai_html_content):
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 p-4 max-w-xl mx-auto">
+<body class="bg-slate-50 text-slate-800 p-4 sm:p-6 max-w-6xl mx-auto">
     <!-- Top Title Area -->
     <header class="mb-6 mt-2 flex justify-between items-center">
         <div>
