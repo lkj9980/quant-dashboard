@@ -180,35 +180,36 @@ def generate_html(today_date, current_time, ai_html_content):
             <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg font-bold transition">메인으로</a>
         </div>
     </header>
+    
     <!-- 메인 콘텐츠 영역 -->
     <main class="space-y-4">
         
         <!-- 디버그 뷰어 박스 -->
         <div id="debug-view" class="hidden" style="background: #1e293b; color: #38bdf8; padding: 12px; margin: 10px 0; font-family: monospace; font-size: 11px; border-radius: 8px; white-space: pre-wrap; max-height: 150px; overflow-y: auto;">디버그 대기 중...</div>
-        <!-- 정돈된 제어 패널 (지수 선택 & 기간 선택 분리) -->
 
-        <div class="bg-white p-3.5 sm:p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
-            
-            <!-- 1. 지수 선택 칩 영역 (가로 스크롤 및 깔끔한 배치) -->
-            <div>
-                <div class="text-xs font-bold text-slate-500 mb-2">📊 지수 단독 선택</div>
-                <div id="series-chips" class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto p-1">
-                    <!-- JS로 동적 생성되거나 기본 칩들이 여기에 들어갑니다 -->
-                </div>
-            </div>
+        <!-- 정돈된 제어 패널 (지수 선택 & 기간 선택 분리) -->
+        <div class="bg-white p-3.5 sm:p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
             
-            <!-- 2. 조회 기간 선택 영역 -->
-            <div class="flex flex-wrap justify-between items-center gap-2">
-                <div class="text-xs font-bold text-slate-500">📅 조회 기간 설정</div>
-                <div class="flex items-center gap-1.5">
-                    <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
-                    <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
-                    <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
-                </div>
-            </div>
-        </div>
+            <!-- 1. 지수 선택 칩 영역 -->
+            <div>
+                <div class="text-xs font-bold text-slate-500 mb-2">📊 지수 단독 선택</div>
+                <div id="series-chips" class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto p-1">
+                    <!-- JS로 동적 생성 -->
+                </div>
+            </div>
+            
+            <!-- 2. 조회 기간 선택 영역 -->
+            <div class="flex flex-wrap justify-between items-center gap-2">
+                <div class="text-xs font-bold text-slate-500">📅 조회 기간 설정</div>
+                <div class="flex items-center gap-1.5">
+                    <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
+                    <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
+                    <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
+                </div>
+            </div>
+        </div>
 
-        <!-- 1. 단일 통합 종합 지수 트렌드 차트 -->
+        <!-- 단일 통합 종합 지수 트렌드 차트 -->
         <section class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100">
             <div class="flex justify-between items-center mb-2">
                 <h2 class="text-sm font-bold text-slate-700">📈 전체 주요 지수 통합 트렌드 및 변곡점</h2>
@@ -220,7 +221,7 @@ def generate_html(today_date, current_time, ai_html_content):
             <p class="text-[11px] text-slate-400 mt-2">💡 상단 시리즈 칩을 클릭하여 각 계열을 독립적으로 켜고 끌 수 있습니다.</p>
         </section>
         
-        <!-- 3. AI가 생성한 카드 영역 (본문) -->
+        <!-- AI가 생성한 카드 영역 (본문) -->
         <div>
             {ai_html_content}
         </div>
@@ -232,7 +233,7 @@ def generate_html(today_date, current_time, ai_html_content):
         Last Updated: {current_time} • Powered by GitHub Pages & Gemini AI
     </footer>
     
-    <!-- 4. CSV를 읽어서 차트를 그려주는 자바스크립트 -->
+    <!-- CSV를 읽어서 차트를 그려주는 자바스크립트 -->
     <script src="../chart.js"></script>
         
 </body>
