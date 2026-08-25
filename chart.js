@@ -1,9 +1,9 @@
-        let globalRawRows = [];
+  let globalRawRows = [];
         let globalHeaders = [];
         let chartInstance = null;
         let currentLimit = 20;
         let selectedSeriesIndex = 1;
-
+        
         function logDebug(msg) {
             const box = document.getElementById('debug-view');
             if (!box) {
@@ -23,11 +23,11 @@
             currentLimit = limit;
             ['20', '60', 'all'].forEach(id => {
                 const btn = document.getElementById('btn-' + id);
-                if (btn) btn.className = "text-xs px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition";
+                if (btn) btn.className = "text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition";
             });
             const activeId = limit === 20 ? 'btn-20' : (limit === 60 ? 'btn-60' : 'btn-all');
             const activeBtn = document.getElementById(activeId);
-            if (activeBtn) activeBtn.className = "text-xs px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold transition shadow-sm";
+            if (activeBtn) activeBtn.className = "text-xs px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold transition shadow-sm";
 
             renderChart();
         }
@@ -58,17 +58,18 @@
         async function loadData() {
             try {
                 logDebug("데이터 로딩 시작...");
-                const sampleCsv = `Date,코스피,코스닥,S&P500,나스닥 종합,미국 국채 10년,USD/KRW 환율
-2026-08-10,2500,800,5300,16500,4.25,1330
-2026-08-11,2510,805,5320,16550,4.28,1332
-2026-08-12,2490,795,5280,16400,4.30,1335
-2026-08-13,2530,810,5350,16700,4.22,1328
-2026-08-14,2540,815,5380,16800,4.20,1325
-2026-08-17,2520,808,5340,16650,4.24,1330
-2026-08-18,2550,820,5400,16900,4.18,1322
-2026-08-19,2560,825,5420,17000,4.15,1320
-2026-08-20,2580,835,5450,17150,4.12,1315
-2026-08-23,2600,845,5500,17300,4.10,1310`;
+                const sampleCsv = `Date,코스피,코스닥,코스피 200,S&P 500,나스닥 종합,나스닥 100,S&P 500 선물,나스닥 100 선물,러셀 2000 선물,미국 국채 10년,미국 국채 30년,USD/KRW 환율,WTI 유가,국제 금,구리 선물,VIX 변동성
+2026-08-10 09:00,2495,798,328,5290,16450,18450,5300,18500,2090,4.25,4.35,1330,78,2400,4.1,15.2
+2026-08-10 15:55,2500,800,330,5300,16500,18500,5310,18550,2100,4.25,4.35,1330,78,2400,4.1,15.2
+2026-08-11 15:55,2510,805,332,5320,16550,18600,5330,18620,2110,4.28,4.38,1332,77,2410,4.12,15.0
+2026-08-12 15:55,2490,795,328,5280,16400,18400,5290,18420,2080,4.30,4.40,1335,79,2390,4.08,15.8
+2026-08-13 15:55,2530,810,334,5350,16700,18750,5360,18780,2125,4.22,4.32,1328,76,2420,4.15,14.5
+2026-08-14 15:55,2540,815,335,5380,16800,18850,5390,18880,2140,4.20,4.30,1325,75,2430,4.18,14.2
+2026-08-17 15:55,2520,808,332,5340,16650,18700,5350,18720,2115,4.24,4.34,1330,77,2415,4.13,14.9
+2026-08-18 15:55,2550,820,337,5400,16900,18950,5410,18980,2150,4.18,4.28,1322,74,2440,4.20,13.8
+2026-08-19 15:55,2560,825,338,5420,17000,19050,5430,19080,2165,4.15,4.25,1320,73,2450,4.22,13.5
+2026-08-20 15:55,2580,835,341,5450,17150,19200,5460,19230,2180,4.12,4.22,1315,72,2465,4.25,13.0
+2026-08-25 15:55,2600,845,344,5500,17300,19400,5510,19430,2200,4.10,4.20,1310,71,2480,4.28,12.5`;
 
                 let data = "";
                 try {
@@ -83,13 +84,13 @@
                     logDebug("외부 파일 로드 실패 (CORS 또는 경로 문제), 안전한 샘플 데이터 사용");
                     data = sampleCsv;
                 }
-
+                
                 const rows = data.trim().split(/\r?\n/);
                 if (rows.length < 2) return;
 
                 globalHeaders = rows[0].split(',').map(h => h.trim());
-                                const rawRows = rows.slice(1);
-
+                const rawRows = rows.slice(1);    
+                
                 // ★ 핵심: 날짜별로 그룹화하여 동일 날짜의 '마지막(최신) 행'만 남기는 전처리 로직
                 const dailyMap = {};
                 rawRows.forEach(row => {
