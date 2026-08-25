@@ -88,7 +88,32 @@
                 if (rows.length < 2) return;
 
                 globalHeaders = rows[0].split(',').map(h => h.trim());
-                globalRawRows = rows.slice(1);
+                                const rawRows = rows.slice(1);
+
+                // ★ 핵심: 날짜별로 그룹화하여 동일 날짜의 '마지막(최신) 행'만 남기는 전처리 로직
+                const dailyMap = {};
+                rawRows.forEach(row => {
+                    const cols = row.split(',').map(c => c.trim());
+                    if (cols.length < globalHeaders.length) return;
+                    
+                    // 날짜 문자열에서 시간(HH:MM)이 포함되어 있다면 앞의 날짜 부분(YYYY-MM-DD)만 추출
+                    // 예: "2026-08-20 15:30" -> "2026-08-20"
+                    const fullDateStr = cols[0];
+                    const dateKey = fullDateStr.split(' ')[0]; 
+
+                    // 같은 날짜 데이터가 여러 개 들어오면 나중에 들어온(마지막) 값으로 계속 덮어씀
+                    dailyMap[dateKey] = cols;
+                });
+
+                // 맵에 정리된 데이터를 다시 배열로 변환
+                globalRawRows = Object.keys(dailyMap).sort().map(dateKey => {
+                    const cols = dailyMap[dateKey];
+                    // X축 레이블을 깔끔하게 날짜만 보이도록 첫 번째 열을 날짜 전용 키로 설정
+                    cols[0] = dateKey;
+                    return cols.join(',');
+                });
+
+                logDebug(`일자별 압축 완료: 총 ${Object.keys(dailyMap).length}일치 데이터 확보`);
 
                 updateChipsUI();
                 renderChart();
