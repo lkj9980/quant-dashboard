@@ -213,10 +213,11 @@ def generate_html(today_date, current_time, ai_html_content):
         <!-- 디버그 뷰어 박스 -->
         <div id="debug-view" class="hidden" style="background: #1e293b; color: #38bdf8; padding: 12px; margin-bottom: 12px; font-family: monospace; font-size: 11px; border-radius: 12px; white-space: pre-wrap; max-height: 140px; overflow-y: auto;">디버그 대기 중...</div>
         
-        <!-- 여유롭고 정돈된 제어 패널 -->
-        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
         <!-- 차트 & 제어 패널 통합 토글 영역 (칩과 제어 패널이 차트와 한 세트로 묶임) -->
         <div id="chart-toggle-section" class="space-y-4 transition-all">
+        
+        <!-- 여유롭고 정돈된 제어 패널 -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
             <!-- 1. 지수 선택 칩 영역 -->
             <div>
                 <div class="text-xs font-bold text-slate-500 mb-2">📊 지수 단독 선택</div>
