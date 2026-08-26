@@ -215,8 +215,9 @@ def generate_html(today_date, current_time, ai_html_content):
         
         <!-- 여유롭고 정돈된 제어 패널 -->
         <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
-            
-           <!-- 1. 지수 선택 칩 영역 -->
+        <!-- 차트 & 제어 패널 통합 토글 영역 (칩과 제어 패널이 차트와 한 세트로 묶임) -->
+        <div id="chart-toggle-section" class="space-y-4 transition-all">
+            <!-- 1. 지수 선택 칩 영역 -->
             <div>
                 <div class="text-xs font-bold text-slate-500 mb-2">📊 지수 단독 선택</div>
                 <div id="series-chips" class="flex flex-wrap gap-1.5 p-0.5">
@@ -236,6 +237,7 @@ def generate_html(today_date, current_time, ai_html_content):
                     <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
                 </div>
             </div>
+        </div>
         </div>
 
         <!-- 단일 통합 종합 지수 트렌드 차트 -->
