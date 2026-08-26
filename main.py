@@ -7,6 +7,8 @@ from datetime import datetime
 import markdown
 import yfinance as yf
 from google import genai
+from google.genai.errors import ServerError
+import time
 from datetime import datetime, timezone, timedelta
 import csv
 
@@ -103,6 +105,27 @@ def append_to_quant_log(current_time, ticker_values):
             writer.writerow(["Date"] + list(ticker_values.keys()))
         writer.writerow([current_time] + list(ticker_values.values()))
 
+def call_gemini_with_retry(client, model_name, prompt_text, max_retries=3, delay=5):
+    for attempt in range(1, max_retries + 1):
+        try:
+            print(f"🔄 Gemini API 호출 시도 ({attempt}/{max_retries})...")
+            response = client.models.generate_content(
+                model=model_name,
+                contents=prompt_text,
+            )
+            return response
+        except ServerError as e:
+            print(f"⚠️ 서버 과부하(503) 또는 일시적 오류 발생: {e}")
+            if attempt == max_retries:
+                print("❌ 최대 재시도 횟수 초과.")
+                raise e
+            wait_time = delay * attempt
+            print(f"⏳ {wait_time}초 후 재시도합니다...")
+            time.sleep(wait_time)
+        except Exception as e:
+            print(f"❌ 예상치 못한 에러 발생: {e}")
+            raise e
+
 # 2. 분석 함수 (수집된 raw_text를 인자로 받음)
 def get_ai_analysis(GEMINI_API_KEY, raw_text):
     # ------------------------------------------
@@ -140,10 +163,12 @@ def get_ai_analysis(GEMINI_API_KEY, raw_text):
     """
     # 클라이언트 초기화 (환경 변수 GEMINI_API_KEY가 설정되어 있다면 인자 생략 가능)
     client = genai.Client(api_key=GEMINI_API_KEY)
-    
-    response = client.models.generate_content(
-        model="gemini-3.5-flash",
-        contents=prompt,
+    response = call_gemini_with_retry(
+        client=client,
+        model_name="gemini-3.5-flash", # 또는 사용하시는 모델명
+        prompt_text=prompt,
+        max_retries=3,
+        delay=30
     )
 
     #response = model.generate_content(prompt)
