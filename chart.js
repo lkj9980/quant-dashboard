@@ -19,6 +19,14 @@
             if (box) box.classList.toggle('hidden');
         }
 
+        // 제어 패널(칩+기간설정)과 차트를 한 세트로 껐다 켰다 하는 함수
+        function toggleChartSection() {
+            const section = document.getElementById('chart-toggle-section');
+            if (section) {
+                section.classList.toggle('hidden');
+            }
+        }
+
         function setPeriod(limit) {
             currentLimit = limit;
             ['20', '60', 'all'].forEach(id => {
