@@ -252,6 +252,7 @@ def generate_html(today_date, current_time, ai_html_content):
             <p class="text-[11px] text-slate-400 mt-3">💡 하루 중 여러 번 수집된 데이터 중 <strong>가장 마지막(국장 15:55 / 미장 익일 07:00 등 최종 마감) 값</strong>만 압축하여 부드럽게 시각화됩니다.</p>
         </section>
         </div>
+        
         <!-- AI가 생성한 카드 영역 (본문) -->
         <div>
             {ai_html_content}
