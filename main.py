@@ -160,6 +160,25 @@ def get_ai_analysis(GEMINI_API_KEY, raw_text):
        - 카드 4: Portfolio A (일반계좌) 추천 비중 (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
        - 카드 5. Portfolio B (퇴직연금 DC/IRP) 추천 비중 (위험자산 최대 70%) (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
        - 카드 6. 분할 매수/매도 가격 타점 및 액션 플랜
+
+    - ★ 중요 [백테스트 자동화용 데이터 블록 추가]:
+      HTML 카드 출력 바로 아래에, 파싱하기 쉽도록 오직 아래와 같은 JSON 형식의 데이터 블록을 <script type="application/json" id="backtest-json"> 태그로 감싸서 반드시 포함하세요. (숫자는 퍼센트나 소수점 비중으로 명시)
+      
+      <script type="application/json" id="backtest-json">
+      {
+        "date": "YYYY-MM-DD",
+        "portfolio_a": {
+          "kospi200_weight": 0.0,
+          "kosdaq150_weight": 0.0,
+          "nasdaq100_weight": 0.0,
+          "cash_weight": 1.0
+        },
+        "portfolio_b": {
+          "risky_total_weight": 0.0,
+          "safe_total_weight": 1.0
+        }
+      }
+      </script>
     """
     # 클라이언트 초기화 (환경 변수 GEMINI_API_KEY가 설정되어 있다면 인자 생략 가능)
     client = genai.Client(api_key=GEMINI_API_KEY)
