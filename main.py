@@ -137,12 +137,13 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
     # 2. Gemini AI 매크로 분석
     # ------------------------------------------
     print("2. Gemini AI 시장 분석 중...")
+    
+    #1. 백테스트 JSON 템플릿 읽기 및 오늘 날짜 주입
+    with open("backtest_template.json", "r", encoding="utf-8") as f:
+        backtest_json_snippet = f.read().format(today_date=today_date)
+
     #genai.configure(api_key=GEMINI_API_KEY)
     #model = genai.GenerativeModel('gemini-3.5-flash')
-
-    #1. 백테스트 JSON 템플릿 읽기 및 오늘 날짜 주입
-with open("backtest_template.json", "r", encoding="utf-8") as f:
-    backtest_json_snippet = f.read().format(today_date=today_date)
 
     # 2. 프롬프트 템플릿 읽기 및 raw_text와 백테스트 스니펫 주입
     with open("prompt_template.txt", "r", encoding="utf-8") as f:
@@ -160,8 +161,8 @@ with open("backtest_template.json", "r", encoding="utf-8") as f:
         max_retries=3,
         delay=30
     )
-#config=types.GenerateContentConfig(
-#        temperature=0.2,
+    #config=types.GenerateContentConfig(
+    #        temperature=0.2,
 
     #response = model.generate_content(prompt)
 
@@ -224,7 +225,7 @@ def generate_html(today_date, current_time, ai_html_content):
         </div>
     </header>
     
- <!-- 메인 콘텐츠 영역 (시원시원한 여백 확보) -->
+    <!-- 메인 콘텐츠 영역 (시원시원한 여백 확보) -->
     <main class="space-y-5">
         
         <!-- 디버그 뷰어 박스 -->
@@ -411,8 +412,9 @@ if __name__ == "__main__":
     
     # [수정] 3. 분석 수행
     ai_text = get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text)
-        # 2. [필수] AI 응답이 끝나면 파이썬이 이 함수를 호출해서 CSV에 저장!
-save_to_backtest_csv(ai_text, today_date)
+    
+    # 2. [필수] AI 응답이 끝나면 파이썬이 이 함수를 호출해서 CSV에 저장!
+    save_to_backtest_csv(ai_text, today_date)
 
     # 4. HTML 생성
     html_template = generate_html(today_date, current_time, ai_text)
