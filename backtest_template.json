@@ -1,0 +1,13 @@
+{
+  "date": "{today_date}",
+  "portfolio_a": {
+    "kospi200_weight": 0.0,
+    "kosdaq150_weight": 0.0,
+    "nasdaq100_weight": 0.0,
+    "cash_weight": 1.0
+  },
+  "portfolio_b": {
+    "risky_total_weight": 0.0,
+    "safe_total_weight": 1.0
+  }
+}
