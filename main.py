@@ -164,6 +164,7 @@ with open("backtest_template.json", "r", encoding="utf-8") as f:
 #        temperature=0.2,
 
     #response = model.generate_content(prompt)
+
     return response.text
 
 def save_to_backtest_csv(data, today_date):
@@ -410,7 +411,9 @@ if __name__ == "__main__":
     
     # [수정] 3. 분석 수행
     ai_text = get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text)
-    
+        # 2. [필수] AI 응답이 끝나면 파이썬이 이 함수를 호출해서 CSV에 저장!
+save_to_backtest_csv(ai_text, today_date)
+
     # 4. HTML 생성
     html_template = generate_html(today_date, current_time, ai_text)
     
