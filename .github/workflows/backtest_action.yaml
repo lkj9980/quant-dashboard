@@ -1,0 +1,45 @@
+name: Weekly Quant Backtest Automation
+
+on:
+  repository_dispatch:
+    types: [run_backtest_pipeline]  # 외부 웹훅 호출 시 실행
+  workflow_dispatch:                # 깃허브 웹(Actions 탭)에서 수동 실행(Run workflow) 가능
+  schedule:
+    # 매주 토요일 한국 시간(KST) 오전 9시 0분 정각에 자동 실행 (UTC 기준 토요일 00:00)
+    - cron: '0 0 * * 6'
+
+jobs:
+  run-backtest:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. 깃허브 저장소 체크아웃
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. 파이썬 환경 설정 (버전 3.10)
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      # 3. 필수 라이브러리 설치 (pandas, numpy, yfinance, pyyaml 등)
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 4. 백테스트 전용 파이썬 스크립트 실행
+      - name: Run Backtest Script
+        run: |
+          python Backtest.py
+
+      # 5. 백테스트 결과 생성물(backtest_result.csv 등) 자동 커밋 및 푸시
+      - name: Commit and Push Backtest Results
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # 백테스트 실행 결과로 생성되거나 갱신된 파일 추가 (설정 파일이나 결과 CSV 등)
+          git add backtest_result.csv quant_log.csv
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-execute weekly backtest [skip ci]" && git push)
