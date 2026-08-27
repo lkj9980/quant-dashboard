@@ -168,7 +168,12 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
 
     return response.text
 
-def save_to_backtest_csv(data, today_date):
+def save_to_backtest_csv(ai_text, today_date):
+    match = re.search(r'<script type="application/json" id="backtest-json">(.*?)</script>', ai_text, re.DOTALL)
+    if not match: return
+    
+    data = json.loads(match.group(1).strip())
+
     row_data = {
         "Date": today_date,
         "A_Kospi200": data["portfolio_a"]["kospi200_weight"],
