@@ -1,0 +1,30 @@
+# ==========================================
+# 퀀트 전략 백테스트 설정 파일 (backtest_config.yaml)
+# ==========================================
+
+# 1. 백테스트 기간 설정 (null로 두면 quant_log.csv에 쌓인 전체 기간 자동 적용)
+period:
+  start_date: null   # 예: "2026-01-01"
+  end_date: null     # 예: "2026-08-27"
+
+# 2. 초기 자본금 및 비용 설정
+capital:
+  initial_capital: 100000000  # 초기 자본금 (기본 1억원)
+  transaction_fee: 0.00015    # 거래 수수료 및 세금 (예: 0.015%)
+  slippage: 0.001             # 슬리피지 가정 (예: 0.1%)
+
+# 3. 매매 대상 티커 및 로그 CSV 컬럼 매핑 설정
+# (quant_log.csv에 기록되는 비중 컬럼명과 야후 파이낸스 티커를 연결합니다)
+assets:
+  - name: "KOSPI200_Lev"
+    ticker: "252670.KS"       # KODEX 200선물레버리지
+    weight_column: "Lev_Weight"  # CSV에서 이 비중 값을 읽어옴
+    
+  - name: "KOSDAQ_Inv"
+    ticker: "251340.KS"       # KODEX 코스닥150선물인버스
+    weight_column: "Inv_Weight"  # CSV에서 이 비중 값을 읽어옴
+
+# 4. 파일 경로 설정
+paths:
+  log_file: "histoey/quant_log.csv"
+  output_report: "backtest_result.csv"
