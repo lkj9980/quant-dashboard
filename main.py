@@ -140,7 +140,7 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
     
     #1. 백테스트 JSON 템플릿 읽기 및 오늘 날짜 주입
     with open("backtest_template.json", "r", encoding="utf-8") as f:
-        backtest_json_snippet = f.read().format(today_date=today_date)
+        backtest_json_snippet = f.read()
 
     #genai.configure(api_key=GEMINI_API_KEY)
     #model = genai.GenerativeModel('gemini-3.5-flash')
