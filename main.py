@@ -139,52 +139,13 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
     print("2. Gemini AI 시장 분석 중...")
     #genai.configure(api_key=GEMINI_API_KEY)
     #model = genai.GenerativeModel('gemini-3.5-flash')
-    prompt = f"""
-    너는 20년 경력의 수석 퀀트 전략가다. 아래 지표를 바탕으로 매크로 시황을 분석하고 계좌별 전략을 작성하라.
-    정량적 시장 지표는 수집된 지표(yfinance)에서 참고해야 하고, 임의로 숫자를 지어낼 수 없으며,
-    정성적 시황(글로벌 매크로 뉴스, 연준 발언, 인사이트 등)은 폭넓은 실시간 웹 검색을 통해 종합적으로 분석하여, 일반 계좌와 퇴직연금 계좌의 자산 배분 포트폴리오를 도출하라.
     
-    [수집된 지표(yfinance)]
-    {raw_text}
-    
-    # [계좌별 규제 룰]
-    1. [Portfolio A] 일반 계좌 (7개 자산군 합계 100%): 
-       - 코스피200 ETF(레버/인버스), 코스닥150 ETF(레버/인버스), 나스닥100 ETF(레버/인버스), 현금 관망
-    2. [Portfolio B] 퇴직연금 DC/IRP 계좌 (합계 100%): 위험자산 최대 70% 
-       - 위험자산(코스피/코스닥/나스닥 ETF) 총합 최대 70% 제한
-       - 안전자산(미국채 30년 ETF + 대기 현금)
-       - 레버리지/인버스 매매 원천 금지
-    
-    [출력 형식]
-    - 마크다운 기호(###, **, |, - 등)를 절대 사용하지 마세요.
-    - 오직 Tailwind CSS 클래스를 사용한 순수 HTML <div> 카드 형태로만 출력하세요.
-    - 전체 응답은 아래 카드 구조(div)를 포함해야 합니다:
-       - 카드 1: 오늘의 매크로 변곡점 한 줄 요약(Blockquote) (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
-       - 카드 2. [실시간 주요 지표 현황판] (마크다운)
-       - 카드 3: 시장별 포지션 스코어링 및 점수 (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
-       - 카드 4: Portfolio A (일반계좌) 추천 비중 (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
-       - 카드 5. Portfolio B (퇴직연금 DC/IRP) 추천 비중 (위험자산 최대 70%) (class="bg-white rounded-2xl p-5 shadow-sm mb-4 border border-gray-100")
-       - 카드 6. 분할 매수/매도 가격 타점 및 액션 플랜
+    # 템플릿 파일 읽기
+    with open("prompt_template.txt", "r", encoding="utf-8") as f:
+        template_str = f.read()
+        
+    prompt = template_str.format(raw_text=raw_text)
 
-    - ★ 중요 [백테스트 자동화용 데이터 블록 추가]:
-      HTML 카드 출력 바로 아래에, 파싱하기 쉽도록 오직 아래와 같은 JSON 형식의 데이터 블록을 <script type="application/json" id="backtest-json"> 태그로 감싸서 반드시 포함하세요. (숫자는 퍼센트나 소수점 비중으로 명시)
-      
-      <script type="application/json" id="backtest-json">
-      {
-        "date": "YYYY-MM-DD",
-        "portfolio_a": {
-          "kospi200_weight": 0.0,
-          "kosdaq150_weight": 0.0,
-          "nasdaq100_weight": 0.0,
-          "cash_weight": 1.0
-        },
-        "portfolio_b": {
-          "risky_total_weight": 0.0,
-          "safe_total_weight": 1.0
-        }
-      }
-      </script>
-    """
     # 클라이언트 초기화 (환경 변수 GEMINI_API_KEY가 설정되어 있다면 인자 생략 가능)
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = call_gemini_with_retry(
@@ -194,6 +155,8 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
         max_retries=3,
         delay=30
     )
+#config=types.GenerateContentConfig(
+#        temperature=0.2,
 
     #response = model.generate_content(prompt)
     return response.text
@@ -221,12 +184,6 @@ def save_to_backtest_csv(data, today_date):
         
     df_final.to_csv(csv_file, index=False, encoding="utf-8-sig")
     print(f">> [백테스트 데이터 저장 성공] {today_date} 비중이 backtest_data.csv에 동기화되었습니다.")
-
-
-
-
-
-
 
 def generate_html(today_date, current_time, ai_html_content):
     # 1. 아카이브 폴더 생성
