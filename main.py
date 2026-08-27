@@ -15,7 +15,7 @@ from google.genai import types
 from google.genai.errors import ServerError
 
 # 3. 커스텀 모듈 (Local Modules)
-from backtest_schema import QuantBacktestData
+#from backtest_schema import QuantBacktestData
 
 # 1. 데이터 수집 함수 (데이터를 딕셔너리로 반환)
 def collect_market_data():
