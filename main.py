@@ -3,7 +3,6 @@ import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from datetime import datetime
 import markdown
 import yfinance as yf
 from google import genai
@@ -11,6 +10,48 @@ from google.genai.errors import ServerError
 import time
 from datetime import datetime, timezone, timedelta
 import csv
+import json
+import re
+
+def save_backtest_data(ai_response_text, today_date):
+    try:
+        # 1. AI 응답에서 <script type="application/json" id="backtest-json"> 블록 내용 추출
+        match = re.search(r'<script type="application/json" id="backtest-json">\s*({.*?})\s*</script>', ai_response_text, re.DOTALL)
+        if not match:
+            print("[경고] 백테스트용 JSON 데이터 블록을 찾지 못했습니다.")
+            return
+        
+        json_str = match.group(1)
+        data = json.loads(json_str)
+        
+        # 2. CSV로 저장할 1행 데이터 구성 (quant_log.csv의 Date를 키로 사용)
+        row_data = {
+            "Date": today_date,
+            "A_Kospi200": data["portfolio_a"].get("kospi200_weight", 0),
+            "A_Kosdaq150": data["portfolio_a"].get("kosdaq150_weight", 0),
+            "A_Nasdaq100": data["portfolio_a"].get("nasdaq100_weight", 0),
+            "A_Cash": data["portfolio_a"].get("cash_weight", 0),
+            "B_Risky": data["portfolio_b"].get("risky_total_weight", 0),
+            "B_Safe": data["portfolio_b"].get("safe_total_weight", 0),
+        }
+        
+        df_new = pd.DataFrame([row_data])
+        
+        # 3. backtest_data.csv에 이어 붙이기 (없으면 새로 생성)
+        csv_file = "backtest_data.csv"
+        try:
+            df_existing = pd.read_csv(csv_file)
+            # 이미 오늘 날짜 데이터가 있으면 갱신, 없으면 추가
+            df_existing = df_existing[df_existing['Date'] != today_date]
+            df_final = pd.concat([df_existing, df_new], ignore_index=True)
+        except FileNotFoundError:
+            df_final = df_new
+            
+        df_final.to_csv(csv_file, index=False, encoding="utf-8-sig")
+        print(f">> [백테스트 데이터 동기화 완료] {today_date} 비중 데이터가 backtest_data.csv에 기록되었습니다.")
+        
+    except Exception as e:
+        print(f"[에러] 백테스트 데이터 파싱 중 오류 발생: {e}")
 
 # 1. 데이터 수집 함수 (데이터를 딕셔너리로 반환)
 def collect_market_data():
