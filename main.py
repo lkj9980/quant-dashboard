@@ -173,24 +173,15 @@ def save_to_backtest_csv(ai_text, today_date):
     if not match: return
     
     data = json.loads(match.group(1).strip())
-    
+
     row_data = {
         "Date": today_date,
-        # Portfolio A (일반 계좌: 레버/인버스 6개 + 현금)
-        "A_Kospi200_Lev": data["portfolio_a"]["kospi200_lev_weight"],
-        "A_Kospi200_Inv": data["portfolio_a"]["kospi200_inv_weight"],
-        "A_Kosdaq150_Lev": data["portfolio_a"]["kosdaq150_lev_weight"],
-        "A_Kosdaq150_Inv": data["portfolio_a"]["kosdaq150_inv_weight"],
-        "A_Nasdaq100_Lev": data["portfolio_a"]["nasdaq100_lev_weight"],
-        "A_Nasdaq100_Inv": data["portfolio_a"]["nasdaq100_inv_weight"],
+        "A_Kospi200": data["portfolio_a"]["kospi200_weight"],
+        "A_Kosdaq150": data["portfolio_a"]["kosdaq150_weight"],
+        "A_Nasdaq100": data["portfolio_a"]["nasdaq100_weight"],
         "A_Cash": data["portfolio_a"]["cash_weight"],
-        
-        # Portfolio B (퇴직연금 DC/IRP: 위험자산 총합/안전자산 총합 + 상세 세부)
-        "B_Kospi200": data["portfolio_b"]["kospi200_weight"],
-        "B_Kosdaq150": data["portfolio_b"]["kosdaq150_weight"],
-        "B_Nasdaq100": data["portfolio_b"]["nasdaq100_weight"],
-        "B_US_Treasury_30Y": data["portfolio_b"]["us_treasury_30y_weight"],
-        "B_DC_IRP_Cash": data["portfolio_b"]["dc_irp_cash_weight"],
+        "B_Risky": data["portfolio_b"]["risky_total_weight"],
+        "B_Safe": data["portfolio_b"]["safe_total_weight"],
     }
     
     df_new = pd.DataFrame([row_data])
@@ -267,65 +258,44 @@ def generate_html(today_date, current_time, ai_html_content):
         <!-- 디버그 뷰어 박스 -->
         <div id="debug-view" class="hidden" style="background: #1e293b; color: #38bdf8; padding: 12px; margin-bottom: 12px; font-family: monospace; font-size: 11px; border-radius: 12px; white-space: pre-wrap; max-height: 140px; overflow-y: auto;">디버그 대기 중...</div>
         
-        <div id="charts-container-section" class="space-y-3 transition-all">
-
-            <!-- 여유롭고 정돈된 제어 패널 -->
-            <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center flex-wrap gap-2">
-            
-                <!-- 2. 조회 기간 설정 영역 -->
-                <div class="flex flex-wrap justify-between items-center gap-2">
-                    <span class="text-xs font-bold text-slate-500">📅 조회 기간 설정</span>
-                    <div class="flex items-center gap-1.5">
-                        <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
-                        <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
-                        <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 국내 증시</h2>
-                        <div id="chips-domestic" class="flex items-center gap-1"></div>
-                    </div>
-                    
-                    <div class="relative w-full h-44">
-                        <canvas id="chartDomestic"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 글로벌 증시</h2>
-                        <div id="chips-global" class="flex items-center gap-1"></div>
-                    </div>
-
-                    <div class="relative w-full h-44">
-                        <canvas id="chartGlobal"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 환율 및 국채 금리 (보조축)</h2>
-                        <div id="chips-macro" class="flex items-center gap-1"></div>
-                    </div>
-                    
-                    <div class="relative w-full h-44">
-                        <canvas id="chartMacro"></canvas>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 원자재 및 변동성 (보조축)</h2>
-                        <div id="chips-commodity" class="flex items-center gap-1"></div>
-                    </div>
-
-                    <div class="relative w-full h-44">
-                        <canvas id="chartCommodity"></canvas>
-                    </div>
+        <!-- 차트 & 제어 패널 통합 토글 영역 (칩과 제어 패널이 차트와 한 세트로 묶임) -->
+        <div id="chart-toggle-section" class="space-y-4 transition-all">
+        
+        <!-- 여유롭고 정돈된 제어 패널 -->
+        <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-gray-100 space-y-4">
+            <!-- 1. 지수 선택 칩 영역 -->
+            <div>
+                <div class="text-xs font-bold text-slate-500 mb-2">📊 지수 단독 선택</div>
+                <div id="series-chips" class="flex flex-wrap gap-1.5 p-0.5">
+                    <!-- JS로 동적 생성 -->
                 </div>
             </div>
+
+            <!-- 구분선 -->
+            <div class="border-t border-slate-100"></div>
+            
+            <!-- 2. 조회 기간 설정 영역 -->
+            <div class="flex flex-wrap justify-between items-center gap-2">
+                <div class="text-xs font-bold text-slate-500">📅 조회 기간 설정</div>
+                <div class="flex items-center gap-1.5">
+                    <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
+                    <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
+                    <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 단일 통합 종합 지수 트렌드 차트 -->
+        <section class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex justify-between items-center mb-3">
+                <h2 id="chart-title" class="text-xs sm:text-sm font-bold text-slate-700">📈 전체 주요 지수 통합 트렌드 및 변곡점</h2>
+                <span class="text-[10px] bg-blue-50 text-blue-600 font-semibold px-2.5 py-1 rounded-lg">일자별 마감 뷰</span>
+            </div>
+            <div class="relative w-full h-72 sm:h-80">
+                <canvas id="quantChart"></canvas>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-3">💡 하루 중 여러 번 수집된 데이터 중 <strong>가장 마지막(국장 15:55 / 미장 익일 07:00 등 최종 마감) 값</strong>만 압축하여 부드럽게 시각화됩니다.</p>
+        </section>
         </div>
         
         <!-- AI가 생성한 카드 영역 (본문) -->
