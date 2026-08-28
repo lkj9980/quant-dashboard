@@ -173,15 +173,24 @@ def save_to_backtest_csv(ai_text, today_date):
     if not match: return
     
     data = json.loads(match.group(1).strip())
-
+    
     row_data = {
         "Date": today_date,
-        "A_Kospi200": data["portfolio_a"]["kospi200_weight"],
-        "A_Kosdaq150": data["portfolio_a"]["kosdaq150_weight"],
-        "A_Nasdaq100": data["portfolio_a"]["nasdaq100_weight"],
+        # Portfolio A (일반 계좌: 레버/인버스 6개 + 현금)
+        "A_Kospi200_Lev": data["portfolio_a"]["kospi200_lev_weight"],
+        "A_Kospi200_Inv": data["portfolio_a"]["kospi200_inv_weight"],
+        "A_Kosdaq150_Lev": data["portfolio_a"]["kosdaq150_lev_weight"],
+        "A_Kosdaq150_Inv": data["portfolio_a"]["kosdaq150_inv_weight"],
+        "A_Nasdaq100_Lev": data["portfolio_a"]["nasdaq100_lev_weight"],
+        "A_Nasdaq100_Inv": data["portfolio_a"]["nasdaq100_inv_weight"],
         "A_Cash": data["portfolio_a"]["cash_weight"],
-        "B_Risky": data["portfolio_b"]["risky_total_weight"],
-        "B_Safe": data["portfolio_b"]["safe_total_weight"],
+        
+        # Portfolio B (퇴직연금 DC/IRP: 위험자산 총합/안전자산 총합 + 상세 세부)
+        "B_Kospi200": data["portfolio_b"]["kospi200_weight"],
+        "B_Kosdaq150": data["portfolio_b"]["kosdaq150_weight"],
+        "B_Nasdaq100": data["portfolio_b"]["nasdaq100_weight"],
+        "B_US_Treasury_30Y": data["portfolio_b"]["us_treasury_30y_weight"],
+        "B_DC_IRP_Cash": data["portfolio_b"]["dc_irp_cash_weight"],
     }
     
     df_new = pd.DataFrame([row_data])
