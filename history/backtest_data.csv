@@ -1,2 +1,3 @@
-﻿Date,A_Kospi200,A_Kosdaq150,A_Nasdaq100,A_Cash,B_Risky,B_Safe
-2026-08-28,0.2,0.1,0.5,0.2,0.7,0.3
+﻿Date,A_Kospi200,A_Kosdaq150,A_Nasdaq100,A_Cash,B_Risky,B_Safe,A_Kospi200_Lev,A_Kospi200_Inv,A_Kosdaq150_Lev,A_Kosdaq150_Inv,A_Nasdaq100_Lev,A_Nasdaq100_Inv,B_Kospi200,B_Kosdaq150,B_Nasdaq100,B_US_Treasury_30Y,B_DC_IRP_Cash
+2026-08-28,0.2,0.1,0.5,0.2,0.7,0.3,,,,,,,,,,,
+2026-08-29,,,,40.0,,,0.0,20.0,0.0,0.0,40.0,0.0,10.0,10.0,50.0,20.0,10.0
