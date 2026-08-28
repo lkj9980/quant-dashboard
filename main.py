@@ -270,73 +270,62 @@ def generate_html(today_date, current_time, ai_html_content):
         <div id="charts-container-section" class="space-y-3 transition-all">
 
         <!-- 여유롭고 정돈된 제어 패널 -->
-        <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center flex-wrap gap-2">
-                     
-            <!-- 2. 조회 기간 설정 영역 -->
-            <div class="flex flex-wrap justify-between items-center gap-2">
-                <span class="text-xs font-bold text-slate-500">📅 조회 기간 설정</span>
-                <div class="flex items-center gap-1.5">
-                    <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
-                    <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
-                    <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
-                </div>
+        <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center flex-wrap gap-2">                    
+        
+        <!-- 2. 조회 기간 설정 영역 -->
+        <div class="flex flex-wrap justify-between items-center gap-2">
+            <span class="text-xs font-bold text-slate-500">📅 조회 기간 설정</span>
+            <div class="flex items-center gap-1.5">
+                <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
+                <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
+                <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
             </div>
-            <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 국내 증시</h2>
-                        <div id="chips-domestic" class="flex items-center gap-1"></div>
-                    </div>
+        </div>
+        <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
+            <div class="flex justify-between items-center flex-wrap gap-1">
+                <h2 class="text-xs font-bold text-slate-700">📈 국내 증시</h2>
+                <div id="chips-domestic" class="flex items-center gap-1"></div>
+            </div>
+            
+            <div class="relative w-full h-44">
+                <canvas id="chartDomestic"></canvas>
+            </div>
+        </div>
 
-                    <div class="relative w-full h-44">
-                        <canvas id="chartDomestic"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 글로벌 증시</h2>
-                        <div id="chips-global" class="flex items-center gap-1"></div>
-                    </div>
-
-                    <div class="relative w-full h-44">
-                        <canvas id="chartGlobal"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 글로벌 증시</h2>
-
-                        <div id="chips-global" class="flex items-center gap-1"></div>
-                    </div>
-
-                    <div class="relative w-full h-44">
-                        <canvas id="chartGlobal"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 환율 및 국채 금리 (보조축)</h2>
-                        <div id="chips-macro" class="flex items-center gap-1"></div>
-                    </div>
-
-                    <div class="relative w-full h-44">
-                        <canvas id="chartMacro"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 원자재 및 변동성 (보조축)</h2>
-                        <div id="chips-commodity" class="flex items-center gap-1"></div>
-                    </div>
-
-                    <div class="relative w-full h-44">
-                        <canvas id="chartCommodity"></canvas>
-                    </div>
-                </div>
+        <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
+            <div class="flex justify-between items-center flex-wrap gap-1">
+                <h2 class="text-xs font-bold text-slate-700">📈 글로벌 증시</h2>
+                <div id="chips-global" class="flex items-center gap-1"></div>
             </div>
+
+            <div class="relative w-full h-44">
+                <canvas id="chartGlobal"></canvas>
+            </div>
+        </div>
+
+        <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
+            <div class="flex justify-between items-center flex-wrap gap-1">
+                <h2 class="text-xs font-bold text-slate-700">📈 환율 및 국채 금리 (보조축)</h2>
+                <div id="chips-macro" class="flex items-center gap-1"></div>
+            </div>
+
+            <div class="relative w-full h-44">
+                <canvas id="chartMacro"></canvas>
+            </div>
+        </div>
+
+        <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
+            <div class="flex justify-between items-center flex-wrap gap-1">
+                <h2 class="text-xs font-bold text-slate-700">📈 원자재 및 변동성 (보조축)</h2>
+                <div id="chips-commodity" class="flex items-center gap-1"></div>
+            </div>
+
+            <div class="relative w-full h-44">
+                <canvas id="chartCommodity"></canvas>
+            </div>
+        </div>
+        
+        </div>
         </div>
         
         <!-- AI가 생성한 카드 영역 (본문) -->
