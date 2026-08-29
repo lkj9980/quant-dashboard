@@ -234,122 +234,20 @@ def generate_html(today_date, current_time, ai_html_content):
     
     # 개별 일일 리포트 파일 경로
     daily_filename = f"history/{current_time}.html"
-    
-    # 공통 HTML 템플릿
-    html_template = f"""<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Quant Dashboard - {today_date}</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="bg-slate-50 text-slate-800 p-4 sm:p-6 max-w-4xl mx-auto">
-    <!-- Top Title Area -->
-    <header class="mb-5 mt-2 flex justify-between items-center flex-wrap gap-3">
-        <div>
-            <h1 class="text-xl sm:text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
-            <p class="text-xs text-slate-500 mt-0.5">최신 매크로 시황 및 실시간 퀀트 분석 결과 (2026-08-25)</p>
-        </div>
-        <div class="flex items-center gap-2">
-            <button onclick="toggleChartSection()" class="text-xs bg-indigo-600 text-white hover:bg-indigo-700 px-3 py-2 rounded-xl font-bold transition shadow-sm">차트</button>
-            <button onclick="toggleDebug()" class="text-xs bg-slate-800 text-slate-200 hover:bg-slate-700 px-3 py-2 rounded-xl font-bold transition shadow-sm">디버그</button>
-            <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-2 rounded-xl font-bold transition shadow-sm">메인으로</a>
-        </div>
-    </header>
-    
-    <!-- 메인 콘텐츠 영역 (시원시원한 여백 확보) -->
-    <main class="space-y-5">
+
+    # 1. 외부 HTML 템플릿 파일 읽어오기
+    template_path = "report_template.html"
+    with open(template_path, "r", encoding="utf-8") as f:
+        html_template = f.read()
         
-        <!-- 디버그 뷰어 박스 -->
-        <div id="debug-view" class="hidden" style="background: #1e293b; color: #38bdf8; padding: 12px; margin-bottom: 12px; font-family: monospace; font-size: 11px; border-radius: 12px; white-space: pre-wrap; max-height: 140px; overflow-y: auto;">디버그 대기 중...</div>
-        
-        <div id="charts-container-section" class="space-y-3 transition-all">
+    # 2. 동적 데이터(날짜 및 AI 본문 내용) 치환
+    html_template = html_template.replace("{{date}}", today_date_str)
+    html_template = html_template.replace("{{ai_html_content}}", ai_html_content)  # 이 부분 추가!
 
-            <!-- 여유롭고 정돈된 제어 패널 -->
-            <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center flex-wrap gap-2">
-            
-                <!-- 2. 조회 기간 설정 영역 -->
-                <div class="flex flex-wrap justify-between items-center gap-2">
-                    <span class="text-xs font-bold text-slate-500">📅 조회 기간 설정</span>
-                    <div class="flex items-center gap-1.5">
-                        <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
-                        <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
-                        <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 국내 증시</h2>
-                        <div id="chips-domestic" class="flex items-center gap-1"></div>
-                    </div>
-                    
-                    <div class="relative w-full h-44">
-                        <canvas id="chartDomestic"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 글로벌 증시</h2>
-                        <div id="chips-global" class="flex items-center gap-1"></div>
-                    </div>
-
-                    <div class="relative w-full h-44">
-                        <canvas id="chartGlobal"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 환율 및 국채 금리 (보조축)</h2>
-                        <div id="chips-macro" class="flex items-center gap-1"></div>
-                    </div>
-                    
-                    <div class="relative w-full h-44">
-                        <canvas id="chartMacro"></canvas>
-                    </div>
-                </div>
-                
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 원자재 및 변동성 (보조축)</h2>
-                        <div id="chips-commodity" class="flex items-center gap-1"></div>
-                    </div>
-
-                    <div class="relative w-full h-44">
-                        <canvas id="chartCommodity"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- AI가 생성한 카드 영역 (본문) -->
-        <div>
-            {ai_html_content}
-        </div>
-        
-    </main>
-
-    <!-- 푸터 -->
-    <footer class="text-center text-[11px] text-slate-400 mt-8 mb-4">
-        Last Updated: {current_time} • Powered by GitHub Pages & Gemini AI
-    </footer>
-    
-    <!-- CSV를 읽어서 차트를 그려주는 자바스크립트 -->
-    <script src="../Chart2.js"></script>
-        
-</body>
-</html>"""
-    
-    # 오늘 날짜 파일로 아카이브 저장
+    # 3. 오늘 날짜 아카이브 파일로 저장
     with open(daily_filename, 'w', encoding='utf-8') as f:
         f.write(html_template)
-
+    
     # 2. history 폴더에 있는 모든 리포트 목록을 읽어서 메인 index.html의 아카이브 목록 구성
     files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)    
         
