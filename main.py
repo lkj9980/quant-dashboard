@@ -241,9 +241,10 @@ def generate_html(today_date, current_time, ai_html_content):
         html_template = f.read()
         
     # 2. 동적 데이터(날짜 및 AI 본문 내용) 치환
-    html_template = html_template.replace("{{date}}", today_date_str)
-    html_template = html_template.replace("{{ai_html_content}}", ai_html_content)  # 이 부분 추가!
-
+    html_template = html_template.replace("{today_date}", today_date)
+    html_template = html_template.replace("{ai_html_content}", ai_html_content)  # 이 부분 추가!
+    html_template = html_template.replace("{current_time}", current_time)
+    
     # 3. 오늘 날짜 아카이브 파일로 저장
     with open(daily_filename, 'w', encoding='utf-8') as f:
         f.write(html_template)
