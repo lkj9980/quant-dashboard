@@ -300,14 +300,14 @@ def generate_html(today_date, current_time, ai_html_content):
 </html>"""
 
     # 1. 외부 HTML 템플릿 파일 읽어오기
-    index_template_path = "Html/report_template.html"
+    index_template_path = "Html/index_template.html"
     with open(index_template_path, "r", encoding="utf-8") as f:
         index_template = f.read()
         
     # 2. 동적 데이터(날짜 및 AI 본문 내용) 치환
-    html_template = html_template.replace("{today_date}", today_date)
-    html_template = html_template.replace("{archive_links}", archive_links)  # 이 부분 추가!
-    html_template = html_template.replace("{daily_filename}", daily_filename)
+    index_template = index_template.replace("{today_date}", today_date)
+    index_template = index_template.replace("{archive_links}", archive_links)  # 이 부분 추가!
+    index_template = index_template.replace("{daily_filename}", daily_filename)
     
     # 메인 index.html 갱신
     with open('index.html', 'w', encoding='utf-8') as f:
