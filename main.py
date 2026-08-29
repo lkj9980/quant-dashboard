@@ -341,7 +341,7 @@ def generate_html(today_date, current_time, ai_html_content):
     </footer>
     
     <!-- CSV를 읽어서 차트를 그려주는 자바스크립트 -->
-    <script src="../chart.js"></script>
+    <script src="../Chart2.js"></script>
         
 </body>
 </html>"""
