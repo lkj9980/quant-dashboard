@@ -31,15 +31,13 @@
         <div id="debug-view" class="hidden" style="background: #1e293b; color: #38bdf8; padding: 12px; margin-bottom: 12px; font-family: monospace; font-size: 11px; border-radius: 12px; white-space: pre-wrap; max-height: 140px; overflow-y: auto;">디버그 대기 중...</div>
         
         <div id="charts-container-section" class="space-y-3 transition-all">
-
-            <!-- 여유롭고 정돈된 제어 패널 -->
-            <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-wrap justify-between items-center gap-3">
-                <!-- 2. 조회 기간 설정 영역 -->
-                <span class="text-xs font-bold text-slate-500">📅 조회 기간 설정</span>
-                <div class="flex items-center gap-1.5 ml-auto sm:ml-auto">
-                    <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
-                    <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
-                    <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
+            <!-- 여유롭고 정돈된 제어 패널 (공백 없는 완벽한 구조) -->
+            <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center flex-wrap gap-2">
+                <span class="text-xs font-bold text-slate-500">📅 조회 기간 설정 (전체 차트 공통)</span>
+                <div class="flex items-center gap-1">
+                    <button onclick="setPeriod(20)" id="btn-20" class="text-[11px] px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
+                    <button onclick="setPeriod(60)" id="btn-60" class="text-[11px] px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
+                    <button onclick="setPeriod(999)" id="btn-all" class="text-[11px] px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체</button>
                 </div>
             </div>
                 
