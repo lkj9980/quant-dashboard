@@ -31,7 +31,7 @@
             if (box) box.classList.toggle('hidden');
         }
 
-        function toggleChartsSection() {
+        function toggleChartSection() {
             const section = document.getElementById('charts-container-section');
             if (section) {
                 section.classList.toggle('hidden');
