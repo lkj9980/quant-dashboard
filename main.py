@@ -236,7 +236,7 @@ def generate_html(today_date, current_time, ai_html_content):
     daily_filename = f"history/{current_time}.html"
 
     # 1. 외부 HTML 템플릿 파일 읽어오기
-    template_path = "report_template.html"
+    template_path = "Html/report_template.html"
     with open(template_path, "r", encoding="utf-8") as f:
         html_template = f.read()
         
