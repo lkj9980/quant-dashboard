@@ -33,10 +33,10 @@
         <div id="charts-container-section" class="space-y-3 transition-all">
 
             <!-- 여유롭고 정돈된 제어 패널 -->
-            <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-wrap justify-between items-center gap-3">
                 <!-- 2. 조회 기간 설정 영역 -->
                 <span class="text-xs font-bold text-slate-500">📅 조회 기간 설정</span>
-                <div class="flex items-center gap-1.5">
+                <div class="flex items-center gap-1.5 ml-auto sm:ml-auto">
                     <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
                     <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
                     <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
