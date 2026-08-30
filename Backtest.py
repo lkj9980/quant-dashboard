@@ -26,7 +26,7 @@ def run_backtest():
         print(f"[에러] 로그 파일('{log_file}')을 찾을 수 없습니다. 경로를 확인해주세요.")
         return
 
-    df_log['Date'] = pd.to_datetime(df_log['Date']).dt.normalize()
+    df_log['Date'] = pd.to_datetime(df_log['Date'], format="mixed")
     df_log = df_log.sort_values('Date').reset_index(drop=True)
     
     # 3. 기간 설정 (YAML에 지정되어 있으면 그에 따르고, 없으면 로그의 전체 기간 사용)
