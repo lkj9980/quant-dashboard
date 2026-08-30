@@ -1,1 +1,18 @@
-
+{
+  "portfolio_a": {
+    "kospi200_lev_weight": 0.0,
+    "kospi200_inv_weight": 0.0,
+    "kosdaq150_lev_weight": 0.0,
+    "kosdaq150_inv_weight": 0.0,
+    "nasdaq100_lev_weight": 0.0,
+    "nasdaq100_inv_weight": 0.0,
+    "cash_weight": 100.0
+  },
+  "portfolio_b": {
+    "kospi200_weight": 0.0,
+    "kosdaq150_weight": 0.0,
+    "nasdaq100_weight": 0.0,
+    "us_treasury_30y_weight": 0.0,
+    "dc_irp_cash_weight": 100.0
+  }
+}
