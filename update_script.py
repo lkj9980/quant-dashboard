@@ -31,6 +31,16 @@ else:
                 # 유연하게 기존 chart.js 관련 스크립트 태그를 통째로 교체하려면 아래처럼 패턴을 맞추거나
                 # 정규식을 쓸 수 있지만, 일단 가장 안전한 문자열 치환 방식을 사용합니다.
                 updated_content = content
+                updated_content = updated_content.replace(cdn_script, replacement_str)
+                
+                # 파일명에서 숫자들만 추출해서 날짜 객체로 변환 (예: 2026-08-29 00:38 또는 2026-08-29_00-38 등 대응)
+                match = re.search(r"(\d{4})[^\d]?(\d{2})[^\d]?(\d{2})[^\d]?(\d{2})[^\d]?(\d{2})", filename)
+                if not match:
+                    continue
+                    
+                file_dt = datetime(*map(int, match.groups()))
+                split_dt = datetime(2026, 8, 29, 0, 38)
+
                 # 2026-08-29 00:38 기준 분기
                 if file_dt < split_dt:
                     replacement_str = '<script src="../html/chart.js"></script>'
