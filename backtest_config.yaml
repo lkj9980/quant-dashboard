@@ -15,14 +15,41 @@ capital:
 
 # 3. 매매 대상 티커 및 로그 CSV 컬럼 매핑 설정
 # (quant_log.csv에 기록되는 비중 컬럼명과 야후 파이낸스 티커를 연결합니다)
+# [Portfolio A & B 전체 자산군 매핑]
 assets:
-  - name: "KOSPI200_Lev"
-    ticker: "252670.KS"       # KODEX 200선물레버리지
-    weight_column: "Lev_Weight"  # CSV에서 이 비중 값을 읽어옴
+  # Portfolio A (일반 계좌)
+  - name: "A_Kospi200_Lev"
+    ticker: "252670.KS"
+    weight_column: "A_Kospi200_Lev"
+  - name: "A_Kospi200_Inv"
+    ticker: "252660.KS"
+    weight_column: "A_Kospi200_Inv"
+  - name: "A_Kosdaq150_Lev"
+    ticker: "233740.KS"
+    weight_column: "A_Kosdaq150_Lev"
+  - name: "A_Kosdaq150_Inv"
+    ticker: "251340.KS"
+    weight_column: "A_Kosdaq150_Inv"
+  - name: "A_Nasdaq100_Lev"
+    ticker: "379800.KS" # 예시 티커 (TIGER 미국나스닥100레버리지 등 상황에 맞게 조정)
+    weight_column: "A_Nasdaq100_Lev"
+  - name: "A_Nasdaq100_Inv"
+    ticker: "381180.KS" # 예시 티커
+    weight_column: "A_Nasdaq100_Inv"
     
-  - name: "KOSDAQ_Inv"
-    ticker: "251340.KS"       # KODEX 코스닥150선물인버스
-    weight_column: "Inv_Weight"  # CSV에서 이 비중 값을 읽어옴
+  # Portfolio B (퇴직연금 DC/IRP - 위험/안전자산 세부 매핑)
+  - name: "B_Kospi200"
+    ticker: "069500.KS" # KODEX 200
+    weight_column: "B_Kospi200"
+  - name: "B_Kosdaq150"
+    ticker: "229200.KS" # KODEX 코스닥150
+    weight_column: "B_Kosdaq150"
+  - name: "B_Nasdaq100"
+    ticker: "133690.KS" # TIGER 미국나스닥100
+    weight_column: "B_Nasdaq100"
+  - name: "B_US_Treasury_30Y"
+    ticker: "304660.KS" # TIGER 미국채30년선물
+    weight_column: "B_US_Treasury_30Y"
 
 # 4. 파일 경로 설정
 paths:
