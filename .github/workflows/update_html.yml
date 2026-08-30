@@ -1,0 +1,30 @@
+name: Batch Update HTML Script Tags
+
+on:
+  workflow_dispatch: # 원할 때 깃허브 웹에서 수동으로 실행할 수 있음
+  push:
+    paths:
+      - 'update_script.py' # 이 파이썬 스크립트 자체를 올릴 때나 필요시 자동 실행
+
+jobs:
+  update-html:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run HTML update script
+        run: python update_script.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add history/
+          git diff --staged --quiet || git commit -m "Auto-update HTML script tags via GitHub Actions [skip ci]"
+          git push
