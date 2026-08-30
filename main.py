@@ -139,14 +139,14 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
     print("2. Gemini AI 시장 분석 중...")
     
     #1. 백테스트 JSON 템플릿 읽기 및 오늘 날짜 주입
-    with open("backtest_template.json", "r", encoding="utf-8") as f:
+    with open("data/backtest_template.json", "r", encoding="utf-8") as f:
         backtest_json_snippet = f.read()
 
     #genai.configure(api_key=GEMINI_API_KEY)
     #model = genai.GenerativeModel('gemini-3.5-flash')
 
     # 2. 프롬프트 템플릿 읽기 및 raw_text와 백테스트 스니펫 주입
-    with open("prompt_template.txt", "r", encoding="utf-8") as f:
+    with open("data/prompt_template.txt", "r", encoding="utf-8") as f:
         template_str = f.read()
 
     # 3. 최종 프롬프트 완료 
