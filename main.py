@@ -236,7 +236,7 @@ def generate_html(today_date, current_time, ai_html_content):
     daily_filename = f"history/{current_time}.html"
 
     # 1. 외부 HTML 템플릿 파일 읽어오기
-    template_path = "Html/report_template.html"
+    template_path = "html/report_template.html"
     with open(template_path, "r", encoding="utf-8") as f:
         html_template = f.read()
         
@@ -264,7 +264,7 @@ def generate_html(today_date, current_time, ai_html_content):
 
     # 메인 인덱스 페이지 (아카이브 허브 역할 + 오늘자 내용 병행 표시)
     # 1. 외부 HTML 템플릿 파일 읽어오기
-    index_template_path = "Html/index_template.html"
+    index_template_path = "html/index_template.html"
     with open(index_template_path, "r", encoding="utf-8") as f:
         index_template = f.read()
         
