@@ -5,7 +5,7 @@ import numpy as np
 
 def run_backtest():
     # 1. 설정 파일 로드
-    config_path = "backtest_config.yaml"
+    config_path = "data/backtest_config.yaml"
     if not os.path.exists(config_path):
         raise FileNotFoundError(f"설정 파일({config_path})을 찾을 수 없습니다.")
         
