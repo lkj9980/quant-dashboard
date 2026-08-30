@@ -33,7 +33,7 @@ def run_backtest():
     start_date = config['period']['start_date'] or df_log['Date'].min().strftime('%Y-%m-%d')
     end_date = config['period']['end_date'] or df_log['Date'].max().strftime('%Y-%m-%d')
     
-    print(📌 검증 기간: {start_date} ~ {end_date} | 초기 자산: {init_cap:,.0f}원)
+    print(f"📌 검증 기간: {start_date} ~ {end_date} | 초기 자산: {init_cap:,.0f}원")
     
     # 4. 야후 파이낸스에서 자산별 가격 데이터 수집
     tickers = [asset['ticker'] for asset in assets]
