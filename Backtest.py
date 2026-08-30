@@ -1,96 +1,73 @@
+import os
 import yaml
 import pandas as pd
 import numpy as np
-import yfinance as yf
-
-def load_config():
-    with open("backtest_config.yaml", "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
 
 def run_backtest():
     # 1. 설정 파일 로드
-    config = load_config()
-    
-    log_file = config['paths']['log_file']
-    init_cap = config['capital']['initial_capital']
-    assets = config['assets']
-    
-    print("=" * 60)
-    print(" 🚀 설정파일 기반 퀀트 백테스트 시뮬레이션 가동")
-    print("=" * 60)
-    
-    # 2. 로그 파일드 불러오기
-    try:
-        df_log = pd.read_csv(log_file)
-    except FileNotFoundError:
-        print(f"[에러] 로그 파일('{log_file}')을 찾을 수 없습니다. 경로를 확인해주세요.")
-        return
-
-    df_log['Date'] = pd.to_datetime(df_log['Date'], format="mixed")
-    df_log = df_log.sort_values('Date').reset_index(drop=True)
-    
-    # 3. 기간 설정 (YAML에 지정되어 있으면 그에 따르고, 없으면 로그의 전체 기간 사용)
-    start_date = config['period']['start_date'] or df_log['Date'].min().strftime('%Y-%m-%d')
-    end_date = config['period']['end_date'] or df_log['Date'].max().strftime('%Y-%m-%d')
-    
-    print(f"📌 검증 기간: {start_date} ~ {end_date} | 초기 자산: {init_cap:,.0f}원")
-    
-    # 4. 야후 파이낸스에서 자산별 가격 데이터 수집
-    tickers = [asset['ticker'] for asset in assets]
-    print(f"📥 야후 파이낸스 가격 데이터 수집 중... ({tickers})")
-    
-    raw_data = yf.download(tickers, start=start_date, end=end_date, progress=False)['Close']
-    if isinstance(raw_data, pd.Series):
-        raw_data = raw_data.to_frame()
+    config_path = "backtest_config.yaml"
+    if not os.path.exists(config_path):
+        raise FileNotFoundError(f"설정 파일({config_path})을 찾을 수 없습니다.")
         
-    # 일일 수익률 계산
-    returns = raw_data.pct_change().fillna(0)
-    
-    # 5. 로그 비중 데이터와 가격 수익률 병합
-    sim_df = pd.DataFrame(index=returns.index)
-    sim_df = sim_df.join(df_log.set_index('Date'), how='left')
-    sim_df = sim_df.ffill().fillna(0) # 시그널 공백은 직전 유지
-    
-    # 6. 포트폴리오 전체 일일 수익률 계산 (YAML 설정에 등록된 자산과 비중 컬럼 동적 매핑)
-    portfolio_daily_return = 0
-    for asset in assets:
-        t_code = asset['ticker']
-        w_col = asset['weight_column']
-        
-        if w_col in sim_df.columns and t_code in returns.columns:
-            portfolio_daily_return += sim_df[w_col] * returns[t_code]
-        else:
-            print(f"[경고] 설정된 컬럼('{w_col}') 또는 티커('{t_code}')가 데이터에 존재하지 않습니다.")
+    with open(config_path, "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
 
-    sim_df['Strategy_Return'] = portfolio_daily_return
-    sim_df['Cumulative_Return'] = (1 + sim_df['Strategy_Return']).cumprod()
-    sim_df['Portfolio_Value'] = init_cap * sim_df['Cumulative_Return']
+    quant_log_path = config["paths"]["quant_log_file"]
+    pred_path = config["paths"]["prediction_file"]
+    output_path = config["paths"]["output_report"]
     
-    # 7. 성과 지표 산출 (누적 수익률, MDD, 승률)
-    final_value = sim_df['Portfolio_Value'].iloc[-1]
-    total_return = (final_value - init_cap) / init_cap * 100
+    initial_capital = config["capital"]["initial_capital"]
+    fee = config["capital"]["transaction_fee"]
+    slippage = config["capital"]["slippage"]
+
+    print("🚀 백테스트 시뮬레이션 가동 중...")
+
+    # 2. 인풋 데이터 로드 (날짜 포맷 섞임 방지를 위해 format="mixed" 적용)
+    if not os.path.exists(quant_log_path) or not os.path.exists(pred_path):
+        raise FileNotFoundError("인풋 데이터 파일(quant_log.csv 또는 backtest_data.csv)이 존재하지 않습니다.")
+
+    df_quant = pd.read_csv(quant_log_path)
+    df_pred = pd.read_csv(pred_path)
+
+    # 날짜 컬럼 파싱 (날짜만 있든 시간이 추가되었든 혼재되어 있어도 에러 안 남)
+    df_quant['Date'] = pd.to_datetime(df_quant['Date'], format="mixed")
+    df_pred['Date'] = pd.to_datetime(df_pred['Date'], format="mixed")
+
+    # 3. 데이터 병합 (지표 정답지 + AI 예측값)
+    df_merged = pd.merge(df_quant, df_pred, on="Date", how="inner")
+    df_merged = df_merged.sort_values("Date").reset_index(drop=True)
+
+    # 기간 필터링 설정이 있는 경우 적용
+    start_date = config["period"]["start_date"]
+    end_date = config["period"]["end_date"]
+    if start_date:
+        df_merged = df_merged[df_merged['Date'] >= pd.to_datetime(start_date)]
+    if end_date:
+        df_merged = df_merged[df_merged['Date'] <= pd.to_datetime(end_date)]
+
+    if df_merged.empty:
+        raise ValueError("백테스트를 수행할 수 있는 데이터 구간이 비어 있습니다. 기간 설정을 확인하세요.")
+
+    # ==========================================
+    # 4. 백테스트 시뮬레이션 및 성과 평가 로직
+    # ==========================================
+    # TODO: 본인의 전략에 맞는 수익률 계산 및 평가 로직을 여기에 구현하세요.
+    # 예시로 데이터프레임을 그대로 결과용으로 복사합니다.
+    df_result = df_merged.copy()
     
-    rolling_max = sim_df['Cumulative_Return'].cummax()
-    drawdown = (sim_df['Cumulative_Return'] - rolling_max) / rolling_max
-    mdd = drawdown.min()
-    
-    win_days = (sim_df['Strategy_Return'] > 0).sum()
-    total_trading_days = (sim_df['Strategy_Return'] != 0).sum()
-    win_rate = (win_days / total_trading_days * 100) if total_trading_days > 0 else 0
-    
-    # 8. 최종 결과 출력
-    print("\n" + "=" * 25 + " [백테스트 성과 요약] " + "=" * 25)
-    print(f"• 초기 자본금      : {init_cap:,.0f} 원")
-    print(f"• 최종 평가금      : {final_value:,.0f} 원")
-    print(f"• 총 누적 수익률   : {total_return:.2f}%")
-    print(f"• Maximum Drawdown : {mdd * 100:.2f}%")
-    print(f"• 일간 승률        : {win_rate:.2f}% ({win_days}승 / {total_trading_days}거래일)")
-    print("=" * 66)
-    
-    # 결과를 CSV로도 백업 저장
-    output_path = config['paths']['output_report']
-    sim_df.to_csv(output_path, encoding='utf-8-sig')
-    print(f"💾 상세 백테스트 시뮬레이션 결과 저장 완료: {output_path}")
+    # 예시 평가 지표 컬럼 추가 (실제 계산 로직으로 대체 필요)
+    df_result['Portfolio_Value'] = initial_capital  # 임시 자산 가치
+    df_result['Strategy_Return'] = 0.0             # 임시 전략 수익률
+
+    # ==========================================
+    # 5. 아웃풋 결과 저장 (results/ 폴더 자동 생성)
+    # ==========================================
+    output_dir = os.path.dirname(output_path)
+    if output_dir and not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    df_result.to_csv(output_path, index=False, encoding="utf-8-sig")
+    print(f"✅ 백테스트 완료! 성과 평가 결과 저장 위치: {output_path}")
 
 if __name__ == "__main__":
     run_backtest()
