@@ -53,5 +53,6 @@ assets:
 
 # 4. 파일 경로 설정
 paths:
-  log_file: "data/quant_log.csv"
-  output_report: "data/backtest_data.csv"
+  quant_log_file: "data/quant_log.csv"         # 1. 지표 데이터 (정답지)
+  prediction_file: "data/backtest_data.csv"    # 2. AI 예측값 (시그널)
+  output_report: "results/backtest_result.csv" # 3. 백테스트 평가 결과 (아웃풋)
