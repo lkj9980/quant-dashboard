@@ -41,5 +41,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           # 백테스트 실행 결과로 생성되거나 갱신된 파일 추가 (설정 파일이나 결과 CSV 등)
-          git add backtest_result.csv quant_log.csv
+          git add data/backtest_data.csv data/quant_log.csv
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-execute weekly backtest [skip ci]" && git push)
