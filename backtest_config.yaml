@@ -26,5 +26,5 @@ assets:
 
 # 4. 파일 경로 설정
 paths:
-  log_file: "history/quant_log.csv"
-  output_report: "history/backtest_data.csv"
+  log_file: "data/quant_log.csv"
+  output_report: "data/backtest_data.csv"
