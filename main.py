@@ -102,7 +102,7 @@ def analyze_index_turning_points():
     return "\n".join(signals)
 
 def append_to_quant_log(current_time, ticker_values):
-    csv_filename = "history/quant_log.csv"
+    csv_filename = "data/quant_log.csv"
     file_exists = os.path.isfile(csv_filename)
     with open(csv_filename, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
@@ -194,7 +194,7 @@ def save_to_backtest_csv(ai_text, today_date):
     }
     
     df_new = pd.DataFrame([row_data])
-    csv_file = "history/backtest_data.csv"
+    csv_file = "data/backtest_data.csv"
     
     try:
         #df_existing = pd.read_csv(csv_file)
