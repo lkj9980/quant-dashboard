@@ -64,7 +64,7 @@ def collect_market_data():
     return "\n".join(data_summary), ticker_values
 
 def analyze_index_turning_points():
-    csv_filename = "history/quant_log.csv"
+    csv_filename = "data/quant_log.csv"
     if not os.path.exists(csv_filename):
         return "아직 누적된 지수 데이터가 없습니다."
     
