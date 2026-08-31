@@ -10,7 +10,7 @@
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 p-4 sm:p-6 max-w-4xl mx-auto">
+<body class="bg-slate-50 text-slate-800 p-4 sm:p-6 max-w-5xl mx-auto">
     <!-- Top Title Area -->
     <header class="mb-5 mt-2 flex justify-between items-center flex-wrap gap-3">
         <div>
@@ -23,8 +23,8 @@
             <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-2 rounded-xl font-bold transition shadow-sm">메인으로</a>
         </div>
     </header>
-    
-    <!-- 메인 콘텐츠 영역 (시원시원한 여백 확보) -->
+  
+    <!-- 메인 콘텐츠 영역 -->
     <main class="space-y-5">
         
         <!-- 디버그 뷰어 박스 -->
@@ -42,51 +42,54 @@
                     <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
                 </div>
             </div>
-                
+
+            <!-- 차트 4개 그리드 레이아웃 (공백 원천 차단형 높이 고정 적용) -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
+                
+                <!-- 1. 국내 증시 -->
+                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-col" style="height: 235px;">
+                    <div class="flex justify-between items-center flex-wrap gap-1 mb-2">
                         <h2 class="text-xs font-bold text-slate-700">📈 국내 증시</h2>
                         <div id="chips-domestic" class="flex items-center gap-1"></div>
                     </div>
-                    
-                    <div class="relative w-full" style="height: 175px;">
-                        <canvas id="chartDomestic"></canvas>
+                    <div class="relative w-full flex-grow">
+                        <canvas id="chartDomestic" class="absolute inset-0 w-full h-full"></canvas>
                     </div>
                 </div>
 
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 글로벌 증시</h2>
-                        <div id="chips-global" class="flex items-center gap-1"></div>
-                    </div>
-
-                    <div class="relative w-full" style="height: 175px;">
-                        <canvas id="chartGlobal"></canvas>
-                    </div>
+                <!-- 2. 글로벌 증시 -->
+                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-col" style="height: 235px;">
+                    <div class="flex justify-between items-center flex-wrap gap-1 mb-2">
+                        <h2 class="text-xs font-bold text-slate-700">📈 글로벌 증시</h2>
+                        <div id="chips-global" class="flex items-center gap-1"></div>
+                    </div>
+                    <div class="relative w-full flex-grow">
+                        <canvas id="chartGlobal" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
                 </div>
 
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 환율 및 국채 금리 (보조축)</h2>
-                        <div id="chips-macro" class="flex items-center gap-1"></div>
-                    </div>
-                    
-                    <div class="relative w-full" style="height: 175px;">
-                        <canvas id="chartMacro"></canvas>
-                    </div>
+                <!-- 3. 환율 및 국채 금리 (보조축) -->
+                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-col" style="height: 235px;">
+                    <div class="flex justify-between items-center flex-wrap gap-1 mb-2">
+                        <h2 class="text-xs font-bold text-slate-700">📈 환율 및 국채 금리 (보조축)</h2>
+                        <div id="chips-macro" class="flex items-center gap-1"></div>
+                    </div>
+                    <div class="relative w-full flex-grow">
+                        <canvas id="chartMacro" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
                 </div>
                 
-                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 space-y-2">
-                    <div class="flex justify-between items-center flex-wrap gap-1">
-                        <h2 class="text-xs font-bold text-slate-700">📈 원자재 및 변동성 (보조축)</h2>
-                        <div id="chips-commodity" class="flex items-center gap-1"></div>
-                    </div>
-
-                    <div class="relative w-full" style="height: 175px;">
-                        <canvas id="chartCommodity"></canvas>
-                    </div>
+                <!-- 4. 원자재 및 변동성 (보조축) -->
+                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-col" style="height: 235px;">
+                    <div class="flex justify-between items-center flex-wrap gap-1 mb-2">
+                        <h2 class="text-xs font-bold text-slate-700">📈 원자재 및 변동성 (보조축)</h2>
+                        <div id="chips-commodity" class="flex items-center gap-1"></div>
+                    </div>
+                    <div class="relative w-full flex-grow">
+                        <canvas id="chartCommodity" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
                 </div>
+
             </div>
         </div>
         
