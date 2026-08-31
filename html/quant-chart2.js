@@ -210,7 +210,7 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: true,
+                    maintainAspectRatio: false,
                     scales: {
                         x: { 
                             grid: { display: false }, 
