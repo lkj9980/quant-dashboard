@@ -215,16 +215,6 @@ def save_to_backtest_csv(ai_text, today_date):
         print(f">> [디버그 5 예외 발생] 파일 읽기/병합 중 에러: {e}")
         df_final = df_new
 
-    # 1. 파일이 없으면 헤더 포함해서 새로 생성 (w 모드)
-    if not os.path.exists(csv_file):
-        df_new.to_csv(csv_file, index=False, encoding="utf-8-sig")
-        print(f">> [신규 생성] backtest_data.csv 파일이 없어 새로 만들었습니다.")
-    
-    # 2. 파일이 이미 있으면 헤더 없이 밑에 이어붙이기 (a 모드)
-    else:
-        df_new.to_csv(csv_file, mode='a', header=False, index=False, encoding="utf-8-sig")
-        print(f">> [누적 추가] 기존 backtest_data.csv에 {today_date} 데이터를 Append 했습니다.")
-        
     df_final.to_csv(csv_file, index=False, encoding="utf-8-sig")
     print(f">> [백테스트 데이터 저장 성공] {today_date} 비중이 backtest_data.csv에 동기화되었습니다.")
 
