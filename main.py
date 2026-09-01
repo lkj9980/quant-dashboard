@@ -103,8 +103,7 @@ def analyze_index_turning_points():
 
 def append_to_quant_log(current_time, ticker_values):
     csv_filename = "data/quant_log.csv"
-    print(f"[DEBUG] 실제 저장될 절대 경로: {os.path.abspath(csv_filename)}")
-
+    csv_str = f.read()
     file_exists = os.path.isfile(csv_filename)
     print(f"[DEBUG] 파일 존재 여부: {file_exists}")
     with open(csv_filename, mode='a', newline='', encoding='utf-8') as f:
