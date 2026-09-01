@@ -102,7 +102,7 @@ def analyze_index_turning_points():
     return "\n".join(signals)
 
 def append_to_quant_log(current_time, ticker_values):
-    csv_filename = "data/quant_log.csv"
+    csv_filename = "data/quant_log2.csv"
     
     file_exists = os.path.isfile(csv_filename)
     print(f"[DEBUG] 파일 존재 여부: {file_exists}")
