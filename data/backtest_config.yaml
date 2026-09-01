@@ -4,8 +4,8 @@
 
 # 1. 백테스트 기간 설정 (null로 두면 quant_log.csv에 쌓인 전체 기간 자동 적용)
 period:
-  start_date: null   # 예: "2026-01-01"
-  end_date: null     # 예: "2026-08-27"
+  start_date: 2026-08-17   # 예: "2026-01-01"
+  end_date: 2026-08-27     # 예: "2026-08-27"
 
 # 2. 초기 자본금 및 비용 설정
 capital:
