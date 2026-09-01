@@ -103,13 +103,17 @@ def analyze_index_turning_points():
 
 def append_to_quant_log(current_time, ticker_values):
     csv_filename = "data/quant_log.csv"
+    print(f"[DEBUG] 실제 저장될 절대 경로: {os.path.abspath(csv_filename)}")
+
     file_exists = os.path.isfile(csv_filename)
+    print(f"[DEBUG] 파일 존재 여부: {file_exists}")
     with open(csv_filename, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         if not file_exists:
             writer.writerow(["Date"] + list(ticker_values.keys()))
         writer.writerow([current_time] + list(ticker_values.values()))
-
+        print(f"[DEBUG] 데이터 행 추가 완료: {row_data}")
+        
 def call_gemini_with_retry(client, model_name, prompt_text, max_retries=3, delay=5):
     for attempt in range(1, max_retries + 1):
         try:
