@@ -69,7 +69,7 @@
 
                 let data = "";
                 try {
-                    const response = await fetch('../history/quant_log.csv');
+                    const response = await fetch('../data/quant_log.csv');
                     if (response.ok) {
                         data = await response.text();
                         logDebug("서버 CSV 로드 성공");
