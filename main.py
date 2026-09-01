@@ -112,6 +112,7 @@ def append_to_quant_log(current_time, ticker_values):
         if not file_exists:
             writer.writerow(["Date"] + list(ticker_values.keys()))
         writer.writerow([current_time] + list(ticker_values.values()))
+        row_data = [current_time] + list(ticker_values.values())
         print(f"[DEBUG] 데이터 행 추가 완료: {row_data}")
         
 def call_gemini_with_retry(client, model_name, prompt_text, max_retries=3, delay=5):
