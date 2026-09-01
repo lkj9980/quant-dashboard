@@ -111,10 +111,19 @@ def append_to_quant_log(current_time, ticker_values):
         writer = csv.writer(f)
         if not file_exists:
             writer.writerow(["Date"] + list(ticker_values.keys()))
-        writer.writerow([current_time] + list(ticker_values.values()))
         row_data = [current_time] + list(ticker_values.values())
+        writer.writerow(row_data)
         print(f"[DEBUG] 데이터 행 추가 완료: {row_data}")
-        
+                    
+    # 방금 저장한 CSV 파일을 즉시 다시 읽어서 마지막 Date와 상태 확인
+    if os.path.exists(csv_filename):
+        df = pd.read_csv(csv_filename)
+        if "Date" in df.columns and not df.empty:
+            last_date = df['Date'].iloc[-1]
+            print(f"[DEBUG] CSV 파일 검증 완료 - 마지막 Date: {last_date} (총 {len(df)}개 행 누적됨)")
+        else:
+            print("[DEBUG] CSV 파일에 'Date' 컬럼이 없거나 비어 있습니다.")
+
 def call_gemini_with_retry(client, model_name, prompt_text, max_retries=3, delay=5):
     for attempt in range(1, max_retries + 1):
         try:
