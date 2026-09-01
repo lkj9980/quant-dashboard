@@ -341,7 +341,7 @@ if __name__ == "__main__":
     save_to_backtest_csv(ai_text, today_date)
 
     # 4. HTML 생성
-    #html_template = generate_html(today_date, current_time, ai_text)
+    html_template = generate_html(today_date, current_time, ai_text)
     
     #GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
     #MY_EMAIL = os.environ.get("MY_EMAIL")
