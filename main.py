@@ -103,7 +103,15 @@ def analyze_index_turning_points():
 
 def append_to_quant_log(current_time, ticker_values):
     csv_filename = "data/quant_log.csv"
-    csv_str = f.read()
+    # 방금 저장한 CSV 파일을 즉시 다시 읽어서 마지막 Date와 상태 확인
+    if os.path.exists(csv_filename):
+        df = pd.read_csv(csv_filename)
+        if "Date" in df.columns and not df.empty:
+            last_date = df['Date'].iloc[-1]
+            print(f"[DEBUG] CSV 파일 검증 완료 - 마지막 Date: {last_date} (총 {len(df)}개 행 누적됨)")
+        else:
+            print("[DEBUG] CSV 파일에 'Date' 컬럼이 없거나 비어 있습니다.")
+    
     file_exists = os.path.isfile(csv_filename)
     print(f"[DEBUG] 파일 존재 여부: {file_exists}")
     with open(csv_filename, mode='a', newline='', encoding='utf-8') as f:
