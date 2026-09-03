@@ -23,6 +23,7 @@ def run_backtest_and_generate_report():
     # Updated paths for results and templates
     latest_result_path = config["paths"]["output_report"]
     template_path = config["paths"]["template_file"]
+    history_html_dir = config["paths"]["history_html_dir"]
     
     initial_capital = config["capital"]["initial_capital"]
     fee = config["capital"]["transaction_fee"]
@@ -98,7 +99,7 @@ def run_backtest_and_generate_report():
 
     # 7. history/backtest/ 폴더에 타임스탬프 기반 HTML 아카이브 저장
     timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
-    history_html_dir = "history/backtest"
+    #history_html_dir = "history/backtest"
     os.makedirs(history_html_dir, exist_ok=True)
     history_html_path = os.path.join(history_html_dir, f"backtest_{timestamp}.html")
 
