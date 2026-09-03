@@ -57,3 +57,4 @@ paths:
   prediction_file: "data/backtest_data.csv"    # 2. AI 예측값 (시그널)
   output_report: "results/backtest_result.csv" # 3. 백테스트 평가 결과 (아웃풋)
   template_file: "html/backtest_report_template.html" # 4. 백테스트 HTML 템플릿 (아웃풋)
+  history_html_dir: "history/backtest"
