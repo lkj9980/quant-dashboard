@@ -245,17 +245,18 @@ def generate_html(today_date, current_time, ai_html_content):
     
     # 2. history 폴더에 있는 모든 리포트 목록을 읽어서 메인 index.html의 아카이브 목록 구성
     files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)    
+
+    # 아카이브 개별 아이템용 외부 템플릿 읽기
+    item_template_path = "html/archive_item_template.html"
+    with open(item_template_path, "r", encoding="utf-8") as f:
+        item_template = f.read()
         
     archive_links = ""
     for file in files:
         date_str = file.replace(".html", "")
-        archive_links += f"""
-        <a href="history/{file}" class="block bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:border-blue-400 transition mb-3 flex justify-between items-center">
-            <span class="font-bold text-slate-700">📅 {date_str} 일일 퀀트 리포트</span>
-            <span class="text-xs text-blue-600 font-semibold">보기 &rarr;</span>
-        </a>
-        """
-
+        item_html = item_template.replace("{file}", file).replace("{date_str}", date_str)
+        archive_links += item_html
+        
     # 메인 인덱스 페이지 (아카이브 허브 역할 + 오늘자 내용 병행 표시)
     # 1. 외부 HTML 템플릿 파일 읽어오기
     index_template_path = "html/index_template.html"
