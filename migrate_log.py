@@ -2,8 +2,10 @@ import os
 import shutil
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-src_path = os.path.join(base_dir, "data", "quant_log.csv")
-dst_path = os.path.join(base_dir, "history", "quant_log.csv")
+
+# 예시: 최신 index.html을 history 폴더 쪽으로 백업/아카이브할 때
+src_path = os.path.join(base_dir, "index.html")
+dst_path = os.path.join(base_dir, "index_backup.html")  # 또는 타임스탬프 조합
 
 os.makedirs(os.path.dirname(dst_path), exist_ok=True)
 
