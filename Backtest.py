@@ -21,8 +21,8 @@ def run_backtest_and_generate_report():
     pred_path = config["paths"]["prediction_file"]
     
     # Updated paths for results and templates
-    latest_result_path = "results/backtest_result.csv"
-    template_path = "html/backtest_report_template.html"
+    latest_result_path = config["paths"]["output_report"]
+    template_path = config["paths"]["template_file"]
     
     initial_capital = config["capital"]["initial_capital"]
     fee = config["capital"]["transaction_fee"]
