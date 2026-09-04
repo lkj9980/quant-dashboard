@@ -244,7 +244,18 @@ def generate_html(today_date, current_time, ai_html_content):
         f.write(html_template)
     
     # 2. history 폴더에 있는 모든 리포트 목록을 읽어서 메인 index.html의 아카이브 목록 구성
-    files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)    
+    files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)
+    
+    # 1. 날짜별로 파일 그룹화 (예: {'2026-09-03': ['2026-09-03 15:55.html', ...], ...})
+    grouped_files = defaultdict(list)
+    for file in sorted(files, reverse=True):
+        filename_core = file.replace(".html", "")
+        if " " in filename_core:
+            date_part, _ = filename_core.split(" ")
+        else:
+            date_part = filename_core # 날짜만 있는 구형 파일 포맷 대응
+        grouped_files[date_part].append(file)
+
 
     # 아카이브 개별 아이템용 외부 템플릿 읽기
     item_template_path = "html/archive_item_template.html"
@@ -254,8 +265,16 @@ def generate_html(today_date, current_time, ai_html_content):
     archive_links = ""
     for file in files:
         date_str = file.replace(".html", "")
+        if " " in date_str:
+            _, time_part = filename_core.split(" ")
+            display_text = f"{time_part} 일일 퀀트 리포트"
+            badge_html = get_badge_html(time_part)
+        else:
+            display_text = f"{filename_core} 아카이브 리포트"
+            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">기타</span>'
+
         item_html = item_template.replace("{file}", file)
-        item_html = item_template.replace("{date_str}", date_str)
+        item_html = item_template.replace("{badge_html}", badge_html)
         item_html = item_template.replace("{date_str}", date_str)
         archive_links += item_html
         
@@ -275,7 +294,23 @@ def generate_html(today_date, current_time, ai_html_content):
         f.write(index_template)
         
     return index_template
-    
+
+def get_badge_html(time_part):
+    try:
+        hour = int(time_part.split(":")[0])
+        if 6 <= hour < 9:
+            return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-sky-50 text-sky-600">모닝브리핑</span>'
+        elif 9 <= hour < 12:
+            return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-emerald-50 text-emerald-600">오전시황</span>'
+        elif 12 <= hour < 15:
+            return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-amber-50 text-amber-600">오후시황</span>'
+        elif 15 <= hour < 21:
+            return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-indigo-50 text-indigo-600">장마감</span>'
+        else:
+            return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-purple-50 text-purple-600">야간세션</span>'
+    except:
+        return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">정기발행</span>'
+
 def send_gmail_report(current_time, html_template, GMAIL_APP_PASSWORD,MY_EMAIL):
     # 3. 마크다운을 예쁜 HTML 웹페이지 코드로 변환
     html_body = markdown.markdown(html_template, extensions=['tables', 'fenced_code'])
