@@ -1,4 +1,12 @@
-            <a href="history/{file}" class="block bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:border-blue-400 transition mb-3 flex justify-between items-center">
-                <span class="font-bold text-slate-700">📅 {date_str} 일일 퀀트 리포트</span>
-                <span class="text-xs text-blue-600 font-semibold">보기 &rarr;</span>
-            </a>
+                <a href="history/{file}" class="block bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow transition group">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            {badge}
+                            <div>
+                                <div class="text-xs font-bold text-slate-800 group-hover:text-blue-600 transition">📅 {date_str} 일일 퀀트 리포트</div>
+                                {keystr}
+                            </div>
+                        </div>
+                        <span class="text-xs text-blue-600 font-semibold">보기 &rarr;</span>
+                    </div>
+                </a>
