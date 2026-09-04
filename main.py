@@ -254,7 +254,9 @@ def generate_html(today_date, current_time, ai_html_content):
     archive_links = ""
     for file in files:
         date_str = file.replace(".html", "")
-        item_html = item_template.replace("{file}", file).replace("{date_str}", date_str)
+        item_html = item_template.replace("{file}", file)
+        item_html = item_template.replace("{date_str}", date_str)
+        item_html = item_template.replace("{date_str}", date_str)
         archive_links += item_html
         
     # 메인 인덱스 페이지 (아카이브 허브 역할 + 오늘자 내용 병행 표시)
