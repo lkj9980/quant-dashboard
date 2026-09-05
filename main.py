@@ -222,7 +222,7 @@ def save_to_backtest_csv(ai_text, today_date):
     df_final.to_csv(csv_file, index=False, encoding="utf-8-sig")
     print(f">> [백테스트 데이터 저장 성공] {today_date} 비중이 backtest_data.csv에 동기화되었습니다.")
 
-def generate_html(today_date, current_time, ai_html_content):
+def create_daily_report(today_date, current_time, ai_html_content):
     # 1. 아카이브 폴더 생성
     os.makedirs("history", exist_ok=True)
     
@@ -242,7 +242,28 @@ def generate_html(today_date, current_time, ai_html_content):
     # 3. 오늘 날짜 아카이브 파일로 저장
     with open(daily_filename, 'w', encoding='utf-8') as f:
         f.write(html_template)
+
+    return daily_filename
+
+def get_badge_html(time_part):
+    try:
+        hour = int(time_part.split(":")[0])
+        if 6 <= hour < 9:
+            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-sky-50 text-sky-600">모닝브리핑</span>'
+        elif 9 <= hour < 12:
+            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-emerald-50 text-emerald-600">오전시황</span>'
+        elif 12 <= hour < 15:
+            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-amber-50 text-amber-600">오후시황</span>'
+        elif 15 <= hour < 21:
+            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-indigo-50 text-indigo-600">장마감</span>'
+        else:
+            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-purple-50 text-purple-600">야간세션</span>'
+    except:
+        return badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">정기발행</span>'
+        
+    return badge_html
     
+def build_archive_links():
     # 2. history 폴더에 있는 모든 리포트 목록을 읽어서 메인 index.html의 아카이브 목록 구성
     files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)
     
@@ -279,7 +300,11 @@ def generate_html(today_date, current_time, ai_html_content):
         item_html = item_html.replace("{date_str}", date_str)
         archive_links += item_html
         
-    # 메인 인덱스 페이지 (아카이브 허브 역할 + 오늘자 내용 병행 표시)
+    return archive_links
+    
+def generate_index_html(today_date, archive_links, daily_filename):
+    """3. 메인 허브 및 일일 리포트 통합 빌드 메인 함수"""
+    
     # 1. 외부 HTML 템플릿 파일 읽어오기
     index_template_path = "html/index_template.html"
     with open(index_template_path, "r", encoding="utf-8") as f:
@@ -295,22 +320,6 @@ def generate_html(today_date, current_time, ai_html_content):
         f.write(index_template)
         
     return index_template
-
-def get_badge_html(time_part):
-    try:
-        hour = int(time_part.split(":")[0])
-        if 6 <= hour < 9:
-            return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-sky-50 text-sky-600">모닝브리핑</span>'
-        elif 9 <= hour < 12:
-            return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-emerald-50 text-emerald-600">오전시황</span>'
-        elif 12 <= hour < 15:
-            return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-amber-50 text-amber-600">오후시황</span>'
-        elif 15 <= hour < 21:
-            return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-indigo-50 text-indigo-600">장마감</span>'
-        else:
-            return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-purple-50 text-purple-600">야간세션</span>'
-    except:
-        return '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">정기발행</span>'
 
 def send_gmail_report(current_time, html_template, GMAIL_APP_PASSWORD,MY_EMAIL):
     # 3. 마크다운을 예쁜 HTML 웹페이지 코드로 변환
@@ -378,9 +387,15 @@ if __name__ == "__main__":
     
     # 2. [필수] AI 응답이 끝나면 파이썬이 이 함수를 호출해서 CSV에 저장!
     save_to_backtest_csv(ai_text, today_date)
+    
+    # 1단계: 개별 리포트 생성
+    daily_filename = create_daily_report(today_date, current_time, ai_html_content)
+    
+    # 2단계: 아카이브 링크 목록 컴파일
+    archive_links = build_archive_links()
 
-    # 4. HTML 생성
-    html_template = generate_html(today_date, current_time, ai_text)
+    # 3단계: 메인 인덱스 페이지(아카이브 허브) 조립 및 저장
+    html_template = generate_html(today_date, archive_links, daily_filename)
     
     #GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
     #MY_EMAIL = os.environ.get("MY_EMAIL")
