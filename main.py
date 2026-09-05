@@ -246,23 +246,32 @@ def create_daily_report(today_date, current_time, ai_html_content):
     return daily_filename
 
 def get_badge_html(time_part):
+    """외부 JSON 설정 파일을 로드하여 시간대에 따른 배지 HTML 반환"""
+    # 기본값 설정
+    selected_label = "정기발행"
+    selected_class = "bg-slate-100 text-slate-600"
+    
     try:
         hour = int(time_part.split(":")[0])
-        if 6 <= hour < 9:
-            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-sky-50 text-sky-600">모닝브리핑</span>'
-        elif 9 <= hour < 12:
-            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-emerald-50 text-emerald-600">오전시황</span>'
-        elif 12 <= hour < 15:
-            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-amber-50 text-amber-600">오후시황</span>'
-        elif 15 <= hour < 21:
-            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-indigo-50 text-indigo-600">장마감</span>'
-        else:
-            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-purple-50 text-purple-600">야간세션</span>'
-    except:
-        return badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">정기발행</span>'
         
-    return badge_html
-    
+        # 외부 설정 파일 경로 (프로젝트 구조에 맞게 경로 수정 가능)
+        config_path = "html/badges_config.json"
+        
+        if os.path.exists(config_path):
+            with open(config_path, "r", encoding="utf-8") as f:
+                badges = json.load(f)
+                
+            for badge in badges:
+                if hour >= badge["threshold"]:
+                    selected_label = badge["label"]
+                    selected_class = badge["class"]
+                    break
+                    
+    except (ValueError, IndexError, json.JSONDecodeError):
+        pass
+
+    return f'<span class="text-[10px] font-bold px-2 py-1 rounded-lg {selected_class}">{selected_label}</span>'
+ 
 def build_archive_links():
     # 2. history 폴더에 있는 모든 리포트 목록을 읽어서 메인 index.html의 아카이브 목록 구성
     files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)
