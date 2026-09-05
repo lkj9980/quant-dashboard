@@ -5,6 +5,7 @@ import os
 import re
 import time
 from datetime import datetime, timezone, timedelta
+from collections import defaultdict
 
 # 2. 서드파티 라이브러리 (External Packages)
 import markdown
