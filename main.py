@@ -273,10 +273,10 @@ def generate_html(today_date, current_time, ai_html_content):
             display_text = f"{filename_core} 아카이브 리포트"
             badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">기타</span>'
 
-        item_html = item_template.replace("{file}", file)
-        item_html = item_template.replace("{badge_html}", badge_html)
-        item_html = item_template.replace("{date_str}", date_str)
-        archive_links += item_html
+        item_template = item_template.replace("{file}", file)
+        item_template = item_template.replace("{badge_html}", badge_html)
+        item_template = item_template.replace("{date_str}", date_str)
+        archive_links += item_template
         
     # 메인 인덱스 페이지 (아카이브 허브 역할 + 오늘자 내용 병행 표시)
     # 1. 외부 HTML 템플릿 파일 읽어오기
