@@ -206,18 +206,18 @@ def save_to_backtest_csv(ai_text, today_date):
         #df_existing = df_existing[df_existing['Date'] != today_date]
         #df_final = pd.concat([df_existing, df_new], ignore_index=True)
         if os.path.exists(csv_file):
-            print(f">> [디버그 5-1] 기존 파일 존재함. 읽기 시도...")
+            #print(f">> [디버그 5-1] 기존 파일 존재함. 읽기 시도...")
             df_existing = pd.read_csv(csv_file)
-            print(f">> [디버그 5-2] 기존 파일 읽기 성공 (행 개수: {len(df_existing)})")
+            #print(f">> [디버그 5-2] 기존 파일 읽기 성공 (행 개수: {len(df_existing)})")
             
             df_existing = df_existing[df_existing['Date'].astype(str) != str(today_date)]
             df_final = pd.concat([df_existing, df_new], ignore_index=True)
-            print(">> [디버그 5-3] 기존 데이터 + 신규 데이터 병합 완료")
+            #print(">> [디버그 5-3] 기존 데이터 + 신규 데이터 병합 완료")
         else:
-            print(">> [디버그 5-4] 기존 파일 없음. 새로 생성 모드")
+            #print(">> [디버그 5-4] 기존 파일 없음. 새로 생성 모드")
             df_final = df_new
     except FileNotFoundError:
-        print(f">> [디버그 5 예외 발생] 파일 읽기/병합 중 에러: {e}")
+        #print(f">> [디버그 5 예외 발생] 파일 읽기/병합 중 에러: {e}")
         df_final = df_new
 
     df_final.to_csv(csv_file, index=False, encoding="utf-8-sig")
