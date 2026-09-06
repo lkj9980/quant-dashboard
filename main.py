@@ -307,7 +307,7 @@ def build_archive_links():
         
         item_html = item_html.replace("{file}", file)
         item_html = item_html.replace("{badge_html}", badge_html)
-        item_html = item_html.replace("{date_str}", display_text)
+        item_html = item_html.replace("{display_text}", display_text)
         archive_links += item_html
         
     return archive_links
