@@ -272,8 +272,75 @@ def get_badge_html(time_part):
         pass
 
     return f'<span class="text-[10px] font-bold px-2 py-1 rounded-lg {selected_class}">{selected_label}</span>'
- 
+
 def build_archive_links():
+    """history 폴더의 파일들을 날짜별로 그룹화하고 외부 템플릿을 조합하여 아카이브 HTML 생성"""
+    if not os.path.exists("history"):
+        return ""
+        
+    files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)
+    
+    # 날짜별로 파일 그룹화
+    grouped_files = defaultdict(list)
+    for file in files:
+        filename_core = file.replace(".html", "")
+        if " " in filename_core:
+            date_part, _ = filename_core.split(" ")
+        else:
+            date_part = filename_core
+        grouped_files[date_part].append(file)
+
+    # 템플릿 파일들 로드
+    try:
+        with open("html/archive_section_template.html", "r", encoding="utf-8") as f:
+            section_template_base = f.read()
+        with open("html/archive_item_template.html", "r", encoding="utf-8") as f:
+            item_template_base = f.read()
+    except FileNotFoundError as e:
+        print(f"템플릿 파일을 찾을 수 없습니다: {e}")
+        return ""
+        
+    archive_sections = ""
+    
+    # 날짜별(Key)로 순회
+    for date_str, date_files in grouped_files.items():
+        # 날짜 포맷팅 (YYYY-MM-DD -> YYYY년 M월 D일)
+        try:
+            dt = datetime.strptime(date_str, "%Y-%m-%d")
+            formatted_date = f"{dt.year}년 {dt.month}월 {dt.day}일"
+        except (ValueError, TypeError):
+            formatted_date = date_str
+
+        # 해당 날짜에 속한 개별 아이템들 HTML 생성
+        items_html = ""
+        for file in date_files:
+            filename_core = file.replace(".html", "")
+            
+            if " " in filename_core:
+                _, time_part = filename_core.split(" ")
+                display_text = f"{time_part} 일일 퀀트 리포트"
+                badge_html = get_badge_html(time_part)
+            else:
+                display_text = f"{filename_core} 아카이브 리포트"
+                badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">기타</span>'
+
+            item_html = (item_template_base
+                         .replace("{file}", file)
+                         .replace("{badge_html}", badge_html)
+                         .replace("{display_text}", display_text))
+            
+            items_html += item_html
+            
+        # 날짜 섹션 템플릿에 날짜와 하위 아이템 묶음(items_html)을 병합
+        section_html = (section_template_base
+                        .replace("{formatted_date}", formatted_date)
+                        .replace("{items_html}", items_html))
+                        
+        archive_sections += section_html
+        
+    return archive_sections
+
+def build_archive_links_bak():
     # 2. history 폴더에 있는 모든 리포트 목록을 읽어서 메인 index.html의 아카이브 목록 구성
     files = sorted([f for f in os.listdir("history") if f.endswith(".html")], reverse=True)
     
