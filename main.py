@@ -186,14 +186,22 @@ def get_summary_from_index(filename):
             pass
     return "상세 시황 분석 리포트"
 
-def save_report_metadata_index(today_date, filename, summary_text, portfolio_data):
+def save_report_metadata_index(ai_text, today_date,filename):
     """
-    아카이브 목록 렌더링 속도 개선을 위해 요약문과 메타데이터를 단일 JSON 인덱스 파일에 누적 저장
+    1. AI 응답에서 공용 파싱 함수로 JSON 데이터 추출 (summary 및 portfolio 포함)
+    2. 아카이브 허브용 report_index.json 메타데이터 갱신
+    3. 하위 세부 작업인 backtest_csv 저장 함수 호출
     """
+    data = parse_report_metadata(ai_text)
+    if not data:
+        return
+        
+    summary_text = data.get("summary", "상세 시황 분석 리포트")
+    
+    # 1. report_index.json 업데이트 로직 수행
     index_file = "data/report_index.json"
     os.makedirs(os.path.dirname(index_file), exist_ok=True)
     
-    # 기존 인덱스 로드
     index_data = {}
     if os.path.exists(index_file):
         try:
@@ -202,14 +210,12 @@ def save_report_metadata_index(today_date, filename, summary_text, portfolio_dat
         except json.JSONDecodeError:
             pass
             
-    # 파일명을 키로 하여 요약 및 메타데이터 저장
     index_data[filename] = {
         "date": today_date,
         "summary": summary_text,
-        "portfolios": portfolio_data
+        "portfolios": data
     }
     
-    # 인덱스 파일 저장
     with open(index_file, "w", encoding="utf-8") as f:
         json.dump(index_data, f, ensure_ascii=False, indent=4)
 
@@ -234,7 +240,7 @@ def get_summary_from_ai_text(ai_text):
         return data["summary"]
     return "상세 시황 분석 리포트"
 
-def save_to_backtest_csv(ai_text, today_date, filename):
+def save_to_backtest_csv__new(ai_text, today_date, filename):
     data = parse_report_metadata(ai_text)
     if not data:
         return
@@ -276,10 +282,9 @@ def save_to_backtest_csv(ai_text, today_date, filename):
     df_final.to_csv(csv_file, index=False, encoding="utf-8-sig")
 
     # 💡 2. 아카이브 허브용 메타데이터 인덱스 파일에도 즉시 기록
-    save_report_metadata_index(today_date, filename, summary_text, data)
+    #save_report_metadata_index(today_date, filename, summary_text, data)
 
-
-def save_to_backtest_csv_bak(ai_text, today_date):
+def save_to_backtest_csv(ai_text, today_date):
     match = re.search(r'<script type="application/json" id="backtest-json">(.*?)</script>', ai_text, re.DOTALL)
     if not match: return
     
@@ -567,8 +572,11 @@ if __name__ == "__main__":
     
     # [수정] 3. 분석 수행
     ai_text = get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text)
-    
+
     # 2. [필수] AI 응답이 끝나면 파이썬이 이 함수를 호출해서 CSV에 저장!
+    # 1. 메타데이터 인덱스 저장 (summary 및 전체 JSON 캐싱)
+    #save_report_metadata_index(ai_text, today_date,filename )
+    # 2. 백테스트 데이터 CSV 저장 (별개 호출)
     save_to_backtest_csv(ai_text, today_date)
     
     # 1단계: 개별 리포트 생성
