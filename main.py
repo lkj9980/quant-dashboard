@@ -437,8 +437,8 @@ def build_archive_links():
             item_html = (item_template_base
                          .replace("{file}", file)
                          .replace("{badge_html}", badge_html)
-                         .replace("{display_text}", display_text)
-                         .replace("{summary_text}", summary_text))
+                         .replace("{display_text}", display_text))
+                         #.replace("{summary_text}", summary_text))
             
             items_html += item_html
             
