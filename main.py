@@ -172,11 +172,46 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
     #response = model.generate_content(prompt)
 
     return response.text
-import os
-import json
-import re
-import pandas as pd
-from bs4 import BeautifulSoup
+
+def get_summary_from_index(filename):
+    """인덱스 파일에서 파일명에 해당하는 요약문 즉시 반환 (디스크 I/O 최적화)"""
+    index_file = "data/report_index.json"
+    if os.path.exists(index_file):
+        try:
+            with open(index_file, "r", encoding="utf-8") as f:
+                index_data = json.load(f)
+                if filename in index_data:
+                    return index_data[filename].get("summary", "상세 시황 분석 리포트")
+        except json.JSONDecodeError:
+            pass
+    return "상세 시황 분석 리포트"
+
+def save_report_metadata_index(today_date, filename, summary_text, portfolio_data):
+    """
+    아카이브 목록 렌더링 속도 개선을 위해 요약문과 메타데이터를 단일 JSON 인덱스 파일에 누적 저장
+    """
+    index_file = "data/report_index.json"
+    os.makedirs(os.path.dirname(index_file), exist_ok=True)
+    
+    # 기존 인덱스 로드
+    index_data = {}
+    if os.path.exists(index_file):
+        try:
+            with open(index_file, "r", encoding="utf-8") as f:
+                index_data = json.load(f)
+        except json.JSONDecodeError:
+            pass
+            
+    # 파일명을 키로 하여 요약 및 메타데이터 저장
+    index_data[filename] = {
+        "date": today_date,
+        "summary": summary_text,
+        "portfolios": portfolio_data
+    }
+    
+    # 인덱스 파일 저장
+    with open(index_file, "w", encoding="utf-8") as f:
+        json.dump(index_data, f, ensure_ascii=False, indent=4)
 
 def parse_report_metadata(ai_text):
     """
@@ -199,19 +234,17 @@ def get_summary_from_ai_text(ai_text):
         return data["summary"]
     return "상세 시황 분석 리포트"
 
-def save_to_backtest_csv(ai_text, today_date):
-    """공용 파싱 함수를 호출하여 백테스트/메타데이터 CSV를 동기화하는 함수"""
+def save_to_backtest_csv(ai_text, today_date, filename):
     data = parse_report_metadata(ai_text)
     if not data:
-        print(f">> [백테스트 데이터 저장 실패] {today_date}: JSON 메타데이터 블록을 찾을 수 없습니다.")
         return
     
+    summary_text = data.get("summary", "상세 시황 분석 리포트")
+    
+    # 💡 1. 기존 백테스트 CSV 저장 로직
     row_data = {
         "Date": today_date,
-        # AI 한 줄 요약 추가 (필요시 CSV에서도 활용 가능)
-        "Summary": data.get("summary", ""),
-        
-        # Portfolio A (일반 계좌: 레버/인버스 6개 + 현금)
+        "Summary": summary_text,
         "A_Kospi200_Lev": data["portfolio_a"]["kospi200_lev_weight"],
         "A_Kospi200_Inv": data["portfolio_a"]["kospi200_inv_weight"],
         "A_Kosdaq150_Lev": data["portfolio_a"]["kosdaq150_lev_weight"],
@@ -219,8 +252,6 @@ def save_to_backtest_csv(ai_text, today_date):
         "A_Nasdaq100_Lev": data["portfolio_a"]["nasdaq100_lev_weight"],
         "A_Nasdaq100_Inv": data["portfolio_a"]["nasdaq100_inv_weight"],
         "A_Cash": data["portfolio_a"]["cash_weight"],
-        
-        # Portfolio B (퇴직연금 DC/IRP: 위험자산 총합/안전자산 총합 + 상세 세부)
         "B_Kospi200": data["portfolio_b"]["kospi200_weight"],
         "B_Kosdaq150": data["portfolio_b"]["kosdaq150_weight"],
         "B_Nasdaq100": data["portfolio_b"]["nasdaq100_weight"],
@@ -239,11 +270,14 @@ def save_to_backtest_csv(ai_text, today_date):
             df_final = pd.concat([df_existing, df_new], ignore_index=True)
         else:
             df_final = df_new
-    except Exception as e:
+    except Exception:
         df_final = df_new
 
     df_final.to_csv(csv_file, index=False, encoding="utf-8-sig")
-    print(f">> [백테스트 데이터 저장 성공] {today_date} 비중이 backtest_data.csv에 동기화되었습니다.")
+
+    # 💡 2. 아카이브 허브용 메타데이터 인덱스 파일에도 즉시 기록
+    save_report_metadata_index(today_date, filename, summary_text, data)
+
 
 def save_to_backtest_csv_bak(ai_text, today_date):
     match = re.search(r'<script type="application/json" id="backtest-json">(.*?)</script>', ai_text, re.DOTALL)
@@ -320,28 +354,26 @@ def create_daily_report(today_date, current_time, ai_html_content):
 
 def get_badge_html(time_part):
     """외부 JSON 설정 파일을 로드하여 시간대에 따른 배지 HTML 반환"""
-    # 기본값 설정
+    # 기본값 설정 (기타 배지)
     selected_label = "정기발행"
     selected_class = "bg-slate-100 text-slate-600"
     
-    try:
-        hour = int(time_part.split(":")[0])
-        
-        # 외부 설정 파일 경로 (프로젝트 구조에 맞게 경로 수정 가능)
-        config_path = "html/badges_config.json"
-        
-        if os.path.exists(config_path):
-            with open(config_path, "r", encoding="utf-8") as f:
-                badges = json.load(f)
-                
-            for badge in badges:
-                if hour >= badge["threshold"]:
-                    selected_label = badge["label"]
-                    selected_class = badge["class"]
-                    break
+    if time_part != "default":
+        try:
+            hour = int(time_part.split(":")[0])
+            config_path = "html/badges_config.json"
+            
+            if os.path.exists(config_path):
+                with open(config_path, "r", encoding="utf-8") as f:
+                    badges = json.load(f)
                     
-    except (ValueError, IndexError, json.JSONDecodeError):
-        pass
+                for badge in badges:
+                    if hour >= badge["threshold"]:
+                        selected_label = badge["label"]
+                        selected_class = badge["class"]
+                        break
+        except (ValueError, IndexError, json.JSONDecodeError):
+            pass
 
     return f'<span class="text-[10px] font-bold px-2 py-1 rounded-lg {selected_class}">{selected_label}</span>'
 
