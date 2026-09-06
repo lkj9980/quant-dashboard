@@ -1,12 +1,15 @@
-<a href="history/{file}" class="block bg-white p-4 rounded-xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow transition group">
-  <div class="flex items-center justify-between">
-    <div class="flex items-center gap-2.5">
-      {badge_html}
-      <div>
-        <div class="text-xs font-bold text-slate-800 group-hover:text-blue-600 transition">📅 {display_text}</div>
-        <!--{keystr}-->
-      </div>
+<a href="history/{file}" class="block bg-white border border-slate-100 rounded-2xl p-4 shadow-sm hover:border-slate-300 transition-all">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            {badge_html}
+            <span class="text-sm font-semibold text-slate-800">📅 {display_text}</span>
+        </div>
+        <span class="text-xs font-medium text-blue-600 flex items-center gap-1">
+            보기 &rarr;
+        </span>
     </div>
-    <span class="text-xs text-blue-600 font-semibold">보기 &rarr;</span>
-  </div>
+    <!-- 💡 AI 한줄 요약이 들어갈 자리 추가 -->
+    <div class="text-xs text-slate-500 mt-2 px-0.5 tracking-tight">
+        <!--{summary_text}-->
+    </div>
 </a>
