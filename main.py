@@ -399,7 +399,7 @@ if __name__ == "__main__":
     save_to_backtest_csv(ai_text, today_date)
     
     # 1단계: 개별 리포트 생성
-    daily_filename = create_daily_report(today_date, current_time, ai_html_content)
+    daily_filename = create_daily_report(today_date, current_time, ai_text)
     
     # 2단계: 아카이브 링크 목록 컴파일
     archive_links = build_archive_links()
