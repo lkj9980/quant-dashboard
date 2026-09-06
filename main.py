@@ -295,7 +295,7 @@ def build_archive_links():
     archive_links = ""
     for file in files:
         filename_core = file.replace(".html", "")
-        if " " in date_str:
+        if " " in filename_core:
             date_part, time_part = filename_core.split(" ")
             display_text = f"{time_part} 일일 퀀트 리포트"
             badge_html = get_badge_html(time_part)
