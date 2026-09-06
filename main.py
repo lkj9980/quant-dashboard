@@ -405,7 +405,7 @@ if __name__ == "__main__":
     archive_links = build_archive_links()
 
     # 3단계: 메인 인덱스 페이지(아카이브 허브) 조립 및 저장
-    html_template = generate_html(today_date, archive_links, daily_filename)
+    html_template = generate_index_html(today_date, archive_links, daily_filename)
     
     #GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")    # gg내 메일 주소 설정 (보내는 사람과 받는 사람 동일)
     #MY_EMAIL = os.environ.get("MY_EMAIL")
