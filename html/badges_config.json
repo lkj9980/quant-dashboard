@@ -1,8 +1,7 @@
 [
-    {"threshold": 18, "label": "야간세션", "class": "bg-purple-50 text-purple-600"},
+    {"threshold": 0, "label": "야간세션", "class": "bg-purple-50 text-purple-600"},
     {"threshold": 15, "label": "장마감", "class": "bg-indigo-50 text-indigo-600"},
     {"threshold": 12, "label": "오후시황", "class": "bg-amber-50 text-amber-600"},
     {"threshold": 9, "label": "오전시황", "class": "bg-emerald-50 text-emerald-600"},
-    {"threshold": 6, "label": "모닝브리핑", "class": "bg-sky-50 text-sky-600"},
-    {"threshold": 0, "label": "정기발행", "class": "bg-slate-100 text-slate-600"}
+    {"threshold": 6, "label": "모닝브리핑", "class": "bg-sky-50 text-sky-600"}
 ]
