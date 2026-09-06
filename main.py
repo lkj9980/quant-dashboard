@@ -172,8 +172,80 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
     #response = model.generate_content(prompt)
 
     return response.text
+import os
+import json
+import re
+import pandas as pd
+from bs4 import BeautifulSoup
+
+def parse_report_metadata(ai_text):
+    """
+    AI 응답 텍스트에서 <script type="application/json" id="backtest-json"> 
+    블록을 찾아 딕셔너리 데이터로 파싱하는 공용 함수
+    """
+    match = re.search(r'<script type="application/json" id="backtest-json">(.*?)</script>', ai_text, re.DOTALL)
+    if not match:
+        return None
+    
+    try:
+        return json.loads(match.group(1).strip())
+    except json.JSONDecodeError:
+        return None
+
+def get_summary_from_ai_text(ai_text):
+    """AI 응답 텍스트에서 공용 파싱 함수를 통해 한 줄 요약 추출"""
+    data = parse_report_metadata(ai_text)
+    if data and "summary" in data:
+        return data["summary"]
+    return "상세 시황 분석 리포트"
 
 def save_to_backtest_csv(ai_text, today_date):
+    """공용 파싱 함수를 호출하여 백테스트/메타데이터 CSV를 동기화하는 함수"""
+    data = parse_report_metadata(ai_text)
+    if not data:
+        print(f">> [백테스트 데이터 저장 실패] {today_date}: JSON 메타데이터 블록을 찾을 수 없습니다.")
+        return
+    
+    row_data = {
+        "Date": today_date,
+        # AI 한 줄 요약 추가 (필요시 CSV에서도 활용 가능)
+        "Summary": data.get("summary", ""),
+        
+        # Portfolio A (일반 계좌: 레버/인버스 6개 + 현금)
+        "A_Kospi200_Lev": data["portfolio_a"]["kospi200_lev_weight"],
+        "A_Kospi200_Inv": data["portfolio_a"]["kospi200_inv_weight"],
+        "A_Kosdaq150_Lev": data["portfolio_a"]["kosdaq150_lev_weight"],
+        "A_Kosdaq150_Inv": data["portfolio_a"]["kosdaq150_inv_weight"],
+        "A_Nasdaq100_Lev": data["portfolio_a"]["nasdaq100_lev_weight"],
+        "A_Nasdaq100_Inv": data["portfolio_a"]["nasdaq100_inv_weight"],
+        "A_Cash": data["portfolio_a"]["cash_weight"],
+        
+        # Portfolio B (퇴직연금 DC/IRP: 위험자산 총합/안전자산 총합 + 상세 세부)
+        "B_Kospi200": data["portfolio_b"]["kospi200_weight"],
+        "B_Kosdaq150": data["portfolio_b"]["kosdaq150_weight"],
+        "B_Nasdaq100": data["portfolio_b"]["nasdaq100_weight"],
+        "B_US_Treasury_30Y": data["portfolio_b"]["us_treasury_30y_weight"],
+        "B_DC_IRP_Cash": data["portfolio_b"]["dc_irp_cash_weight"],
+    }
+    
+    df_new = pd.DataFrame([row_data])
+    csv_file = "data/backtest_data.csv"
+    os.makedirs(os.path.dirname(csv_file), exist_ok=True)
+    
+    try:
+        if os.path.exists(csv_file):
+            df_existing = pd.read_csv(csv_file)
+            df_existing = df_existing[df_existing['Date'].astype(str) != str(today_date)]
+            df_final = pd.concat([df_existing, df_new], ignore_index=True)
+        else:
+            df_final = df_new
+    except Exception as e:
+        df_final = df_new
+
+    df_final.to_csv(csv_file, index=False, encoding="utf-8-sig")
+    print(f">> [백테스트 데이터 저장 성공] {today_date} 비중이 backtest_data.csv에 동기화되었습니다.")
+
+def save_to_backtest_csv_bak(ai_text, today_date):
     match = re.search(r'<script type="application/json" id="backtest-json">(.*?)</script>', ai_text, re.DOTALL)
     if not match: return
     
@@ -324,10 +396,12 @@ def build_archive_links():
                 display_text = f"{filename_core} 아카이브 리포트"
                 badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">기타</span>'
 
+            #summary_text = get_summary_from_ai_text(ai_text)
             item_html = (item_template_base
                          .replace("{file}", file)
                          .replace("{badge_html}", badge_html)
-                         .replace("{display_text}", display_text))
+                         .replace("{display_text}", display_text)
+                         .replace("{summary_text}", summary_text))
             
             items_html += item_html
             
