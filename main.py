@@ -553,16 +553,40 @@ def send_gmail_report(current_time, html_template, GMAIL_APP_PASSWORD,MY_EMAIL):
     server.close()
     print("Gmail HTML 리포트 발송 완료!")
 
+def get_report_filenames(kst_now):
+    """
+    사용자가 원하시는 원래의 날짜 및 시간 포맷 규칙(Y-m-d H:M)을 유지하되,
+    파일시스템 호환성(콜론 치환 등)을 안전하게 처리하여 반환합니다.
+    """
+    today_date = kst_now.strftime("%Y-%m-%d")
+    
+    # 원래의 표시용 및 저장용 문자열 포맷 적용 (예: "2026-09-07 12:44")
+    current_time_str = kst_now.strftime('%Y-%m-%d %H:%M')
+    
+    # 파일시스템(윈도우/리눅스)에서 허용되지 않는 콜론(:)을 하이픈(-)이나 언더바(_)로 안전하게 치환
+    #safe_time_slug = current_time_str.replace(':', '-').replace(' ', '_')
+    daily_filename = f"history/{current_time_str}.html"
+    
+    return today_date, current_time_str, daily_filename
+
 # 실행부
 if __name__ == "__main__":
-    # 한국 시간(KST, UTC+9) 타임존 정의
+    # 1. 한국 시간(KST, UTC+9) 타임존 정의
     KST = timezone(timedelta(hours=9))
+    kst_now = datetime.now(KST)
     
-    # 기존 datetime.now() 대신 아래처럼 KST를 넣어줍니다.
-    today_date = datetime.now(KST).strftime("%Y-%m-%d")
-    current_time = datetime.now(KST).strftime('%Y-%m-%d %H:%M')
+    # 2. 실행부 초입부에서 파일 경로 및 시간 변수 선언 완료
+    today_date, current_time, daily_filename = get_report_filenames(kst_now)
     
     GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+    
+    print(f"🚀 [시작] 퀀트 리포트 파이프라인 가동")
+    print(f"📅 오늘 날짜: {today_date}")
+    print(f"⏰ 현재 시간: {current_time_str}")
+    print(f"📁 타겟 파일 경로: {daily_filename}")
+
+    # 3. 히스토리 디렉토리 보장
+    os.makedirs("history", exist_ok=True)
     
     # [수정] 1. 수집과 분석을 분리하여 호출
     raw_text, ticker_values = collect_market_data()
