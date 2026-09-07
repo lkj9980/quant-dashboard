@@ -1,4 +1,5 @@
 {
+  "summary": "{summary_text}",
   "portfolio_a": {
     "kospi200_lev_weight": 0.0,
     "kospi200_inv_weight": 0.0,
