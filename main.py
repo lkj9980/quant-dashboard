@@ -144,7 +144,7 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
     print("2. Gemini AI 시장 분석 중...")
     
     #1. 백테스트 JSON 템플릿 읽기 및 오늘 날짜 주입
-    with open("data/data/metadata_template.json", "r", encoding="utf-8") as f:
+    with open("data/metadata_template.json", "r", encoding="utf-8") as f:
         metadata_json_snippet = f.read()
 
     #genai.configure(api_key=GEMINI_API_KEY)
