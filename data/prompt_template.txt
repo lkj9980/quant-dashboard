@@ -27,4 +27,4 @@
 5. ★ 중요 [메타 데이터 블록 추가]:
     - 분석 본문 하단에 반드시 아래의 JSON 형식 데이터를 <script type="application/json" id="backtest-json"> 태그로 감싸서 포함해 주세요. (숫자는 퍼센트나 소수점 비중으로 명시)
     - JSON 내부의 `summary` 키에는 이번 리포트의 핵심 한 줄 요약(예: "VIX 안정 및 미국채 30년 고금리 분할매수 타점")을 반드시 문자열(string)로 포함해야 합니다.
-{backtest_json_snippet}
+{metadata_json_snippet}
