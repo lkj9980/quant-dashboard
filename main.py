@@ -582,7 +582,7 @@ if __name__ == "__main__":
     
     print(f"🚀 [시작] 퀀트 리포트 파이프라인 가동")
     print(f"📅 오늘 날짜: {today_date}")
-    print(f"⏰ 현재 시간: {current_time_str}")
+    print(f"⏰ 현재 시간: {current_time}")
     print(f"📁 타겟 파일 경로: {daily_filename}")
 
     # 3. 히스토리 디렉토리 보장
