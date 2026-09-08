@@ -432,14 +432,15 @@ def build_archive_links():
                 badge_html = get_badge_html(time_part)
             else:
                 display_text = f"{filename_core} 아카이브 리포트"
-                badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">기타</span>'
-
-            #summary_text = get_summary_from_ai_text(ai_text)
+                # 💡 시간 파트가 없으니 '기타'나 기본 배지를 가져오는 함수로 교체
+                badge_html = get_badge_html("default") 
+                
+            summary_text = get_summary_from_index(file, "summary", "상세 시황 분석 리포트")
             item_html = (item_template_base
                          .replace("{file}", file)
                          .replace("{badge_html}", badge_html)
-                         .replace("{display_text}", display_text))
-                         #.replace("{summary_text}", summary_text))
+                         .replace("{display_text}", display_text)
+                         .replace("{summary_text}", summary_text))
             
             items_html += item_html
             
@@ -480,8 +481,7 @@ def build_archive_links_bak():
             badge_html = get_badge_html(time_part)
         else:
             display_text = f"{filename_core} 아카이브 리포트"
-            # 💡 시간 파트가 없으니 '기타'나 기본 배지를 가져오는 함수로 교체
-            badge_html = get_badge_html("default") 
+            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">기타</span>'
 
         item_html = item_template
         
