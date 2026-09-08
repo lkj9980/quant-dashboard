@@ -599,7 +599,7 @@ if __name__ == "__main__":
 
     # 2. [필수] AI 응답이 끝나면 파이썬이 이 함수를 호출해서 CSV에 저장!
     # 1. 메타데이터 인덱스 저장 (summary 및 전체 JSON 캐싱)
-    #save_report_metadata_index(ai_text, today_date,filename )
+    save_report_metadata_index(ai_text, today_date,filename )
     # 2. 백테스트 데이터 CSV 저장 (별개 호출)
     save_to_backtest_csv(ai_text, today_date)
     
