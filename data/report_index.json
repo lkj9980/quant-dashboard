@@ -21,5 +21,25 @@
                 "dc_irp_cash_weight": 30.0
             }
         }
+    },
+    "history/2026-09-09 01:21.html": {
+        "date": "2026-09-09",
+        "summary": "초장기 미국채 금리 급등에 따른 국채 분할매수 극대화 및 일반계좌 현금 65% 중심 방어 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 15.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 5.0,
+            "nasdaq100_lev_weight": 15.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 65.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 20.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 30.0
+        }
     }
 }
