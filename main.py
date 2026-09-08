@@ -213,7 +213,8 @@ def save_report_metadata_index(ai_text, today_date, filename):
     index_data[filename] = {
         "date": today_date,
         "summary": summary_text,
-        "portfolios": data
+        "portfolio_a": data.get("portfolio_a", "Portfolio A (일반계좌)")
+        "portfolio_b": data.get("portfolio_b", "Portfolio B (퇴직연금)")
     }
     
     with open(index_file, "w", encoding="utf-8") as f:
