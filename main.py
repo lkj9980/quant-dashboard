@@ -173,7 +173,7 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
 
     return response.text
 
-def get_summary_from_index(filename):
+def get_summary_from_index(filename, key, default):
     """인덱스 파일에서 파일명에 해당하는 요약문 즉시 반환 (디스크 I/O 최적화)"""
     index_file = "data/report_index.json"
     if os.path.exists(index_file):
@@ -181,7 +181,7 @@ def get_summary_from_index(filename):
             with open(index_file, "r", encoding="utf-8") as f:
                 index_data = json.load(f)
                 if filename in index_data:
-                    return index_data[filename].get("summary", "상세 시황 분석 리포트")
+                    return index_data[filename].get(key, default)
         except json.JSONDecodeError:
             pass
     return "상세 시황 분석 리포트"
