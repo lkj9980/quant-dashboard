@@ -480,7 +480,8 @@ def build_archive_links_bak():
             badge_html = get_badge_html(time_part)
         else:
             display_text = f"{filename_core} 아카이브 리포트"
-            badge_html = '<span class="text-[10px] font-bold px-2 py-1 rounded-lg bg-slate-100 text-slate-600">기타</span>'
+            # 💡 시간 파트가 없으니 '기타'나 기본 배지를 가져오는 함수로 교체
+            badge_html = get_badge_html("default") 
 
         item_html = item_template
         
