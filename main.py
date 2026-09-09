@@ -180,8 +180,12 @@ def get_summary_from_index(filename, key, default):
         try:
             with open(index_file, "r", encoding="utf-8") as f:
                 index_data = json.load(f)
+                print(f"🎯 [get_summary_from_index] JSON 키 : {key}")
+                print(f"📁 [get_summary_from_index] 타겟 파일 경로: {file}")
                 if filename in index_data:
-                    return index_data[filename].get(key, default)
+                    summary_text index_data[filename].get(key, default)
+                    print(f"🚀 [get_summary_from_index] JSON 데이터 추출 : {summary_text}")
+                    return summary_text
         except json.JSONDecodeError:
             pass
     return "상세 시황 분석 리포트"
@@ -197,8 +201,8 @@ def save_report_metadata_index(ai_text, today_date, filename):
         return
         
     summary_text = data.get("summary", "상세 시황 분석 리포트")
-    print(f"🚀 [get_summary_from_index] JSON 데이터 추출 : {summary_text}")
-    print(f"📁 [get_summary_from_index] 타겟 파일 경로: {filename}")
+    print(f"🚀 [save_report_metadata_index] JSON 데이터 추출 : {summary_text}")
+    print(f"📁 [save_report_metadata_index] 타겟 파일 경로: {filename}")
     
     # 1. report_index.json 업데이트 로직 수행
     index_file = "data/report_index.json"
@@ -438,6 +442,7 @@ def build_archive_links():
                 badge_html = get_badge_html("default") 
                 
             summary_text = get_summary_from_index(file, "summary", "상세 시황 분석 리포트")
+            print(f"🚀 [build_archive_links] JSON 데이터 추출 : {summary_text}")
             item_html = (item_template_base
                          .replace("{file}", file)
                          .replace("{badge_html}", badge_html)
