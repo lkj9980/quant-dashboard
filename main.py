@@ -574,7 +574,7 @@ def get_report_filenames(kst_now):
     
     # 파일시스템(윈도우/리눅스)에서 허용되지 않는 콜론(:)을 하이픈(-)이나 언더바(_)로 안전하게 치환
     #safe_time_slug = current_time_str.replace(':', '-').replace(' ', '_')
-    daily_filename = f"history/{current_time_str}.html"
+    daily_filename = f"{current_time_str}.html"
     
     return today_date, current_time_str, daily_filename
 
