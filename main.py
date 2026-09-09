@@ -197,6 +197,8 @@ def save_report_metadata_index(ai_text, today_date, filename):
         return
         
     summary_text = data.get("summary", "상세 시황 분석 리포트")
+    print(f"🚀 [get_summary_from_index] JSON 데이터 추출 : {summary_text}")
+    print(f"📁 [get_summary_from_index] 타겟 파일 경로: {filename}")
     
     # 1. report_index.json 업데이트 로직 수행
     index_file = "data/report_index.json"
