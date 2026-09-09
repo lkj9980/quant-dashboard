@@ -81,5 +81,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 30.0
         }
+    },
+    "history/2026-09-09 11:58.html": {
+        "date": "2026-09-09",
+        "summary": "WTI 유가 급등세 속 미국 국채 30년 5.26% 역사적 고금리 타점 진입에 따른 장기채 분할매수 가동 및 보수적 현금 확보 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 10.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 10.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 15.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 20.0
+        }
     }
 }
