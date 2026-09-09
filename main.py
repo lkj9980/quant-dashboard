@@ -442,7 +442,7 @@ def build_archive_links():
                 badge_html = get_badge_html("default") 
                 
             summary_text = get_summary_from_index(file, "summary", "상세 시황 분석 리포트")
-            print(f"🚀 [build_archive_links] JSON 데이터 추출 : {summary_text}")
+            #print(f"🚀 [build_archive_links] JSON 데이터 추출 : {summary_text}")
             item_html = (item_template_base
                          .replace("{file}", file)
                          .replace("{badge_html}", badge_html)
