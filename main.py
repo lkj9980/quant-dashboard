@@ -181,7 +181,7 @@ def get_summary_from_index(filename, key, default):
             with open(index_file, "r", encoding="utf-8") as f:
                 index_data = json.load(f)
                 print(f"🎯 [get_summary_from_index] JSON 키 : {key}")
-                print(f"📁 [get_summary_from_index] 타겟 파일 경로: {file}")
+                print(f"📁 [get_summary_from_index] 타겟 파일 경로: {filename}")
                 if filename in index_data:
                     summary_text = index_data[filename].get(key, default)
                     print(f"🚀 [get_summary_from_index] JSON 데이터 추출 : {summary_text}")
