@@ -221,5 +221,25 @@
             "us_treasury_30y_weight": 30.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-11 00:01.html": {
+        "date": "2026-09-11",
+        "summary": "VIX 상승 및 미 국채 고금리 지속에 따른 보수적 포지션 구축 및 미 국채 30년 초고금리 장기 퇴직자산 분할매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 10.0,
+            "kosdaq150_lev_weight": 10.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 20.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 5.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 15.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 30.0
+        }
     }
 }
