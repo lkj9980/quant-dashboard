@@ -181,5 +181,25 @@
             "us_treasury_30y_weight": 50.0,
             "dc_irp_cash_weight": 30.0
         }
+    },
+    "2026-09-10 09:20.html": {
+        "date": "2026-09-10",
+        "summary": "금리 급등과 고유가 리스크에 대응한 지수 인버스 헷지 및 고금리 영역 진입한 미국채 30년물 비중 확대 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 15.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 10.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 15.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 5.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 15.0,
+            "us_treasury_30y_weight": 50.0,
+            "dc_irp_cash_weight": 30.0
+        }
     }
 }
