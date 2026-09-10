@@ -241,5 +241,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 30.0
         }
+    },
+    "2026-09-11 07:00.html": {
+        "date": "2026-09-11",
+        "summary": "유가 및 국채금리 급등에 대응한 일반계좌 인버스 헤지 구축 및 퇴직연금 미국채 30년 고금리 타점 분할매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 0.2,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.1,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 0.3,
+            "cash_weight": 0.4
+        },
+        "portfolio_b": {
+            "kospi200_weight": 0.05,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 0.1,
+            "us_treasury_30y_weight": 0.55,
+            "dc_irp_cash_weight": 0.3
+        }
     }
 }
