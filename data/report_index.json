@@ -301,5 +301,25 @@
             "us_treasury_30y_weight": 50.0,
             "dc_irp_cash_weight": 30.0
         }
+    },
+    "2026-09-12 00:01.html": {
+        "date": "2026-09-12",
+        "summary": "VIX 안정세 진입에 따른 미국 기술주 비중 확대 및 고금리 미국채 30년 분할 매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 15.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 10.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 45.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 30.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 5.0,
+            "nasdaq100_weight": 50.0,
+            "us_treasury_30y_weight": 20.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
