@@ -361,5 +361,25 @@
             "us_treasury_30y_weight": 25.0,
             "dc_irp_cash_weight": 5.0
         }
+    },
+    "2026-09-12 15:56.html": {
+        "date": "2026-09-12",
+        "summary": "VIX 하락 속 나스닥 롱 포지션 및 한국 지수 인버스 헷지, 미 장기채 고금리 분할매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 15.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 15.0,
+            "nasdaq100_lev_weight": 30.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 40.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 50.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
