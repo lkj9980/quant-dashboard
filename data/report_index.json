@@ -421,5 +421,25 @@
             "us_treasury_30y_weight": 30.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-13 09:20.html": {
+        "date": "2026-09-13",
+        "summary": "VIX 안정 및 미국채 30년 고금리 분할매수 타점 속 나스닥 중심 포트폴리오 다각화",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 10.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 30.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 40.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 20.0
+        }
     }
 }
