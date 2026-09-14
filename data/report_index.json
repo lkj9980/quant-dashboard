@@ -541,5 +541,25 @@
             "us_treasury_30y_weight": 50.0,
             "dc_irp_cash_weight": 40.0
         }
+    },
+    "2026-09-15 07:00.html": {
+        "date": "2026-09-15",
+        "summary": "코스피 과매도에 따른 대형주 분할 매수 개시 및 미국채 30년 금리 5.3%대 초고금리 진입에 따른 안전자산 집중 배분",
+        "portfolio_a": {
+            "kospi200_lev_weight": 15.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 10.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 55.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 20.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 15.0
+        }
     }
 }
