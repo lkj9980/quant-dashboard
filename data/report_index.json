@@ -521,5 +521,25 @@
             "us_treasury_30y_weight": 50.0,
             "dc_irp_cash_weight": 30.0
         }
+    },
+    "2026-09-14 15:55.html": {
+        "date": "2026-09-14",
+        "summary": "금리 및 유가 급등에 따른 국내 증시 급락 대응을 위한 인버스 헤지 및 미국채 30년 고금리 락인 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 20.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 10.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 10.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 0.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 10.0,
+            "us_treasury_30y_weight": 50.0,
+            "dc_irp_cash_weight": 40.0
+        }
     }
 }
