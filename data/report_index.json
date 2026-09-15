@@ -641,5 +641,25 @@
             "us_treasury_30y_weight": 0.4,
             "dc_irp_cash_weight": 0.5
         }
+    },
+    "2026-09-16 07:00.html": {
+        "date": "2026-09-16",
+        "summary": "미국채 10년물 5% 돌파 및 고유가 리스크에 대응한 현금 비중 60% 확보 및 인버스 헤지, 퇴직연금 내 미국채 30년 초고금리 분할매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 20.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 20.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 0.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 10.0,
+            "us_treasury_30y_weight": 60.0,
+            "dc_irp_cash_weight": 30.0
+        }
     }
 }
