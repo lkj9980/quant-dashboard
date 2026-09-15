@@ -581,5 +581,25 @@
             "us_treasury_30y_weight": 25.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-15 11:47.html": {
+        "date": "2026-09-15",
+        "summary": "역사적 고점 부근의 미국채 30년 금리 분할 매수 및 야간 선물 반등을 활용한 레버리지 단기 분할 대응 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 15.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 15.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 20.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 30.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
