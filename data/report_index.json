@@ -621,5 +621,25 @@
             "us_treasury_30y_weight": 50.0,
             "dc_irp_cash_weight": 20.0
         }
+    },
+    "2026-09-16 00:00.html": {
+        "date": "2026-09-16",
+        "summary": "미 국채 10년물 5% 돌파 및 유가 급등에 따른 3고 현상 심화, 현금 비중 확대 및 미국채 30년 분할매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 0.2,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.1,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 0.1,
+            "cash_weight": 0.6
+        },
+        "portfolio_b": {
+            "kospi200_weight": 0.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 0.1,
+            "us_treasury_30y_weight": 0.4,
+            "dc_irp_cash_weight": 0.5
+        }
     }
 }
