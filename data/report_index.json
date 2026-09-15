@@ -601,5 +601,25 @@
             "us_treasury_30y_weight": 30.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-15 15:55.html": {
+        "date": "2026-09-15",
+        "summary": "미 국채 30년물 5.3% 돌파에 따른 장기채 분할매수 및 코스닥 단기 반등 모멘텀 대응 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 10.0,
+            "kosdaq150_lev_weight": 15.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 15.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 5.0,
+            "kosdaq150_weight": 15.0,
+            "nasdaq100_weight": 10.0,
+            "us_treasury_30y_weight": 50.0,
+            "dc_irp_cash_weight": 20.0
+        }
     }
 }
