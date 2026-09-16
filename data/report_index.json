@@ -661,5 +661,25 @@
             "us_treasury_30y_weight": 60.0,
             "dc_irp_cash_weight": 30.0
         }
+    },
+    "2026-09-16 09:20.html": {
+        "date": "2026-09-16",
+        "summary": "금리 5% 돌파 및 고유가 지속에 대응한 일반계좌 인버스 헷지 50% 및 퇴직연금 미국채 장기물 50% 분할집행 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 20.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 30.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 20.0,
+            "us_treasury_30y_weight": 50.0,
+            "dc_irp_cash_weight": 20.0
+        }
     }
 }
