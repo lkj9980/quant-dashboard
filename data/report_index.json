@@ -681,5 +681,25 @@
             "us_treasury_30y_weight": 50.0,
             "dc_irp_cash_weight": 20.0
         }
+    },
+    "2026-09-16 15:55.html": {
+        "date": "2026-09-16",
+        "summary": "미 채권 금리 5% 돌파에 따른 미국채 30년 분할 매수 및 나스닥 헤지 포지션 구축",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 10.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 10.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 20.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 5.0,
+            "nasdaq100_weight": 25.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 20.0
+        }
     }
 }
