@@ -781,5 +781,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-17 15:55.html": {
+        "date": "2026-09-17",
+        "summary": "미국채 10년물 5% 돌파 및 유가 100달러 상회에 따른 리스크 오프 대응, 인버스 전술 배분 및 초고금리 미국 장기채 분할 매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 20.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 20.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 30.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 20.0
+        }
     }
 }
