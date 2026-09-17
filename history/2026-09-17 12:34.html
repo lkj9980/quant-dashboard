@@ -1,0 +1,388 @@
+# 공통 HTML 템플릿
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Quant Dashboard - 2026-09-17</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 p-4 sm:p-6 max-w-5xl mx-auto">
+    <!-- Top Title Area -->
+    <header class="mb-5 mt-2 flex justify-between items-center flex-wrap gap-3">
+        <div>
+            <h1 class="text-xl sm:text-2xl font-black tracking-tight text-slate-900">계좌별 맞춤 포트폴리오 전략</h1>
+            <p class="text-xs text-slate-500 mt-0.5">최신 매크로 시황 및 실시간 퀀트 분석 결과 (2026-08-25)</p>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="toggleChartSection()" class="text-xs bg-indigo-600 text-white hover:bg-indigo-700 px-3 py-2 rounded-xl font-bold transition shadow-sm">차트</button>
+            <button onclick="toggleDebug()" class="text-xs bg-slate-800 text-slate-200 hover:bg-slate-700 px-3 py-2 rounded-xl font-bold transition shadow-sm">디버그</button>
+            <a href="../index.html" class="text-xs bg-slate-200 hover:bg-slate-300 px-3 py-2 rounded-xl font-bold transition shadow-sm">메인으로</a>
+        </div>
+    </header>
+  
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="space-y-5">
+        
+        <!-- 디버그 뷰어 박스 -->
+        <div id="debug-view" class="hidden" style="background: #1e293b; color: #38bdf8; padding: 12px; margin-bottom: 12px; font-family: monospace; font-size: 11px; border-radius: 12px; white-space: pre-wrap; max-height: 140px; overflow-y: auto;">디버그 대기 중...</div>
+        
+        <div id="charts-container-section" class="space-y-3 transition-all">
+
+            <!-- 여유롭고 정돈된 제어 패널 -->
+            <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center flex-wrap gap-2">
+                <!-- 2. 조회 기간 설정 영역 -->
+                <span class="text-xs font-bold text-slate-500">📅 조회 기간 설정</span>
+                <div class="flex items-center gap-1.5">
+                    <button onclick="setPeriod(20)" id="btn-20" class="text-xs px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold transition shadow-sm">최근 20일</button>
+                    <button onclick="setPeriod(60)" id="btn-60" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">최근 60일</button>
+                    <button onclick="setPeriod(999)" id="btn-all" class="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">전체 보기</button>
+                </div>
+            </div>
+
+            <!-- 차트 4개 그리드 레이아웃 (공백 원천 차단형 높이 고정 적용) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                
+                <!-- 1. 국내 증시 -->
+                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-col" style="height: 235px;">
+                    <div class="flex justify-between items-center flex-wrap gap-1 mb-2">
+                        <h2 class="text-xs font-bold text-slate-700">📈 국내 증시</h2>
+                        <div id="chips-domestic" class="flex items-center gap-1"></div>
+                    </div>
+                    <div class="relative w-full flex-grow">
+                        <canvas id="chartDomestic" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- 2. 글로벌 증시 -->
+                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-col" style="height: 235px;">
+                    <div class="flex justify-between items-center flex-wrap gap-1 mb-2">
+                        <h2 class="text-xs font-bold text-slate-700">📈 글로벌 증시</h2>
+                        <div id="chips-global" class="flex items-center gap-1"></div>
+                    </div>
+                    <div class="relative w-full flex-grow">
+                        <canvas id="chartGlobal" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- 3. 환율 및 국채 금리 (보조축) -->
+                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-col" style="height: 235px;">
+                    <div class="flex justify-between items-center flex-wrap gap-1 mb-2">
+                        <h2 class="text-xs font-bold text-slate-700">📈 환율 및 국채 금리 (보조축)</h2>
+                        <div id="chips-macro" class="flex items-center gap-1"></div>
+                    </div>
+                    <div class="relative w-full flex-grow">
+                        <canvas id="chartMacro" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+                
+                <!-- 4. 원자재 및 변동성 (보조축) -->
+                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex flex-col" style="height: 235px;">
+                    <div class="flex justify-between items-center flex-wrap gap-1 mb-2">
+                        <h2 class="text-xs font-bold text-slate-700">📈 원자재 및 변동성 (보조축)</h2>
+                        <div id="chips-commodity" class="flex items-center gap-1"></div>
+                    </div>
+                    <div class="relative w-full flex-grow">
+                        <canvas id="chartCommodity" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI가 생성한 카드 영역 (본문) -->
+        <div>
+            <div class="bg-slate-50 p-6 rounded-3xl font-sans text-slate-800 max-w-5xl mx-auto shadow-lg">
+
+  <!-- Card 1: 오늘의 매크로 변곡점 한 줄 요약 -->
+  <div class="bg-white rounded-2xl p-6 shadow-sm mb-6 border border-gray-100">
+    <div class="text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2">Today's Macro Inflection Point</div>
+    <blockquote class="border-l-4 border-indigo-500 pl-4 my-2">
+      <p class="text-lg font-semibold text-slate-900 leading-relaxed">
+        미국 10년 국채금리가 5%를 돌파하는 고금리 충격 속에서도 국내 증시(코스피 200)의 강력한 추세 변곡점 상승 신호가 포착되었습니다. 고금리 장기화에 따른 변동성에 대응해 미국 장기채의 분할 매수 타점을 확보하는 동시에, 국내 대형주 중심의 전술적 롱 포지션을 개시하는 바벨 전략을 수립합니다.
+      </p>
+    </blockquote>
+  </div>
+
+  <!-- Card 2: 실시간 주요 지표 현황판 -->
+  <div class="bg-white rounded-2xl p-6 shadow-sm mb-6 border border-gray-100">
+    <div class="text-sm font-bold text-slate-900 mb-4 flex items-center justify-between">
+      <span>실시간 글로벌 매크로 지표 현황판</span>
+      <span class="text-xs text-slate-400 font-normal">기준 데이터: yfinance 실시간 취합</span>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- 국내 증시 -->
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+        <div class="text-xs text-slate-500 font-medium mb-1">국내 증시 (변곡점 포착)</div>
+        <div class="space-y-2">
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">코스피</span>
+            <span class="text-xs text-emerald-600 font-bold">6,793.71 (+1.13%) 🚀</span>
+          </div>
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">코스피 200</span>
+            <span class="text-xs text-emerald-600 font-bold">1,072.83 (+1.21%) 🚀</span>
+          </div>
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">코스닥</span>
+            <span class="text-xs text-emerald-600 font-semibold">822.03 (+1.04%)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 해외 지수 -->
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+        <div class="text-xs text-slate-500 font-medium mb-1">해외 주요 지수</div>
+        <div class="space-y-2">
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">S&P 500</span>
+            <span class="text-xs text-rose-600 font-semibold">7,551.81 (-0.45%)</span>
+          </div>
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">나스닥 100</span>
+            <span class="text-xs text-emerald-600 font-semibold">28,945.06 (+0.02%)</span>
+          </div>
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700 font-medium">나스닥 선물</span>
+            <span class="text-xs text-emerald-600 font-semibold">29,444.50 (+0.39%)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 금리 및 환율 -->
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+        <div class="text-xs text-slate-500 font-medium mb-1">금리 및 외환</div>
+        <div class="space-y-2">
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">미 국채 10년</span>
+            <span class="text-xs text-rose-600 font-bold">5.01% (+0.20%)</span>
+          </div>
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">미 국채 30년</span>
+            <span class="text-xs text-emerald-600 font-semibold">5.35% (-0.28%)</span>
+          </div>
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">USD/KRW 환율</span>
+            <span class="text-xs text-rose-600 font-semibold">1,380.12 (+0.21%)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 원자재 및 변동성 -->
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+        <div class="text-xs text-slate-500 font-medium mb-1">원자재 및 리스크</div>
+        <div class="space-y-2">
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">WTI 유가</span>
+            <span class="text-xs text-emerald-600 font-semibold">102.29 (-2.38%)</span>
+          </div>
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">국제 금</span>
+            <span class="text-xs text-rose-600 font-semibold">4,323.50 (-1.00%)</span>
+          </div>
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold text-slate-700">VIX 변동성</span>
+            <span class="text-xs text-rose-600 font-bold">17.71 (+2.91%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3: 시장별 포지션 스코어링 -->
+  <div class="bg-white rounded-2xl p-6 shadow-sm mb-6 border border-gray-100">
+    <div class="text-sm font-bold text-slate-900 mb-4">시장별 자산 매력도 스코어링 (Quant Score)</div>
+    <div class="space-y-4">
+      <div>
+        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+          <span>코스피 200 (추세 전환 및 기술적 급등 변곡점 도달)</span>
+          <span class="text-indigo-600 font-bold">85 / 100</span>
+        </div>
+        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+          <div class="bg-indigo-600 h-full rounded-full" style="width: 85%"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+          <span>미국 장기 국채 (30년물 금리 5.35% 수준의 역사적 락인 밸류에이션)</span>
+          <span class="text-emerald-600 font-bold">80 / 100</span>
+        </div>
+        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+          <div class="bg-emerald-600 h-full rounded-full" style="width: 80%"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+          <span>나스닥 100 (고금리 장기화 우려에 따른 밸류에이션 부담 지속)</span>
+          <span class="text-amber-500 font-bold">55 / 100</span>
+        </div>
+        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+          <div class="bg-amber-500 h-full rounded-full" style="width: 55%"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+          <span>코스닥 150 (대형주 위주 흐름 대비 상대적 탄력 약화)</span>
+          <span class="text-slate-400 font-bold">45 / 100</span>
+        </div>
+        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+          <div class="bg-slate-400 h-full rounded-full" style="width: 45%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 4: Portfolio A (일반 계좌) 추천 비중 -->
+  <div class="bg-white rounded-2xl p-6 shadow-sm mb-6 border border-gray-100">
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider block">Trading Account Portfolio</span>
+        <h3 class="text-base font-bold text-slate-900">Portfolio A: 일반 투자 계좌</h3>
+      </div>
+      <span class="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold rounded-full">적극적 퀀트 트레이딩</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="md:col-span-1">
+        <div class="text-xs text-slate-500 font-semibold mb-2">추천 자산 배분 비중</div>
+        <div class="space-y-2">
+          <div class="flex justify-between items-center text-sm p-2 bg-indigo-50 rounded-lg">
+            <span class="font-medium text-slate-700">코스피 200 레버리지</span>
+            <span class="font-bold text-indigo-600">30.0%</span>
+          </div>
+          <div class="flex justify-between items-center text-sm p-2 bg-sky-50 rounded-lg">
+            <span class="font-medium text-slate-700">나스닥 100 레버리지</span>
+            <span class="font-bold text-sky-600">20.0%</span>
+          </div>
+          <div class="flex justify-between items-center text-sm p-2 bg-slate-100 rounded-lg">
+            <span class="font-medium text-slate-700">현금 자산 (대기 관망)</span>
+            <span class="font-bold text-slate-600">50.0%</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="md:col-span-2 text-sm text-slate-600 leading-relaxed space-y-2 bg-slate-50 p-4 rounded-xl">
+        <div class="font-bold text-slate-800 mb-1 text-xs">포트폴리오 구축 전략 배경</div>
+        <p class="text-xs">1. 코스피 200 지수가 급상승(+1.21%)하여 강한 추세 변곡점 전환 신호를 보냄에 따라 레버리지 ETF의 비중을 30%로 설정하여 초기 모멘텀 극대화를 도모합니다.</p>
+        <p class="text-xs">2. 미 10년 국채금리가 5% 선을 돌파하며 가중되는 고성장주 멀티플 훼손 가능성을 감안해 나스닥 100 레버리지는 방어적으로 20%만 배분합니다.</p>
+        <p class="text-xs">3. VIX 변동성이 17.71로 증가 추세에 있으며, 1,380원대의 고환율 부담이 상존하므로 50%의 대기성 유동성을 유지해 안전마진을 확보합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 5: Portfolio B (퇴직연금 DC/IRP) 추천 비중 -->
+  <div class="bg-white rounded-2xl p-6 shadow-sm mb-6 border border-gray-100">
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider block">Retirement Portfolio</span>
+        <h3 class="text-base font-bold text-slate-900">Portfolio B: 퇴직연금 DC / IRP 계좌</h3>
+      </div>
+      <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full">안정적 현금흐름 락인</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="md:col-span-1">
+        <div class="text-xs text-slate-500 font-semibold mb-2">추천 자산 배분 비중 (위험자산 50%)</div>
+        <div class="space-y-2">
+          <div class="flex justify-between items-center text-sm p-2 bg-emerald-50 rounded-lg">
+            <span class="font-medium text-slate-700 font-semibold">미국채 30년 ETF</span>
+            <span class="font-bold text-emerald-600">40.0%</span>
+          </div>
+          <div class="flex justify-between items-center text-sm p-2 bg-indigo-50 rounded-lg">
+            <span class="font-medium text-slate-700">코스피 200 ETF</span>
+            <span class="font-bold text-indigo-600">30.0%</span>
+          </div>
+          <div class="flex justify-between items-center text-sm p-2 bg-sky-50 rounded-lg">
+            <span class="font-medium text-slate-700">나스닥 100 ETF</span>
+            <span class="font-bold text-sky-600">20.0%</span>
+          </div>
+          <div class="flex justify-between items-center text-sm p-2 bg-slate-100 rounded-lg">
+            <span class="font-medium text-slate-700 text-slate-500">대기성 안전자산 현금</span>
+            <span class="font-bold text-slate-600">10.0%</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="md:col-span-2 text-sm text-slate-600 leading-relaxed space-y-2 bg-slate-50 p-4 rounded-xl">
+        <div class="font-bold text-slate-800 mb-1 text-xs">포트폴리오 구축 전략 배경</div>
+        <p class="text-xs">1. 규제 가이드 준수: 퇴직연금 규정상 위험자산 한도는 최대 70%이나, 매크로 변동성을 고려하여 위험자산의 총합을 50% 수준으로 관리합니다. (레버리지 및 인버스는 완전 차단)</p>
+        <p class="text-xs">2. 안전자산 활용 극대화: 미국채 30년 금리가 5.35% 수준에 도달하여 전례 없는 고금리 이자 수익 획득 및 향후 기준금리 인하 국면에서 막대한 채권 자본 차익을 얻을 수 있는 절호의 기회이므로 40%를 과감히 배분합니다.</p>
+        <p class="text-xs">3. 지형별 균형: 코스피 200의 확실한 추세 변곡 도달 국면에 발맞추어 국내 대표주 ETF를 30% 신규 진입시켜 자산 성장을 가속화합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 6: 분할 매수/매도 가격 타점 및 액션 플랜 -->
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+    <div class="text-sm font-bold text-slate-900 mb-4">분할 매수/매도 가격 타점 및 실전 액션 플랜</div>
+    <div class="space-y-4">
+      <div class="border-b border-slate-100 pb-3">
+        <div class="text-xs font-bold text-indigo-600 mb-1">코스피 200 인덱스 추종 자산</div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          매수 타점: 현재 지수 변곡점 도달 구간인 1,060 ~ 1,072선 범위 내에서 비중의 60%를 1차 일시 진입합니다.
+          리스크 관리: 일평균 거래량이 수축하며 코스피 200 지수가 종가 기준으로 1,040선을 이탈해 역추세가 발생할 시 절반 손절 또는 관망 포지션으로 환원합니다.
+        </p>
+      </div>
+
+      <div class="border-b border-slate-100 pb-3">
+        <div class="text-xs font-bold text-emerald-600 mb-1">미국 장기 국채 30년 추종 자산</div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          매수 타점: 미국채 30년물 수익률이 5.3% 대를 유지하는 시점마다 분할 매수 전략으로 매집합니다. 장기적 저평가 기회이므로, 2회에 걸쳐 분할하여 진입 비중을 채웁니다.
+          목표 수익: 미국 기준금리 인하 기조가 본격화되는 시점까지 배당(분배금) 재투자와 자본 이득 락인 효과를 추구합니다.
+        </p>
+      </div>
+
+      <div>
+        <div class="text-xs font-bold text-sky-600 mb-1">리스크 관리 및 유동성 대기</div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          VIX가 17.71로 슬금슬금 고개를 들고 환율이 1,380.12원으로 여전히 달러 강세에 놓여 있어, 원자재 가격 안정(WTI 하락세)에도 불구하고 매크로 돌발 악재에 노출되어 있습니다.
+          따라서 일반 계좌 내 현금 50%는 철저히 파킹통장 및 초단기 채권형 상품에 예치해 두었다가, 지수가 단기 매물 소화 후 지지를 공고히 하는 국면에만 재집행합니다.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 메타 데이터 블록 추가 -->
+<script type="application/json" id="backtest-json">
+{
+  "summary": "국내 증시 변곡점 포착에 따른 코스피 비중 확대 및 미 국채 30년물 5%대 고금리 락인 전략",
+  "portfolio_a": {
+    "kospi200_lev_weight": 30.0,
+    "kospi200_inv_weight": 0.0,
+    "kosdaq150_lev_weight": 0.0,
+    "kosdaq150_inv_weight": 0.0,
+    "nasdaq100_lev_weight": 20.0,
+    "nasdaq100_inv_weight": 0.0,
+    "cash_weight": 50.0
+  },
+  "portfolio_b": {
+    "kospi200_weight": 30.0,
+    "kosdaq150_weight": 0.0,
+    "nasdaq100_weight": 20.0,
+    "us_treasury_30y_weight": 40.0,
+    "dc_irp_cash_weight": 10.0
+  }
+}
+</script>
+        </div>
+        
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="text-center text-[11px] text-slate-400 mt-8 mb-4">
+        Last Updated: 2026-09-17 12:34 • Powered by GitHub Pages & Gemini AI
+    </footer>
+    
+    <!-- CSV를 읽어서 차트를 그려주는 자바스크립트 -->
+    <script src="../html/quant-chart2.js"></script>
+    
+</body>
+</html>
