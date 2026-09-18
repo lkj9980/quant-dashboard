@@ -901,5 +901,25 @@
             "us_treasury_30y_weight": 20.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-19 00:36.html": {
+        "date": "2026-09-19",
+        "summary": "미국채 10년 금리 5% 고점 돌파에 따른 미국 장기채 분할 매수 및 과매도된 한국 대형주 반등 활용 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 20.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 25.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 35.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
