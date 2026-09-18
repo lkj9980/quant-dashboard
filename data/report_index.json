@@ -841,5 +841,25 @@
             "us_treasury_30y_weight": 20.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-18 09:20.html": {
+        "date": "2026-09-18",
+        "summary": "VIX 하락에 따른 주식 안도 랠리 추종 및 미국채 30년 5.30% 초고금리 타점 중심의 포트폴리오 최적 배분",
+        "portfolio_a": {
+            "kospi200_lev_weight": 20.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 10.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 30.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 40.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 45.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 0.0
+        }
     }
 }
