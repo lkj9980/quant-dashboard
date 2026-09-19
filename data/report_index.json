@@ -981,5 +981,25 @@
             "us_treasury_30y_weight": 50.0,
             "dc_irp_cash_weight": 20.0
         }
+    },
+    "2026-09-20 07:00.html": {
+        "date": "2026-09-20",
+        "summary": "미국채 30년 금리 5.33% 도달에 따른 장기 채권 비중 확대 및 변동성 대응 목적의 주식 시장 현금 비중 강화",
+        "portfolio_a": {
+            "kospi200_lev_weight": 15.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 5.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 5.0,
+            "nasdaq100_weight": 20.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 20.0
+        }
     }
 }
