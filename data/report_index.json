@@ -1061,5 +1061,25 @@
             "us_treasury_30y_weight": 20.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-21 09:20.html": {
+        "date": "2026-09-21",
+        "summary": "미국 국채 30년 금리 5.33% 고금리 락인 및 나스닥100/코스피 레버리지 전술적 분할 진입",
+        "portfolio_a": {
+            "kospi200_lev_weight": 15.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 5.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 15.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 65.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 5.0,
+            "nasdaq100_weight": 20.0,
+            "us_treasury_30y_weight": 50.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
