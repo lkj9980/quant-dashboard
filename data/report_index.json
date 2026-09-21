@@ -1101,5 +1101,25 @@
             "us_treasury_30y_weight": 25.0,
             "dc_irp_cash_weight": 5.0
         }
+    },
+    "2026-09-21 15:55.html": {
+        "date": "2026-09-21",
+        "summary": "미국채 30년 고금리 락인 및 코스피200 단기 반등 레버리지 전술",
+        "portfolio_a": {
+            "kospi200_lev_weight": 20.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 10.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 70.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 20.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 30.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
