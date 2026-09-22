@@ -1161,5 +1161,25 @@
             "us_treasury_30y_weight": 25.0,
             "dc_irp_cash_weight": 5.0
         }
+    },
+    "2026-09-22 12:05.html": {
+        "date": "2026-09-22",
+        "summary": "미 국채 금리 고점 확인 및 환율 급락 모멘텀 기반 코스피/나스닥 레버리지 적극 편입 및 장기채 듀레이션 확대 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 40.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 10.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 30.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 20.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 30.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 30.0,
+            "us_treasury_30y_weight": 20.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
