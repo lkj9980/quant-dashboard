@@ -1381,5 +1381,25 @@
             "us_treasury_30y_weight": 50.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-29 07:19.html": {
+        "date": "2026-09-29",
+        "summary": "미 국채 금리 급등 및 VIX 변동성 확대에 따른 방어적 포트폴리오 구축 및 고금리 장기채 분할 매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 10.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 20.0,
+            "cash_weight": 70.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 15.0,
+            "us_treasury_30y_weight": 60.0,
+            "dc_irp_cash_weight": 15.0
+        }
     }
 }
