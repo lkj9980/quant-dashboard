@@ -1481,5 +1481,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-30 15:55.html": {
+        "date": "2026-09-30",
+        "summary": "미국채 30년 금리 5.59% 초고금리 진입에 따른 장기채 집중 매수 및 지수 하방 방어를 위한 인버스/현금 확보 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 20.0,
+            "kosdaq150_lev_weight": 10.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 20.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 30.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
