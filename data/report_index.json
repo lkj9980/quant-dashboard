@@ -1461,5 +1461,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-09-30 12:02.html": {
+        "date": "2026-09-30",
+        "summary": "미국채 30년 고금리(5.59%) 매수 적기 및 나스닥/코스피 레버리지를 활용한 분할 매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 10.0,
+            "kospi200_inv_weight": 10.0,
+            "kosdaq150_lev_weight": 10.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 25.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
