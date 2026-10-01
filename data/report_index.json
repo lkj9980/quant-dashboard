@@ -1561,5 +1561,25 @@
             "us_treasury_30y_weight": 45.0,
             "dc_irp_cash_weight": 20.0
         }
+    },
+    "2026-10-01 12:07.html": {
+        "date": "2026-10-01",
+        "summary": "미 국채 30년물 금리 5.64% 진입에 따른 안전자산 분할 매수 기회 확보 및 코스닥 강세 기반 성장주 바벨 전략 실행",
+        "portfolio_a": {
+            "kospi200_lev_weight": 10.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 20.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 20.0,
+            "nasdaq100_weight": 30.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
