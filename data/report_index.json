@@ -1641,5 +1641,25 @@
             "us_treasury_30y_weight": 50.0,
             "dc_irp_cash_weight": 30.0
         }
+    },
+    "2026-10-02 15:55.html": {
+        "date": "2026-10-02",
+        "summary": "러셀 2000 급등과 미 국채 금리 진정에 따른 글로벌 자산 배분 변곡점 포착 및 미 장기채/나스닥 분할 매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 15.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 5.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 5.0,
+            "nasdaq100_weight": 30.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 20.0
+        }
     }
 }
