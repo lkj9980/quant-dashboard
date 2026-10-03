@@ -1681,5 +1681,25 @@
             "us_treasury_30y_weight": 30.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-10-03 09:20.html": {
+        "date": "2026-10-03",
+        "summary": "VIX 변동성 안정화 속 나스닥 편입 비율 확대 및 미국채 30년물 고금리 구간을 활용한 안전자산 적극 비중 매수",
+        "portfolio_a": {
+            "kospi200_lev_weight": 20.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 40.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 40.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 20.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 40.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
