@@ -1861,5 +1861,25 @@
             "us_treasury_30y_weight": 30.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-10-05 15:55.html": {
+        "date": "2026-10-05",
+        "summary": "미 국채 30년 금리 5.63%에 따른 안전자산 분할 매수 및 VIX 하락을 활용한 나스닥 레버리지 한정 편입 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 10.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 30.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 40.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
