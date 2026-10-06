@@ -1921,5 +1921,25 @@
             "us_treasury_30y_weight": 20.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-10-06 15:55.html": {
+        "date": "2026-10-06",
+        "summary": "미국채 30년 5.66% 초고금리 타점 진입 및 나스닥/코스닥 주도주 집중 포트폴리오 다각화",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 10.0,
+            "kosdaq150_lev_weight": 20.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 30.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 40.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 20.0,
+            "nasdaq100_weight": 40.0,
+            "us_treasury_30y_weight": 20.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
