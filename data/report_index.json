@@ -1941,5 +1941,25 @@
             "us_treasury_30y_weight": 20.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-10-07 09:20.html": {
+        "date": "2026-10-07",
+        "summary": "미국채 30년 5.64% 고금리 적극 매수와 나스닥 성장의 융합 및 코스피 약세 헷지 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 10.0,
+            "kosdaq150_lev_weight": 10.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 40.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
