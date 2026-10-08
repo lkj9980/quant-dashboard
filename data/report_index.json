@@ -2001,5 +2001,25 @@
             "us_treasury_30y_weight": 50.0,
             "dc_irp_cash_weight": 20.0
         }
+    },
+    "2026-10-08 15:55.html": {
+        "date": "2026-10-08",
+        "summary": "미국채 30년 금리 극점 도달에 따른 장기채 분할 매수 개시 및 국내외 증시 하락 헷지용 인버스 비중 확대 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 25.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 15.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 10.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 20.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 30.0
+        }
     }
 }
