@@ -2081,5 +2081,25 @@
             "us_treasury_30y_weight": 60.0,
             "dc_irp_cash_weight": 20.0
         }
+    },
+    "2026-10-09 15:55.html": {
+        "date": "2026-10-09",
+        "summary": "미국채 30년 금리 5.61% 고점 도달에 따른 장기 채권 비중 확대 및 단기 과매도 코스피의 레버리지 활용 변동성 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 10.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 70.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 5.0,
+            "nasdaq100_weight": 25.0,
+            "us_treasury_30y_weight": 45.0,
+            "dc_irp_cash_weight": 15.0
+        }
     }
 }
