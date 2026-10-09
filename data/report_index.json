@@ -2101,5 +2101,25 @@
             "us_treasury_30y_weight": 45.0,
             "dc_irp_cash_weight": 15.0
         }
+    },
+    "2026-10-10 00:00.html": {
+        "date": "2026-10-10",
+        "summary": "구리·금 급등 및 미국채 30년물 5.64% 도달에 대응해 국내 증시 헤지용 인버스를 일반 계좌에 30% 배분하고, 퇴직연금에서는 고금리 매력이 극대화된 미국채 30년물을 40% 편입하여 포트폴리오의 안정성을 강화하는 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 30.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 20.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 40.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
