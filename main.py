@@ -161,7 +161,7 @@ def get_ai_analysis_and_backtest_data(GEMINI_API_KEY, raw_text):
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = call_gemini_with_retry(
         client=client,
-        model_name="gemini-3.5-flash", # 또는 사용하시는 모델명
+        model_name="gemini-3.6-flash", # 또는 사용하시는 모델명
         prompt_text=prompt,
         max_retries=3,
         delay=30
