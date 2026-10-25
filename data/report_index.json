@@ -2621,5 +2621,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-10-26 00:00.html": {
+        "date": "2026-10-26",
+        "summary": "유가 $103 돌파 및 미국채 10년 4.99% 고금리 충격 속 현금 50% 확보 및 롱숏·채권 분할 매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 10.0,
+            "kospi200_inv_weight": 0.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 15.0,
+            "nasdaq100_lev_weight": 15.0,
+            "nasdaq100_inv_weight": 10.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 20.0,
+            "kosdaq150_weight": 5.0,
+            "nasdaq100_weight": 25.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 20.0
+        }
     }
 }
