@@ -2661,5 +2661,25 @@
             "us_treasury_30y_weight": 30.0,
             "dc_irp_cash_weight": 15.0
         }
+    },
+    "2026-10-26 09:20.html": {
+        "date": "2026-10-26",
+        "summary": "VIX 상승 및 미국채 5% 근접에 대응하는 방어적 현금 확보 및 고금리 채권 분할 매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 10.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 10.0,
+            "nasdaq100_lev_weight": 15.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 65.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 35.0,
+            "us_treasury_30y_weight": 35.0,
+            "dc_irp_cash_weight": 15.0
+        }
     }
 }
