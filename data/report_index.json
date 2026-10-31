@@ -2941,5 +2941,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 30.0
         }
+    },
+    "2026-11-01 00:00.html": {
+        "date": "2026-11-01",
+        "summary": "WTI 유가 104달러 돌파 및 VIX 급등 속 주식 비중 축소, 미 국채 30년(5.31%) 고금리 채권 및 현금 중심의 방어적 자산배분",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 20.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 20.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 20.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 30.0
+        }
     }
 }
