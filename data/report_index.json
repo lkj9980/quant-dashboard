@@ -2921,5 +2921,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 30.0
         }
+    },
+    "2026-10-31 15:55.html": {
+        "date": "2026-10-31",
+        "summary": "VIX 급등 및 고유가·고금리 압박 속에 현금 비중 확대 및 인버스 헤지 전략 유지",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 20.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 10.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 20.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 5.0,
+            "nasdaq100_weight": 15.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 30.0
+        }
     }
 }
