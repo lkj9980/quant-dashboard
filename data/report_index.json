@@ -3021,5 +3021,25 @@
             "us_treasury_30y_weight": 45.0,
             "dc_irp_cash_weight": 20.0
         }
+    },
+    "2026-11-02 00:00.html": {
+        "date": "2026-11-02",
+        "summary": "유가 급등 및 VIX 스파이크에 따른 인버스 헤지 강화 및 미국 30년 국채 중심 방어 포트폴리오 구축",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 15.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 10.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 15.0,
+            "cash_weight": 60.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 5.0,
+            "nasdaq100_weight": 25.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 20.0
+        }
     }
 }
