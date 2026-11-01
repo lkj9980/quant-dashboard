@@ -2981,5 +2981,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 20.0
         }
+    },
+    "2026-11-01 09:20.html": {
+        "date": "2026-11-01",
+        "summary": "유가 상승 및 고금리 장기화에 따른 변동성(VIX) 급증 국면: 현금 확보, 인버스 헤지 및 미 30년채 분할 채권 매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 20.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 10.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 20.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 20.0,
+            "us_treasury_30y_weight": 40.0,
+            "dc_irp_cash_weight": 30.0
+        }
     }
 }
