@@ -3061,5 +3061,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 20.0
         }
+    },
+    "2026-11-02 09:20.html": {
+        "date": "2026-11-02",
+        "summary": "VIX 급등 및 미국채 30년 고금리 활용 장기채 매수 및 보수적 현금 확보 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 15.0,
+            "kosdaq150_lev_weight": 10.0,
+            "kosdaq150_inv_weight": 0.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 25.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 10.0,
+            "nasdaq100_weight": 25.0,
+            "us_treasury_30y_weight": 35.0,
+            "dc_irp_cash_weight": 15.0
+        }
     }
 }
