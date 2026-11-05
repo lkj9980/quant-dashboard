@@ -3281,5 +3281,25 @@
             "us_treasury_30y_weight": 25.0,
             "dc_irp_cash_weight": 15.0
         }
+    },
+    "2026-11-06 07:00.html": {
+        "date": "2026-11-06",
+        "summary": "VIX 70% 폭등 및 유가 $91 돌파에 따른 현금 50% 확보 및 미국채 30년(5.25%) 분할매수 전략",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 20.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 10.0,
+            "nasdaq100_lev_weight": 0.0,
+            "nasdaq100_inv_weight": 20.0,
+            "cash_weight": 50.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 15.0,
+            "kosdaq150_weight": 5.0,
+            "nasdaq100_weight": 20.0,
+            "us_treasury_30y_weight": 35.0,
+            "dc_irp_cash_weight": 25.0
+        }
     }
 }
