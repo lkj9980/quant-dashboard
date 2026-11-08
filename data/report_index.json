@@ -3421,5 +3421,25 @@
             "us_treasury_30y_weight": 40.0,
             "dc_irp_cash_weight": 10.0
         }
+    },
+    "2026-11-08 15:55.html": {
+        "date": "2026-11-08",
+        "summary": "미국 빅테크 성장세 지속 및 미국채 30년 5.26% 고금리 구간 채권 분할 매수, 국내 하방 리스크 헤지 포트폴리오 구축",
+        "portfolio_a": {
+            "kospi200_lev_weight": 0.0,
+            "kospi200_inv_weight": 20.0,
+            "kosdaq150_lev_weight": 0.0,
+            "kosdaq150_inv_weight": 10.0,
+            "nasdaq100_lev_weight": 40.0,
+            "nasdaq100_inv_weight": 0.0,
+            "cash_weight": 30.0
+        },
+        "portfolio_b": {
+            "kospi200_weight": 10.0,
+            "kosdaq150_weight": 0.0,
+            "nasdaq100_weight": 50.0,
+            "us_treasury_30y_weight": 30.0,
+            "dc_irp_cash_weight": 10.0
+        }
     }
 }
